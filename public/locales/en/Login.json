@@ -1,0 +1,9 @@
+{
+  "Welcome": "Welcome",
+  "ToastErrorAuth": "Failed authentication",
+  "ValidateMail": "An email is required",
+  "ValidatePassword": "Required Password",
+  "LabelMail": "Email / Username",
+  "LabelPassword": "Password",
+  "ButtonSignIn": "Sign In"
+}

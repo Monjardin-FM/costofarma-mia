@@ -1,0 +1,9 @@
+{
+  "Welcome": "Bienvenido",
+  "ToastErrorAuth": "Autenticación fallida",
+  "ValidateMail": "Correo electrónico requerido",
+  "ValidatePassword": "Contraseña requerida",
+  "LabelMail": "Correo / Nombre de Usuario",
+  "LabelPassword": "Contraseña",
+  "ButtonSignIn": "Iniciar Sesión"
+}

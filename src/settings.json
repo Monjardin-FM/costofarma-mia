@@ -1,0 +1,44 @@
+{
+  "alarm.config.managerPage.authorization": [
+    "County Administrator",
+    "OTC Administrator"
+  ],
+  "devices.managerPage.authorization": [
+    "County Administrator",
+    "OTC Administrator"
+  ],
+  "defendants.managerPage.authorization": [
+    "County Administrator",
+    "OTC Administrator",
+    "Chief Officer",
+    "County Director",
+    "Monitoring Center Supervisor",
+    "Officer"
+  ],
+  "userManagement.managerPage.authorization": [
+    "County Administrator",
+    "OTC Administrator",
+    "Chief Officer",
+    "County Director",
+    "Monitoring Center Supervisor",
+    "Officer"
+  ],
+  "tracking.managerPage.authorization": [
+    "County Administrator",
+    "OTC Administrator",
+    "Chief Officer",
+    "County Director",
+    "Monitoring Center Agent",
+    "Monitoring Center Supervisor",
+    "Officer"
+  ],
+  "tracking.inactive.defendants.managerPage.authorization": [
+    "County Administrator",
+    "OTC Administrator",
+    "Chief Officer",
+    "County Director",
+    "Monitoring Center Agent",
+    "Monitoring Center Supervisor",
+    "Officer"
+  ]
+}

@@ -1,0 +1,333 @@
+"filename", "language", "TypeScript", "CSS", "JSON", "JSON with Comments", "TypeScript JSX", "comment", "blank", "total"
+"c:\Users\rober\Desktop\otc-app\src\App.tsx", "TypeScript JSX", 0, 0, 0, 0, 18, 0, 3, 21
+"c:\Users\rober\Desktop\otc-app\src\application\exceptions\authentication.exception.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\rober\Desktop\otc-app\src\application\exceptions\base.exception.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 2, 9
+"c:\Users\rober\Desktop\otc-app\src\assets\css\background.css", "CSS", 0, 3, 0, 0, 0, 1, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\assets\css\blob.css", "CSS", 0, 42, 0, 0, 0, 0, 6, 48
+"c:\Users\rober\Desktop\otc-app\src\assets\css\react-datepicker.css", "CSS", 0, 784, 0, 0, 0, 0, 120, 904
+"c:\Users\rober\Desktop\otc-app\src\assets\json\Drop.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\addproduct.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\astronaut.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\clip.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\doctor.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\finance.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\inventary.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\invoice.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\money.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\notFound.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\password.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\pharmacy.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\position.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\prescription.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\reports.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\return.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\returns.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\roles.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\selectfile.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\sells.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\ticket.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\upload.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\assets\json\waves.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\rober\Desktop\otc-app\src\index.css", "CSS", 0, 7, 0, 0, 0, 0, 1, 8
+"c:\Users\rober\Desktop\otc-app\src\main.tsx", "TypeScript JSX", 0, 0, 0, 0, 17, 0, 1, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\domain\entities\alarms.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 1, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\domain\repositories\alarm-repository.ts", "TypeScript", 46, 0, 0, 0, 0, 0, 2, 48
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\infraestructure\services\delete-alarm.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 2, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\infraestructure\services\get-alarm-by-id.ts", "TypeScript", 34, 0, 0, 0, 0, 1, 3, 38
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\infraestructure\services\get-alarm.ts", "TypeScript", 32, 0, 0, 0, 0, 1, 3, 36
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\infraestructure\services\post-alarm.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 2, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\infraestructure\services\update-alarm.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 1, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\components\app-alarm-config-manager-page.tsx", "TypeScript JSX", 0, 0, 0, 0, 114, 0, 3, 117
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\components\app-alarms-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 51, 0, 3, 54
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\components\modals\app-alarm-edit-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 261, 0, 7, 268
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\components\modals\app-alarm-new-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 257, 2, 6, 265
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\components\tables\app-alarm-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 142, 4, 7, 153
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\hooks\use-create-alarm.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\hooks\use-delete-alarm.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\hooks\use-get-alarm-by-id.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\hooks\use-get-alarms.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\alarm-config\web\hooks\use-update-alarm.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\broadcast-messages\domain\entities\broadcast-message.ts", "TypeScript", 6, 0, 0, 0, 0, 0, 1, 7
+"c:\Users\rober\Desktop\otc-app\src\modules\broadcast-messages\web\components\app-broadcast-messages-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 36, 4, 1, 41
+"c:\Users\rober\Desktop\otc-app\src\modules\broadcast-messages\web\components\app-broadcast-messages-manager-page.tsx", "TypeScript JSX", 0, 0, 0, 0, 49, 0, 1, 50
+"c:\Users\rober\Desktop\otc-app\src\modules\broadcast-messages\web\components\modals\app-broadcast-messages-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 46, 0, 2, 48
+"c:\Users\rober\Desktop\otc-app\src\modules\broadcast-messages\web\components\tables\app-broadcast-message-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 96, 54, 6, 156
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\domain\entities\city.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\domain\entities\device-type.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\domain\entities\response-device.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\domain\entities\specific-alarm.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\domain\repositories\catalog-repository.ts", "TypeScript", 10, 0, 0, 0, 0, 0, 2, 12
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\hooks\use-get-city.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\hooks\use-get-device-type.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\hooks\use-get-responsive-devices.ts", "TypeScript", 16, 0, 0, 0, 0, 0, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\hooks\use-get-specific-alarm.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 2, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\infraestructure\services\get-city.ts", "TypeScript", 20, 0, 0, 0, 0, 0, 3, 23
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\infraestructure\services\get-device-type.ts", "TypeScript", 21, 0, 0, 0, 0, 0, 3, 24
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\infraestructure\services\get-response-devices.ts", "TypeScript", 21, 0, 0, 0, 0, 0, 3, 24
+"c:\Users\rober\Desktop\otc-app\src\modules\catalog\infraestructure\services\get-specific-alarm.ts", "TypeScript", 21, 0, 0, 0, 0, 0, 3, 24
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\domain\entities\address.ts", "TypeScript", 11, 0, 0, 0, 0, 0, 1, 12
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\domain\entities\alarm-defendant-params.ts", "TypeScript", 29, 0, 0, 0, 0, 9, 6, 44
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\domain\entities\defendant-by-id.ts", "TypeScript", 24, 0, 0, 0, 0, 0, 1, 25
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\domain\entities\defendant-device.ts", "TypeScript", 8, 0, 0, 0, 0, 0, 1, 9
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\domain\entities\defendant.ts", "TypeScript", 20, 0, 0, 0, 0, 0, 1, 21
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\domain\entities\geoJSON.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 4, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\domain\entities\reference-contact.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\domain\repositories\defendant-repository.ts", "TypeScript", 91, 0, 0, 0, 0, 1, 1, 93
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\assign-address-defendant.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 3, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\assign-alarm-defendant.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 3, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\assign-device-defendant.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 3, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\create-defendant.ts", "TypeScript", 21, 0, 0, 0, 0, 9, 8, 38
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\delete-addres-person.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\delete-device-defendant.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\delete.defendant.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 2, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\edit-address.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\get-address-by-id.ts", "TypeScript", 26, 0, 0, 0, 0, 2, 3, 31
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\get-address-person.ts", "TypeScript", 27, 0, 0, 0, 0, 2, 3, 32
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\get-defendant-by-id.ts", "TypeScript", 39, 0, 0, 0, 0, 2, 3, 44
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\get-defendant-device.ts", "TypeScript", 24, 0, 0, 0, 0, 2, 3, 29
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\get-defendant.ts", "TypeScript", 38, 0, 0, 0, 0, 1, 3, 42
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\infraestructure\services\update-defendant.ts", "TypeScript", 21, 0, 0, 0, 0, 8, 6, 35
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\app-defendants-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 51, 0, 2, 53
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\app-defendants-manager-page.tsx", "TypeScript JSX", 0, 0, 0, 0, 189, 0, 3, 192
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\add-alarm-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 390, 12, 6, 408
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\address-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 196, 0, 6, 202
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\alarm-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 15, 1, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\app-add-victim-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 237, 19, 4, 260
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\app-device-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 123, 1, 6, 130
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\defendant-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 549, 29, 11, 589
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\edit-addres-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 236, 1, 4, 241
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\edit-victim-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 240, 37, 4, 281
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\phone-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 23, 0, 2, 25
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\reference-from.tsx", "TypeScript JSX", 0, 0, 0, 0, 35, 0, 1, 36
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\forms\victim-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 174, 4, 3, 181
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\maps\app-geofence.tsx", "TypeScript JSX", 0, 0, 0, 0, 93, 0, 3, 96
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\modals\app-edit-alarm-defendant-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 54, 3, 1, 58
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\modals\app-edit-info-defendant-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 664, 27, 5, 696
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\modals\app-edit-selection-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 78, 0, 1, 79
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\modals\app-edit-victim-defendant-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 54, 1, 1, 56
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\modals\app-new-defendant-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 220, 3, 8, 231
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\tables\app-address-person.tsx", "TypeScript JSX", 0, 0, 0, 0, 177, 4, 7, 188
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\tables\app-defendants-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 212, 12, 8, 232
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\tables\app-devices-defendant-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 143, 26, 7, 176
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\tables\app-exceptions-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 143, 4, 7, 154
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\components\tables\app-reference-contacts-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 165, 4, 8, 177
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-assign-address.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-assign-alarm-defendant.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-assign-device-defendant.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-create-defendant.ts", "TypeScript", 14, 0, 0, 0, 0, 2, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-delete-address-person.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-delete-defendant.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-delete-device-defendant.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-get-addres-by-id.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-get-address-person.ts", "TypeScript", 16, 0, 0, 0, 0, 0, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-get-defendant-device.ts", "TypeScript", 16, 0, 0, 0, 0, 0, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-get-defendants-by-id.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-get-defendants.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-update-address.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\defendants\web\hooks\use-update-defendant.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\domain\entities\device.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\domain\respositories\device-repositoty.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 2, 21
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\infraestructure\services\create-device.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 2, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\infraestructure\services\delete-device.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 2, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\infraestructure\services\get-device-by-id.ts", "TypeScript", 24, 0, 0, 0, 0, 0, 3, 27
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\infraestructure\services\get-devices.ts", "TypeScript", 26, 0, 0, 0, 0, 0, 3, 29
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\infraestructure\services\update.device.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 2, 17
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\components\app-devices-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 50, 0, 1, 51
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\components\app-devices-manager-page.tsx", "TypeScript JSX", 0, 0, 0, 0, 96, 0, 2, 98
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\components\modals\app-edit-device.tsx", "TypeScript JSX", 0, 0, 0, 0, 188, 1, 4, 193
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\components\modals\app-new-device-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 176, 0, 2, 178
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\components\tables\app-device-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 156, 5, 7, 168
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\hooks\use-create-device.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\hooks\use-delete-device.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\hooks\use-get-device-by-id.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\hooks\use-get-devices.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\devices\web\hooks\use-update-device.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 3, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\domain\entities\county.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\domain\entities\gender.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\domain\entities\role.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\domain\entities\user-manage-by-id.ts", "TypeScript", 18, 0, 0, 0, 0, 0, 1, 19
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\domain\entities\userManage.ts", "TypeScript", 20, 0, 0, 0, 0, 1, 1, 22
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\domain\repositories\user-manage-repository.ts", "TypeScript", 56, 0, 0, 0, 0, 0, 2, 58
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\infraestructure\services\delete-user.ts", "TypeScript", 16, 0, 0, 0, 0, 0, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\infraestructure\services\get-county.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 3, 22
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\infraestructure\services\get-genders.ts", "TypeScript", 20, 0, 0, 0, 0, 0, 3, 23
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\infraestructure\services\get-roles.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 3, 22
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\infraestructure\services\get-user-by-id.ts", "TypeScript", 38, 0, 0, 0, 0, 0, 3, 41
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\infraestructure\services\get-users.ts", "TypeScript", 39, 0, 0, 0, 0, 1, 3, 43
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\infraestructure\services\save-user.ts", "TypeScript", 22, 0, 0, 0, 0, 8, 5, 35
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\infraestructure\services\update-user.ts", "TypeScript", 22, 0, 0, 0, 0, 8, 5, 35
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\components\app-management-users-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 51, 0, 2, 53
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\components\app-management-users-manager-page.tsx", "TypeScript JSX", 0, 0, 0, 0, 127, 0, 1, 128
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\components\forms\new-user-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 3, 0, 1, 4
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\components\modals\app-edit-user-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 321, 0, 4, 325
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\components\modals\app-new-user-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 308, 1, 4, 313
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\components\tables\app-management-users-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 168, 10, 7, 185
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\hooks\use-delete-user.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\hooks\use-get-county.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\hooks\use-get-genders.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\hooks\use-get-roles.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\hooks\use-get-user-by-id.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\hooks\use-get-users.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\hooks\use-save-user.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 2, 11
+"c:\Users\rober\Desktop\otc-app\src\modules\management-users\web\hooks\use-update-user.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 2, 11
+"c:\Users\rober\Desktop\otc-app\src\modules\request-admin\domain\entities\request-admin.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\rober\Desktop\otc-app\src\modules\request-admin\web\components\app-request-admin-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 36, 4, 1, 41
+"c:\Users\rober\Desktop\otc-app\src\modules\request-admin\web\components\app-request-admin-manager-page.tsx", "TypeScript JSX", 0, 0, 0, 0, 25, 0, 2, 27
+"c:\Users\rober\Desktop\otc-app\src\modules\request-admin\web\components\tables\app-request-admin-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 174, 4, 6, 184
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\domain\entities\historic-position.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 1, 15
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\domain\entities\tracking-detail.ts", "TypeScript", 42, 0, 0, 0, 0, 0, 3, 45
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\domain\entities\tracking.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\domain\repositories\tracking-repository.ts", "TypeScript", 12, 0, 0, 0, 0, 0, 2, 14
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\infraestructure\services\find-historic-position.ts", "TypeScript", 31, 0, 0, 0, 0, 0, 3, 34
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\infraestructure\services\get-tracking-detail.ts", "TypeScript", 20, 0, 0, 0, 0, 1, 3, 24
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\infraestructure\services\get-tracking.ts", "TypeScript", 22, 0, 0, 0, 0, 1, 3, 26
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\app-tracking-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 48, 19, 2, 69
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\app-tracking-manager-page.tsx", "TypeScript JSX", 0, 0, 0, 0, 64, 15, 6, 85
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\maps\map-historic-position.tsx", "TypeScript JSX", 0, 0, 0, 0, 145, 2, 5, 152
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\maps\map-tracking.tsx", "TypeScript JSX", 0, 0, 0, 0, 207, 19, 7, 233
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\maps\markers.tsx", "TypeScript JSX", 0, 0, 0, 0, 59, 3, 3, 65
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\modals\app-historic-position-tab.tsx", "TypeScript JSX", 0, 0, 0, 0, 85, 0, 3, 88
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\modals\app-tracking-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 156, 11, 9, 176
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\tables\app-tracking-detail-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 127, 4, 6, 137
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\components\tables\app-tracking-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 262, 30, 8, 300
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\hooks\use-find-hsitoric-position.ts", "TypeScript", 16, 0, 0, 0, 0, 0, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\hooks\use-get-detail-tracking.ts", "TypeScript", 16, 0, 0, 0, 0, 0, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\tracking\web\hooks\use-get-tracking.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\user\application\services\signin\exceptions\signin-user.exception.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 2, 11
+"c:\Users\rober\Desktop\otc-app\src\modules\user\application\services\signin\signin-user.dto.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\modules\user\application\services\signin\signin-user.service.ts", "TypeScript", 18, 0, 0, 0, 0, 0, 4, 22
+"c:\Users\rober\Desktop\otc-app\src\modules\user\domain\entities\user-role.ts", "TypeScript", 1, 0, 0, 0, 0, 0, 1, 2
+"c:\Users\rober\Desktop\otc-app\src\modules\user\domain\entities\user.ts", "TypeScript", 8, 0, 0, 0, 0, 3, 2, 13
+"c:\Users\rober\Desktop\otc-app\src\modules\user\domain\repositories\user.repository.ts", "TypeScript", 8, 0, 0, 0, 0, 0, 3, 11
+"c:\Users\rober\Desktop\otc-app\src\modules\user\infrastructure\repositories\mia-user.repository.ts", "TypeScript", 42, 0, 0, 0, 0, 35, 16, 93
+"c:\Users\rober\Desktop\otc-app\src\modules\user\infrastructure\user.module.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 3, 12
+"c:\Users\rober\Desktop\otc-app\src\modules\user\web\components\AppUserAuthForm\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 94, 0, 5, 99
+"c:\Users\rober\Desktop\otc-app\src\modules\user\web\components\AppUserAuthPage\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 42, 0, 2, 44
+"c:\Users\rober\Desktop\otc-app\src\modules\user\web\hooks\use-signin.ts", "TypeScript", 8, 0, 0, 0, 0, 0, 4, 12
+"c:\Users\rober\Desktop\otc-app\src\modules\user\web\hooks\use-signout.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 4, 11
+"c:\Users\rober\Desktop\otc-app\src\modules\user\web\hooks\use-user.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 3, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\user\web\user.reducer.ts", "TypeScript", 63, 0, 0, 0, 0, 0, 8, 71
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\domain\entities\victim-by-id.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 1, 20
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\domain\entities\victim.ts", "TypeScript", 20, 0, 0, 0, 0, 0, 1, 21
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\domain\repositories\victim-repository.ts", "TypeScript", 54, 0, 0, 0, 0, 0, 2, 56
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\infraestructure\services\create.victim.ts", "TypeScript", 22, 0, 0, 0, 0, 8, 5, 35
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\infraestructure\services\delete-victim.ts", "TypeScript", 16, 0, 0, 0, 0, 0, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\infraestructure\services\get-victim-by-id.ts", "TypeScript", 39, 0, 0, 0, 0, 0, 3, 42
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\infraestructure\services\get-victims.ts", "TypeScript", 38, 0, 0, 0, 0, 3, 3, 44
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\infraestructure\services\update-victim.ts", "TypeScript", 22, 0, 0, 0, 0, 8, 6, 36
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\web\components\app-victim-table.tsx", "TypeScript JSX", 0, 0, 0, 0, 259, 4, 6, 269
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\web\hooks\use-create-victim.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\web\hooks\use-delete-victim.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\web\hooks\use-get-victim-by-id.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\web\hooks\use-get-victims.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\modules\victim\web\hooks\use-update-victim.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 2, 11
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAlert\AppAlert.tsx", "TypeScript JSX", 0, 0, 0, 0, 54, 0, 3, 57
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAlert\AppAlertCloseButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 16, 2, 3, 21
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAlert\AppAlertContext.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 2, 9
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAlert\AppAlertDescription.tsx", "TypeScript JSX", 0, 0, 0, 0, 12, 0, 3, 15
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAlert\AppAlertIcon.tsx", "TypeScript JSX", 0, 0, 0, 0, 12, 0, 3, 15
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAlert\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 4, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAnimation\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 38, 0, 5, 43
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAside\AppAsideLink.tsx", "TypeScript JSX", 0, 0, 0, 0, 43, 0, 3, 46
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAside\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 134, 24, 8, 166
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAttachment.tsx", "TypeScript JSX", 0, 0, 0, 0, 37, 0, 5, 42
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAuthorizationGuard\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 32, 0, 4, 36
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppAvatar\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 41, 0, 3, 44
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppBackgroundImageMotion\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 48, 0, 4, 52
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppBadge\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 30, 0, 3, 33
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppButtonGroup\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 13, 0, 3, 16
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppButton\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 156, 0, 13, 169
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppCheckbox\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 19, 0, 3, 22
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppDataGrid\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 119, 0, 9, 128
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppDatePicker\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 33, 0, 5, 38
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppFieldViewer\AppFieldViewer.tsx", "TypeScript JSX", 0, 0, 0, 0, 12, 0, 3, 15
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppFieldViewer\AppFieldViewerLabel.tsx", "TypeScript JSX", 0, 0, 0, 0, 15, 0, 3, 18
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppFieldViewer\AppFieldViewerValue.tsx", "TypeScript JSX", 0, 0, 0, 0, 12, 0, 3, 15
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppFieldViewer\index.ts", "TypeScript", 3, 0, 0, 0, 0, 0, 1, 4
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppForm\AppFormContext.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 2, 6
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppForm\AppFormField.tsx", "TypeScript JSX", 0, 0, 0, 0, 19, 0, 3, 22
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppForm\AppFormHelperText.tsx", "TypeScript JSX", 0, 0, 0, 0, 32, 0, 3, 35
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppForm\AppFormLabel.tsx", "TypeScript JSX", 0, 0, 0, 0, 31, 0, 3, 34
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppForm\index.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppHeading\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 36, 4, 5, 45
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppHero\AppHero.tsx", "TypeScript JSX", 0, 0, 0, 0, 28, 0, 2, 30
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppHero\AppHeroActionButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 17, 0, 3, 20
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppHero\AppHeroContent.tsx", "TypeScript JSX", 0, 0, 0, 0, 12, 0, 3, 15
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppHero\index.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 1, 3
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppHomePage\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 45, 11, 4, 60
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppInput\AppInputIcon.tsx", "TypeScript JSX", 0, 0, 0, 0, 19, 0, 3, 22
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppInput\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 50, 0, 6, 56
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppLayout\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 45, 6, 5, 56
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppLiveSearch\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 106, 5, 19, 130
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppLoading\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 7, 0, 2, 9
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMenu\AppMenu.tsx", "TypeScript JSX", 0, 0, 0, 0, 22, 0, 5, 27
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMenu\AppMenuButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 12, 0, 3, 15
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMenu\AppMenuContext.ts", "TypeScript", 8, 0, 0, 0, 0, 0, 2, 10
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMenu\AppMenuItem.tsx", "TypeScript JSX", 0, 0, 0, 0, 30, 0, 3, 33
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMenu\AppMenuList.tsx", "TypeScript JSX", 0, 0, 0, 0, 28, 0, 4, 32
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMenu\index.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMessage\app-message-animation.tsx", "TypeScript JSX", 0, 0, 0, 0, 7, 0, 3, 10
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMessage\app-message-text.tsx", "TypeScript JSX", 0, 0, 0, 0, 12, 0, 3, 15
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMessage\app-message-title.tsx", "TypeScript JSX", 0, 0, 0, 0, 14, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMessage\app-message.tsx", "TypeScript JSX", 0, 0, 0, 0, 14, 0, 2, 16
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppMessage\index.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppModal\AppModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 55, 0, 7, 62
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppModal\AppModalBody.tsx", "TypeScript JSX", 0, 0, 0, 0, 13, 0, 3, 16
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppModal\AppModalCloseButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 16, 0, 2, 18
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppModal\AppModalContent.tsx", "TypeScript JSX", 0, 0, 0, 0, 40, 0, 4, 44
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppModal\AppModalFooter.tsx", "TypeScript JSX", 0, 0, 0, 0, 19, 0, 3, 22
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppModal\AppModalHeader.tsx", "TypeScript JSX", 0, 0, 0, 0, 18, 0, 3, 21
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppModal\AppModalOverlay.tsx", "TypeScript JSX", 0, 0, 0, 0, 9, 0, 3, 12
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppModal\index.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppNotFoundPage\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 16, 6, 1, 23
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppNotification\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 38, 5, 3, 46
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppPageTransition\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 15, 0, 3, 18
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppRadioGroup\AppRadioGroup.tsx", "TypeScript JSX", 0, 0, 0, 0, 29, 0, 3, 32
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppRadioGroup\AppRadioGroupItem.tsx", "TypeScript JSX", 0, 0, 0, 0, 36, 0, 3, 39
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppRadioGroup\app-radio-group-context.ts", "TypeScript", 11, 0, 0, 0, 0, 0, 3, 14
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppRadioGroup\index.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 1, 3
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppRouter\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 32, 4, 4, 40
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppSelect\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 28, 0, 6, 34
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppSheet\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 18, 0, 3, 21
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppSpinner\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 10, 0, 3, 13
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppStepper\app-stepper.tsx", "TypeScript JSX", 0, 0, 0, 0, 132, 0, 20, 152
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppSwal\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 8, 0, 2, 10
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTable\AppTable.tsx", "TypeScript JSX", 0, 0, 0, 0, 11, 0, 3, 14
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTable\AppTbody.tsx", "TypeScript JSX", 0, 0, 0, 0, 6, 0, 3, 9
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTable\AppTd.tsx", "TypeScript JSX", 0, 0, 0, 0, 30, 0, 3, 33
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTable\AppTh.tsx", "TypeScript JSX", 0, 0, 0, 0, 28, 0, 3, 31
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTable\AppThead.tsx", "TypeScript JSX", 0, 0, 0, 0, 9, 0, 3, 12
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTable\AppTr.tsx", "TypeScript JSX", 0, 0, 0, 0, 5, 0, 3, 8
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTable\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 6, 0, 1, 7
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTabs\AppTab.tsx", "TypeScript JSX", 0, 0, 0, 0, 39, 0, 5, 44
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTabs\AppTabList.tsx", "TypeScript JSX", 0, 0, 0, 0, 15, 0, 3, 18
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTabs\AppTabPanel.tsx", "TypeScript JSX", 0, 0, 0, 0, 16, 0, 5, 21
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTabs\AppTabPanels.tsx", "TypeScript JSX", 0, 0, 0, 0, 15, 0, 3, 18
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTabs\AppTabs.tsx", "TypeScript JSX", 0, 0, 0, 0, 26, 0, 3, 29
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTabs\app-tab-mapper.ts", "TypeScript", 23, 0, 0, 0, 0, 0, 3, 26
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTabs\app-tabs-context.ts", "TypeScript", 8, 0, 0, 0, 0, 0, 2, 10
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTabs\index.ts", "TypeScript", 5, 0, 0, 0, 0, 0, 1, 6
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTextField\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 31, 0, 5, 36
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppToast\index.ts", "TypeScript", 17, 0, 0, 0, 0, 0, 2, 19
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppToggleButton\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 24, 0, 4, 28
+"c:\Users\rober\Desktop\otc-app\src\presentation\Components\AppTooltip\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 23, 0, 3, 26
+"c:\Users\rober\Desktop\otc-app\src\presentation\types\UIColorScheme.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\rober\Desktop\otc-app\src\presentation\types\UIVariant.ts", "TypeScript", 1, 0, 0, 0, 0, 0, 1, 2
+"c:\Users\rober\Desktop\otc-app\src\routes.ts", "TypeScript", 71, 0, 0, 0, 0, 1, 2, 74
+"c:\Users\rober\Desktop\otc-app\src\settings.json", "JSON with Comments", 0, 0, 0, 4, 0, 0, 1, 5
+"c:\Users\rober\Desktop\otc-app\src\utils\Units.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 3, 10
+"c:\Users\rober\Desktop\otc-app\src\utils\api.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 1, 20
+"c:\Users\rober\Desktop\otc-app\src\utils\bootstrap.ts", "TypeScript", 5, 0, 0, 0, 0, 0, 3, 8
+"c:\Users\rober\Desktop\otc-app\src\utils\capitalize.ts", "TypeScript", 5, 0, 0, 0, 0, 0, 1, 6
+"c:\Users\rober\Desktop\otc-app\src\utils\check-response.ts", "TypeScript", 11, 0, 0, 0, 0, 0, 3, 14
+"c:\Users\rober\Desktop\otc-app\src\utils\context\app.context.ts", "TypeScript", 3, 0, 0, 0, 0, 0, 2, 5
+"c:\Users\rober\Desktop\otc-app\src\utils\hooks\use-async-state.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 4, 18
+"c:\Users\rober\Desktop\otc-app\src\utils\hooks\use-authorization-guard.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 5, 24
+"c:\Users\rober\Desktop\otc-app\src\utils\hooks\use-authorization.ts", "TypeScript", 21, 0, 0, 0, 0, 0, 5, 26
+"c:\Users\rober\Desktop\otc-app\src\utils\hooks\use-go.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 3, 17
+"c:\Users\rober\Desktop\otc-app\src\utils\hooks\use-margin.ts", "TypeScript", 18, 0, 0, 0, 0, 0, 5, 23
+"c:\Users\rober\Desktop\otc-app\src\utils\hooks\use-store.ts", "TypeScript", 6, 0, 0, 0, 0, 0, 2, 8
+"c:\Users\rober\Desktop\otc-app\src\utils\store.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 3, 12
+"c:\Users\rober\Desktop\otc-app\src\utils\token.ts", "TypeScript", 6, 0, 0, 0, 0, 0, 3, 9
+"c:\Users\rober\Desktop\otc-app\src\vite-env.d.ts", "TypeScript", 0, 0, 0, 0, 0, 1, 1, 2
+"Total", "-", 2754, 836, 23, 4, 11257, 571, 1087, 16532

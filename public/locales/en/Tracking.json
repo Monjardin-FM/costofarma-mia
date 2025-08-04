@@ -1,0 +1,18 @@
+{
+  "TrackingTitle": "Tracking",
+  "TrackingInactiveTitle": "Tracking Inactive Defendants",
+  "PlaceholderSearch": "Defendant name",
+  "TooltipTracking": "Tracking",
+  "NameTrackingColumn": "Name",
+  "TamperingTrackingColumn": "Tampering",
+  "BatteryTrackingColumn": "Battery",
+  "ExclusionTrackingColumn": "Exclusion",
+  "PerimeterTrackingColumn": "Perimeter",
+  "PositionTrackingColumn": "Time out",
+  "ProximityTrackingColumn": "Proximity",
+  "ActionsColumn": "Actions",
+  "NotificationLabel": "Notifications",
+  "TabNewNotes": "New Notes",
+  "TabReadNotes": "Read Notes",
+  "LabelOfficer": "Officer: "
+}

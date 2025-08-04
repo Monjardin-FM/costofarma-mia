@@ -1,0 +1,18 @@
+{
+  "TrackingTitle": "Seguimiento",
+  "TrackingInactiveTitle": "Seguimiento de Atacantes Inactivos",
+  "PlaceholderSearch": "Nombre del acusado",
+  "TooltipTracking": "Seguimiento",
+  "NameTrackingColumn": "Nombre",
+  "TamperingTrackingColumn": "Manipulación",
+  "BatteryTrackingColumn": "Batería",
+  "ExclusionTrackingColumn": "Exclusión",
+  "PerimeterTrackingColumn": "Perímetro",
+  "PositionTrackingColumn": "Desconexión",
+  "ProximityTrackingColumn": "Proximidad",
+  "ActionsColumn": "Acciones",
+  "NotificationLabel": "Notificaciones",
+  "TabNewNotes": "Nuevas Notas",
+  "TabReadNotes": "Notas Leídas",
+  "LabelOfficer": "Oficial: "
+}
