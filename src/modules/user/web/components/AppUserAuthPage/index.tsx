@@ -13,7 +13,7 @@ export const AppUserAuth = () => {
   return (
     <>
       {user ? (
-        <Navigate to="/tracking" />
+        <Navigate to="/" />
       ) : (
         <AppPageTransition>
           <div className="flex min-h-screen min-w-full">
@@ -27,7 +27,7 @@ export const AppUserAuth = () => {
                     <img
                       className="mx-auto w-48"
                       src={CostoFarmaLogo}
-                      alt="OTC Logo"
+                      alt="CostoFarma Logo"
                     />
                     <div className="text-primary-900 text-center text-lg">
                       {t("Welcome")}

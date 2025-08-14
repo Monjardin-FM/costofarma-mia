@@ -7,7 +7,6 @@ import { IRoute } from "../AppRouter";
 import { useMargin } from "../../../utils/hooks/use-margin";
 import { useUser } from "../../../modules/user/web/hooks/use-user";
 import * as Icon from "react-feather";
-import { AppAlertButton } from "../../../modules/alert-button/web/components/app-alert-button";
 export type AppLayoutProps = {
   routes?: IRoute[];
 };
@@ -34,7 +33,7 @@ export const AppLayout = () => {
             >
               <Icon.Menu size={20} />
             </button>
-            <AppAlertButton />
+            {/* <AppAlertButton /> */}
             <AppAsideV2
               isVisible={on}
               onClose={() => {
@@ -42,12 +41,6 @@ export const AppLayout = () => {
               }}
             />
             <Outlet />
-            {/* <div
-              className="w-full min-h-screen bg-gray-50 bg-opacity-50 pb-5
-          "
-            >
-              <AppRouter routes={routes} />
-            </div> */}
           </AppPageTransition>
         </div>
       )}

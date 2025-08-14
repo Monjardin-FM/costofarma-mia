@@ -1,44 +1,171 @@
 {
-  "alarm.config.managerPage.authorization": [
-    "County Administrator",
-    "OTC Administrator"
+  "order.remove-item.authorization": ["admin", "shopper", "operator"],
+  "order.cancelation.authorization": ["operator"],
+  "order.update.authorization": [
+    "admin",
+    "finances",
+    "operator",
+    "regulatory_manager",
+    "shopper",
+    "storage"
   ],
-  "devices.managerPage.authorization": [
-    "County Administrator",
-    "OTC Administrator"
+  "provider.change.authorization": ["admin", "shopper"],
+  "provider.managementPage.authorization": ["admin", "finances"],
+  "downloadButton.provider.managementPage.authorization": [
+    "admin",
+    "regulatory_download_reports"
   ],
-  "defendants.managerPage.authorization": [
-    "County Administrator",
-    "OTC Administrator",
-    "Chief Officer",
-    "County Director",
-    "Monitoring Center Supervisor",
-    "Officer"
+  "client.managementPage.authorization": ["admin", "shopper"],
+  "order.searchOrderPage.authorization": [
+    "admin",
+    "customer",
+    "finances",
+    "operator",
+    "regulatory_manager",
+    "shopper",
+    "storage",
+    "order_gestor",
+    "licitacion_gestor"
   ],
-  "userManagement.managerPage.authorization": [
-    "County Administrator",
-    "OTC Administrator",
-    "Chief Officer",
-    "County Director",
-    "Monitoring Center Supervisor",
-    "Officer"
+  "purchaseOrders.managerPage.authorization": ["admin", "shopper"],
+  "quote.quotePage.authorization": [
+    "admin",
+    "finances",
+    "operator",
+    "regulatory_manager",
+    "shopper",
+    "cotizador"
   ],
-  "tracking.managerPage.authorization": [
-    "County Administrator",
-    "OTC Administrator",
-    "Chief Officer",
-    "County Director",
-    "Monitoring Center Agent",
-    "Monitoring Center Supervisor",
-    "Officer"
+  "government.managerPage.authorization": [
+    "admin",
+    "government_reader",
+    "government_editor"
   ],
-  "tracking.inactive.defendants.managerPage.authorization": [
-    "County Administrator",
-    "OTC Administrator",
-    "Chief Officer",
-    "County Director",
-    "Monitoring Center Agent",
-    "Monitoring Center Supervisor",
-    "Officer"
+  "changePrices.managerPage.authorization": ["admin", "shopper"],
+  "salesImport.managerPage.authorization": ["admin", "pharmacy_sells"],
+  "inventory.managerPage.authorization": [
+    "admin",
+    "inventory_manager",
+    "gestor_inventory",
+    "admin_store"
+  ],
+  "permissionManagement.managerPage.authorization": [
+    "admin",
+    "permission_manager"
+  ],
+  "product.managerPage.authorization": ["admin", "shopper", "admin_products"],
+  "order.searchOrderPurchase.authorization": ["admin", "shopper"],
+  "purchase.createPage.authorization": [
+    "admin",
+    "operator",
+    "customer",
+    "licitacion_gestor"
+  ],
+  "prescription.managerPage.authorization": ["admin", "regulatory_manager"],
+  "purchase.managerPage.authorization": ["admin", "shopper", "admin_purchase"],
+  "purchaseFM.managerPage.authorization": [
+    "admin",
+    "shopper",
+    "admin_purchase"
+  ],
+  "receipt.managerPage.authorization": ["admin", "storage"],
+  "consolidatedAgreements.managerPage.authorization": [
+    "admin",
+    "operations",
+    "operator"
+  ],
+  "receptionProducts.managerPage.authorization": [
+    "admin",
+    "operations",
+    "operator"
+  ],
+  "costBalance.managerPage.authorization": ["admin", "finances", "shopper"],
+  "order.cancelPage.authorization": ["admin", "operator"],
+  "reportInventary.page.authorization": [
+    "admin",
+    "operator",
+    "finances",
+    "shopper",
+    "regulatory_manager"
+  ],
+  "reportInventaryDistributor.page.authorization": [
+    "admin",
+    "operator",
+    "finances",
+    "shopper",
+    "regulatory_manager",
+    "regulatory_manager_distributor"
+  ],
+  "product.uploadPage.authorization": ["admin", "shopper"],
+  "shoppingCart.managerPage": ["admin", "operator", "customer"],
+  "supply.products.authorization": ["admin", "high_supply_gestor"],
+  "masterOrder.managementPage.authorization": ["admin", "admin_master_order"],
+  "masterOrder.provider.supply.authorization": [
+    "admin",
+    "admin_supply_master_order"
+  ],
+  "masterOrder.manufacture.authorization": [
+    "admin",
+    "admin_manufacture_master_order"
+  ],
+  "masterOrder.process.authorization": ["admin", "high_supply_gestor"],
+
+  "portfolio.validationMandate": [
+    [
+      "BANRURAL",
+      [
+        "Acuse de recibo firmado",
+        "Orden de farmacia",
+        "Identificación oficial",
+        "Guía",
+        "Acuse de entrega de paquetería",
+        "Soporte de autorización"
+      ]
+    ],
+    [
+      "SOCIEDAD HIPOTECARIA FEDERAL",
+      [
+        "Acuse de recibo firmado",
+        "Orden de farmacia",
+        "Credencial del servicio médico",
+        "Guía (en caso de ser foráneo)",
+        "Acuse de entrega de paquetería (en caso de ser foráneo)",
+        "Soporte de autorización"
+      ]
+    ],
+    [
+      "LUZ Y FUERZA",
+      [
+        "Acuse de recibo firmado",
+        "Orden de farmacia",
+        "Identificación oficial",
+        "Guía (en caso de ser foráneo)",
+        "Acuse de entrega de paquetería (en caso de ser foráneo)",
+        "Soporte de autorización"
+      ]
+    ],
+    [
+      "INSTITUTO PARA DEVOLVERLE",
+      [
+        "Acuse de recibo firmado",
+        "Orden de farmacia",
+        "Identificación oficial",
+        "Guía. (en caso de ser foráneo)",
+        "Acuse de entrega de paquetería. (en caso de ser foráneo)",
+        "Soporte de autorización"
+      ]
+    ],
+
+    [
+      "SISNOVA",
+      [
+        "Carta de autorización",
+        "Correo de autorización",
+        "Guía (en caso de ser foráneo)",
+        "Acuse de entrega"
+      ]
+    ],
+    ["SOFIA", ["Correo de autorización", "Acuse de entrega"]],
+    ["SURA", ["Carta de autorización", "Evidencia", "Acuse de entrega", "Guía"]]
   ]
 }
