@@ -1,35 +1,60 @@
-import React, { useContext } from "react";
 import clsx from "clsx";
-import { AppInput, AppInputProps } from "../AppInput";
-import { AppFormContext } from "../AppForm";
 
-export type AppTextFieldProps = Omit<
-  React.ComponentPropsWithoutRef<"input">,
-  "children" | "className"
-> &
-  AppInputProps;
+export type AppTextFieldProps = {
+  placeholder: string;
+  maxLength?: number;
+  dataOpenCard?: any;
+  name: string;
+  onChange: (e: any) => void;
+  value: any;
+  className: string;
+  disabled?: boolean;
+  type?: string;
+  onBlur?: any;
+  onFocus?: any;
+  inputMode?:
+    | "decimal"
+    | "email"
+    | "numeric"
+    | "search"
+    | "tel"
+    | "text"
+    | "url";
+};
 
-const AppTextField = ({
-  required,
-  type = "text",
+export const AppTextField = ({
+  placeholder,
+  dataOpenCard,
+  name,
+  onChange,
+  value,
   className,
-  onWheel,
-  ...props
+  disabled = false,
+  type = "text",
+  onBlur,
+  onFocus,
+  inputMode,
+  maxLength,
 }: AppTextFieldProps) => {
-  const { isRequired } = useContext(AppFormContext);
-
   return (
     <input
+      onFocus={onFocus}
+      onBlur={onBlur}
+      disabled={disabled}
+      min={0}
       type={type}
-      required={isRequired || required}
-      className={clsx("form-input", className)}
-      onWheel={(event) => {
-        if (onWheel) onWheel(event);
-        else if (type === "number") event.currentTarget.blur();
-      }}
-      {...props}
+      placeholder={placeholder}
+      autoComplete="off"
+      data-openpay-card={dataOpenCard}
+      name={name}
+      value={value}
+      onChange={onChange}
+      maxLength={maxLength}
+      className={clsx(
+        className,
+        "h-9 rounded-md border border-gray-300 p-2 text-base text-gray-600 font-normal max-sm:text-xs"
+      )}
+      inputMode={inputMode}
     />
   );
 };
-
-export default AppInput(AppTextField);

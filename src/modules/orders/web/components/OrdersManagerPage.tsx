@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { useToggle } from "react-use";
 import { ModalResultPerson } from "./modals/ModalResultPerson";
 import { useGetOrderPerson } from "../hooks/use-get-order-person";
+import { OrderPersonTableResult } from "./table/OrderPersonTableResult";
+import { ModalPayment } from "./modals/modalPayment";
 export const OrdersManagerPage = () => {
   const navigate = useNavigate();
   const { getPerson, person } = useGetPerson();
@@ -17,6 +19,7 @@ export const OrdersManagerPage = () => {
   const [search, setSearch] = useState<string>("");
   const [togglemodaResultPerson, setModalResultPerson] = useToggle(false);
   const [idPerson, setIdPerson] = useState(0);
+  const [modalPayment, setModalPayment] = useToggle(false);
   const onSearch = (search: string) => {
     getPerson({ rfc: search });
   };
@@ -28,14 +31,19 @@ export const OrdersManagerPage = () => {
       return () => clearTimeout(timeDelay);
     }
   }, [search]);
-  const onSearchOrderPerson = () => {
-    getOrderPerson({ idPerson: idPerson });
+  const onSearchOrderPerson = async () => {
+    await getOrderPerson({ idPerson: idPerson });
   };
   useEffect(() => {
     if (person) {
       setModalResultPerson(true);
     }
   }, [person]);
+  useEffect(() => {
+    if (idPerson) {
+      getOrderPerson({ idPerson: idPerson });
+    }
+  }, [idPerson]);
   return (
     <AppAuthorizationGuard
       redirect={{ to: "/" }}
@@ -49,6 +57,12 @@ export const OrdersManagerPage = () => {
         isVisible={togglemodaResultPerson}
         onClose={() => setModalResultPerson(false)}
         onSearchOrderPerson={onSearchOrderPerson}
+      />
+      <ModalPayment
+        isVisible={modalPayment}
+        onClose={() => {
+          setModalPayment(false);
+        }}
       />
       <AppPageTransition>
         <div className="items-center mx-auto mb-5">
@@ -71,9 +85,14 @@ export const OrdersManagerPage = () => {
               </Button>
             </div>
             <div className="mt-5 flex flex-col items0center w-full justify-center gap-5 mb-10">
-              <div className="w-full container">
-                {orderPerson &&
-                  orderPerson.map((item) => <span>{item.folio}</span>)}
+              <div className="w-full container mx-auto">
+                <OrderPersonTableResult
+                  onPay={() => {
+                    setModalPayment(true);
+                  }}
+                  onView={() => {}}
+                  items={orderPerson}
+                />
               </div>
             </div>
           </section>

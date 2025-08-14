@@ -17,7 +17,7 @@ export const getMunicipiosService: AddressRepository["getMunicipios"] = async (
   const { body } = await verifyResponse({ response });
   const data = body.data.municipio as any[];
   const municipios = data.map<Municipio>((municipio) => ({
-    idMunicipio: municipio.idEstado,
+    idMunicipio: municipio.idMunicipio,
     descripcion: municipio.descripcion,
   }));
   return municipios;

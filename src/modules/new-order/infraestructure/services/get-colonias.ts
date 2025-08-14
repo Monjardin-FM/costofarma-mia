@@ -14,7 +14,7 @@ export const getColoniasService: AddressRepository["getColonias"] = async (
     },
     searchParams: {
       idMunicipio: params.idMunicipio,
-      codigopostal: params.codigoPostal,
+      codigoPostal: params.codigoPostal,
     },
   });
   const { body } = await verifyResponse({ response });

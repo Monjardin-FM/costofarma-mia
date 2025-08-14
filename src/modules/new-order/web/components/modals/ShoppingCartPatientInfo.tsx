@@ -20,7 +20,7 @@ export type ShoppingCartPatientInfoValues = {
   paterno: string;
   materno: string;
   Calle: string;
-  Colonia: string;
+  Colonia?: string;
   Municipio: number;
   Estado: number;
   CP: string;
@@ -32,33 +32,38 @@ export type ShoppingCartPatientInfoValues = {
 export type ShoppingCartAddressProps = {
   isVisible?: boolean;
   onClose?: () => void;
+  patientFormValues: ShoppingCartPatientInfoValues;
+  setPatientFormValues: (values: ShoppingCartPatientInfoValues) => void;
 };
 export const ShoppingCartPatientInfo = ({
   isVisible,
   onClose,
+  setPatientFormValues,
+  patientFormValues,
 }: ShoppingCartAddressProps) => {
   const { getMunicipios, municipios } = useGetMunicipios();
   const { getEstados, estados } = useGetEstados();
   const { colonias, getColonias } = useGetColonias();
 
   const initialValues: ShoppingCartPatientInfoValues = {
-    rfc: "",
-    nombre: "",
-    paterno: "",
-    materno: "",
-    Calle: "",
-    Colonia: "",
-    Municipio: 0,
-    Estado: 0,
-    CP: "",
-    Referencia1: "",
-    Referencia2: "",
-    Telefono: "",
-    Mail: "",
+    rfc: patientFormValues.rfc ?? "",
+    nombre: patientFormValues.nombre ?? "",
+    paterno: patientFormValues.paterno ?? "",
+    materno: patientFormValues.materno ?? "",
+    Calle: patientFormValues.Calle ?? "",
+    Colonia: patientFormValues.Colonia ?? "",
+    Municipio: patientFormValues.Municipio ?? 0,
+    Estado: patientFormValues.Estado ?? 0,
+    CP: patientFormValues.CP ?? "",
+    Referencia1: patientFormValues.Referencia1 ?? "",
+    Referencia2: patientFormValues.Referencia2 ?? "",
+    Telefono: patientFormValues.Telefono ?? "",
+    Mail: patientFormValues.Mail ?? "",
   };
   useEffect(() => {
     getEstados();
   }, []);
+
   return (
     <Modal
       isOpen={isVisible}
@@ -97,16 +102,22 @@ export const ShoppingCartPatientInfo = ({
                   }
                 }, [values.Estado, setFieldValue]);
                 useEffect(() => {
-                  if (values.Municipio > 0) {
+                  if (
+                    values.Municipio > 0 &&
+                    values.CP.length === 5
+                    // values.CP.trim() !== ""
+                  ) {
                     getColonias({
-                      idMunicipio: values.Estado,
+                      idMunicipio: Number(values.Municipio),
                       codigoPostal: values.CP,
                     });
                   } else {
-                    // setMunicipios([]);
                     setFieldValue("Colonia", 0);
                   }
                 }, [values.Municipio, values.CP, setFieldValue]);
+                useEffect(() => {
+                  console.log(values);
+                }, [values]);
                 return (
                   <Form onSubmit={handleSubmit} autoComplete="off ">
                     <ModalHeader>Información del Paciente</ModalHeader>
@@ -159,13 +170,6 @@ export const ShoppingCartPatientInfo = ({
                           type="text"
                           onChange={handleChange}
                         />
-                        <Input
-                          className="col-span-2"
-                          label="Colonia"
-                          name="Colonia"
-                          value={values.Colonia}
-                          onChange={handleChange}
-                        />
 
                         {/* Estado */}
                         <AppFormField className="col-span-2">
@@ -192,13 +196,9 @@ export const ShoppingCartPatientInfo = ({
                             name="Municipio"
                             value={values.Municipio}
                             onChange={handleChange}
-                            disabled={municipios && municipios.length === 0}
+                            // disabled={municipios && municipios.length === 0}
                           >
-                            <option value="">
-                              {municipios && municipios.length === 0
-                                ? "Selecciona un estado"
-                                : "Selecciona un municipio"}
-                            </option>
+                            <option value="">Selecciona un municipio</option>
                             {municipios?.map((municipio) => (
                               <option
                                 key={municipio.idMunicipio}
@@ -221,7 +221,7 @@ export const ShoppingCartPatientInfo = ({
                         <AppFormField className="col-span-2">
                           <AppSelect
                             name="Colonia"
-                            value={values.Municipio}
+                            value={values.Colonia}
                             onChange={handleChange}
                             disabled={colonias && colonias.length === 0}
                           >
@@ -233,7 +233,7 @@ export const ShoppingCartPatientInfo = ({
                             {colonias?.map((colonia) => (
                               <option
                                 key={colonia.idColonia}
-                                value={colonia.idColonia}
+                                value={colonia.descripcion}
                               >
                                 {colonia.descripcion}
                               </option>
@@ -280,7 +280,15 @@ export const ShoppingCartPatientInfo = ({
                       >
                         Cancelar
                       </Button>
-                      <Button color="primary">Guardar</Button>
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          setPatientFormValues(values);
+                          onClose();
+                        }}
+                      >
+                        Guardar
+                      </Button>
                     </ModalFooter>
                   </Form>
                 );

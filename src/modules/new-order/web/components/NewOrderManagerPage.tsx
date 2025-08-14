@@ -17,7 +17,11 @@ import { useToggle } from "react-use";
 import { AppToast } from "../../../../presentation/Components/AppToast";
 import * as Icon from "react-feather";
 import { ShoppingCartViewer } from "./modals/ShoppingCartViewer";
-import { ShoppingCartPatientInfo } from "./modals/ShoppingCartPatientInfo";
+import {
+  ShoppingCartPatientInfo,
+  ShoppingCartPatientInfoValues,
+} from "./modals/ShoppingCartPatientInfo";
+import { ShoppingCartConfirmOrder } from "./modals/ShoppingCartConfirmOrder";
 export type ShoppingCartFormMode = "create" | "update";
 
 export const NewOrderManagerPage = () => {
@@ -30,12 +34,11 @@ export const NewOrderManagerPage = () => {
   const [shoppingCartIndex, setShoppingCartIndex] = useState<number | null>(
     null
   );
+  const [confirmOrderModal, setConfirmOrderModal] = useToggle(false);
   const [onShoppingCartViewer, toggleShoppingCartViewer] = useToggle(false);
   const [onCustomerForm, toggleCustomerForm] = useToggle(false);
-
   const {
     addItem: addItemToShoppingCart,
-
     updateItem,
     cart: shoppingCartItems,
     // removeItem,
@@ -46,7 +49,22 @@ export const NewOrderManagerPage = () => {
   const [shoppingCartFormMode, setShoppingCartFormMode] =
     useState<ShoppingCartFormMode>("create");
   const rowsPerPage = 10;
-
+  const [patientFormValues, setPatientFormValues] =
+    useState<ShoppingCartPatientInfoValues>({
+      rfc: "",
+      nombre: "",
+      paterno: "",
+      materno: "",
+      Calle: "",
+      Colonia: "",
+      Municipio: 0,
+      Estado: 0,
+      CP: "",
+      Referencia1: "",
+      Referencia2: "",
+      Telefono: "",
+      Mail: "",
+    });
   const onSelectShoppingCartItem = (index: number) => {
     const shoppigCartItem = shoppingCartItems[index];
     if (shoppigCartItem) {
@@ -173,6 +191,17 @@ export const NewOrderManagerPage = () => {
       <ShoppingCartPatientInfo
         isVisible={onCustomerForm}
         onClose={() => toggleCustomerForm(false)}
+        patientFormValues={patientFormValues}
+        setPatientFormValues={setPatientFormValues}
+      />
+      {/* Modal para confirmar pedido */}
+      <ShoppingCartConfirmOrder
+        isVisible={confirmOrderModal}
+        onClose={() => {
+          setConfirmOrderModal(false);
+        }}
+        items={shoppingCartItems}
+        patientInfo={patientFormValues}
       />
       <AppPageTransition>
         <div className="items-center mx-auto mb-5">
@@ -190,36 +219,55 @@ export const NewOrderManagerPage = () => {
                   </div>
                 )}
                 <div className="group relative inline-block text-center">
-                  <Tooltip content="Ver Carrito de Compra" color="primary">
+                  <Tooltip
+                    content="Ver Carrito de Compra"
+                    color="primary"
+                    disableAnimation
+                  >
                     <Button
                       onClick={() => toggleShoppingCartViewer(true)}
                       title="Ver carrito de compra"
                       type="button"
-                      size="sm"
+                      size="md"
+                      isIconOnly
                     >
-                      <Icon.ShoppingCart size={20} />
+                      <Icon.ShoppingCart size={18} />
                     </Button>
                   </Tooltip>
                 </div>
               </div>
-              <Button
-                variant="shadow"
-                size="sm"
-                color="default"
-                startContent={<User size={15} />}
-                onClick={() => {
-                  toggleCustomerForm(true);
-                }}
+              <Tooltip
+                content="Información del paciente"
+                color="primary"
+                disableAnimation
               >
-                Paciente
-              </Button>
-              <Tooltip content="Guardar pedido" color="primary">
-                <Button isIconOnly size="sm" color="primary">
+                <Button
+                  variant="shadow"
+                  size="md"
+                  color="default"
+                  startContent={<User size={18} />}
+                  onClick={() => {
+                    toggleCustomerForm(true);
+                  }}
+                  isIconOnly
+                ></Button>
+              </Tooltip>
+              <Tooltip
+                content="Guardar pedido"
+                color="primary"
+                disableAnimation
+              >
+                <Button
+                  isIconOnly
+                  size="md"
+                  color="primary"
+                  onClick={() => setConfirmOrderModal(true)}
+                >
                   <Icon.Save size={18} />
                 </Button>
               </Tooltip>
             </div>
-            <div className="mt-5 flex flex-col items0center w-full justify-center gap-5 mb-10">
+            <div className="mt-5 flex flex-col items-center w-full justify-center gap-5 mb-10">
               <div className="w-full container">
                 <NewOrderTable onAdd={onAddHandler} items={data} />
               </div>

@@ -1,0 +1,37 @@
+.card-item__side {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 16px 0 rgba(14, 42, 84, 0.55);
+  transform: perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg);
+  transform-style: preserve-3d;
+  transition: all 0.8s cubic-bezier(0.42, 0, 0, 1.05);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  height: 100%;
+}
+.card-item__side.-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg);
+  z-index: 2;
+  padding: 0;
+  height: 100%;
+}
+.card-item__side.-back .card-item__cover {
+  transform: rotateY(-180deg);
+}
+
+.rotateCard {
+  rotate: y 180deg;
+  border-color: #758;
+  opacity: 0;
+}
+.duration {
+  transition-duration: 500ms;
+  opacity: 100;
+}
+.items-rotate {
+  transform: rotateY(-180deg);
+}
