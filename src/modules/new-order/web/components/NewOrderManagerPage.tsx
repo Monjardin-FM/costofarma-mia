@@ -246,6 +246,7 @@ export const NewOrderManagerPage = () => {
             onSearch={onSearch}
             search={search}
             setSearch={setSearch}
+            mode="new"
           />
           <section className="container px-4 mt-12 pb-16 mx-auto">
             <div className="flex justify-end gap-2">

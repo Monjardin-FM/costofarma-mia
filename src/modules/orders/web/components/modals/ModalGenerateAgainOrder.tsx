@@ -10,6 +10,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Tooltip,
 } from "@nextui-org/react";
 import { OrderDetail } from "../../../domain/entities/OrderDetail";
 import { FormInfoClient } from "../../../../new-order/web/components/forms/FormInfoClient";
@@ -17,6 +18,11 @@ import { ShoppingCartPatientInfoValues } from "../../../../new-order/web/compone
 import React, { useEffect, useState } from "react";
 import { useReloadOrder } from "../../hooks/use-reload-order";
 import { AppToast } from "../../../../../presentation/Components/AppToast";
+import { ModalAddProduct } from "./ModalAddProduct";
+import { useToggle } from "react-use";
+import * as Icon from "react-feather";
+import { Product } from "../../../../new-order/domain/entities/product";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type ModalGenerateAgainOrderProps = {
   isVisible: boolean;
@@ -34,6 +40,8 @@ export const ModalGenerateAgainOrder = ({
 }: ModalGenerateAgainOrderProps) => {
   const [itemsList, setItems] = useState<OrderDetail[]>(items);
   const { reloadOrder, loading, error } = useReloadOrder();
+  const [modalAddProduct, toggleModalAddProduct] = useToggle(false);
+  const [animation] = useAutoAnimate();
   const [patientFormValues, setPatientFormValues] =
     useState<ShoppingCartPatientInfoValues>({
       rfc: "",
@@ -50,8 +58,27 @@ export const ModalGenerateAgainOrder = ({
       Telefono: "",
       Mail: "",
     });
-
-  const onReloadHandle = async () => {
+  const onAddHandler = (product: Product) => {
+    if (itemsList.some((item) => item.idProducto === product.idProducto)) {
+      AppToast().fire({
+        title: "Producto ya agregado",
+        text: "Este producto ya lo agregaste a la lista",
+        icon: "warning",
+      });
+      return;
+    }
+    setItems((prevItems) => [...prevItems, { ...product, cantidad: 1 }]);
+    AppToast().fire({
+      title: "Producto agregado",
+      text: "Producto agregado a la lista",
+      icon: "success",
+    });
+  };
+  const onDeleteHandler = (index: number) => {
+    const filteredItems = itemsList.filter((item) => item.idProducto !== index);
+    setItems(filteredItems);
+  };
+  const onReloadHandler = async () => {
     await reloadOrder(
       {
         direccion: {
@@ -137,8 +164,8 @@ export const ModalGenerateAgainOrder = ({
     }
   }, [error]);
   useEffect(() => {
-    setItems(items);
-  }, [items]);
+    if (isVisible) setItems(items);
+  }, [isVisible]);
   return (
     <Modal
       isOpen={isVisible}
@@ -148,52 +175,102 @@ export const ModalGenerateAgainOrder = ({
       scrollBehavior="outside"
       isDismissable={false}
     >
+      <ModalAddProduct
+        isVisible={modalAddProduct}
+        onClose={() => toggleModalAddProduct(false)}
+        onAdd={(product) => onAddHandler(product)}
+      />
       <ModalContent>
         {(onClose) => (
           <>
             <ModalHeader>Generar pedido</ModalHeader>
             <ModalBody>
               <div className="grid grid-cols-12 w-full gap-3">
+                <div className="col-span-12 flex items-center justify-start gap-3">
+                  <Tooltip
+                    content="Agregar productos"
+                    color="primary"
+                    disableAnimation
+                  >
+                    <Button
+                      isIconOnly
+                      color="primary"
+                      onClick={() => toggleModalAddProduct(true)}
+                    >
+                      {" "}
+                      <Icon.PlusCircle size={18} />{" "}
+                    </Button>
+                  </Tooltip>
+                  <Tooltip
+                    content="Resetear productos"
+                    color="foreground"
+                    disableAnimation
+                  >
+                    <Button
+                      isIconOnly
+                      color="default"
+                      onClick={() => setItems(items)}
+                    >
+                      <Icon.RefreshCw size={18} />
+                    </Button>
+                  </Tooltip>
+                </div>
                 <Card className="bg-warn-50 col-span-6">
-                  <CardBody className="flex flex-col items-start justify-start gap-3 ">
-                    {itemsList.length > 0 &&
-                      itemsList.map((item, index) => (
-                        <React.Fragment key={item.idProducto}>
-                          <div className="grid grid-cols-12 w-full">
-                            <div className="col-span-12  grid grid-cols-12">
-                              <span className="font-semibold text-gray-800 col-span-7">
-                                {item.descripcion}
-                              </span>
-                              <div className="col-span-5 flex items-center justify-between gap-2">
-                                <div>
-                                  <Input
-                                    type="number"
-                                    min={1}
-                                    value={item.cantidad.toString()}
-                                    onChange={(e) =>
-                                      handleCantidadChange(
-                                        index,
-                                        Number(e.target.value)
-                                      )
-                                    }
-                                    className="w-24 text-right"
-                                    endContent="pzas."
-                                  />
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <span>{`x $${item.precio.toFixed(
-                                    2
-                                  )} = `}</span>
-                                  <Chip color="warning" variant="shadow">
-                                    ${(item.precio * item.cantidad).toFixed(2)}
-                                  </Chip>
+                  <CardBody>
+                    <div
+                      className="flex flex-col items-start justify-start gap-3"
+                      ref={animation}
+                    >
+                      {itemsList.length > 0 &&
+                        itemsList.map((item, index) => (
+                          <React.Fragment key={item.idProducto}>
+                            <div className="grid grid-cols-12 w-full">
+                              <div className="col-span-12  grid grid-cols-12">
+                                <span className="col-span-6 font-semibold text-gray-800  text-sm flex items-center justify-start">
+                                  {item.descripcion}
+                                </span>
+                                <div className="col-span-6 flex items-center justify-between gap-2">
+                                  <div>
+                                    <Input
+                                      type="number"
+                                      min={1}
+                                      value={item.cantidad.toString()}
+                                      onChange={(e) =>
+                                        handleCantidadChange(
+                                          index,
+                                          Number(e.target.value)
+                                        )
+                                      }
+                                      className="w-24 text-right text-xs"
+                                      endContent="pzas."
+                                    />
+                                  </div>
+                                  <div className="flex items-center gap-2 text-sm">
+                                    <span>{`x $${item.precio.toFixed(
+                                      2
+                                    )} = `}</span>
+                                    <Chip color="warning" variant="shadow">
+                                      $
+                                      {(item.precio * item.cantidad).toFixed(2)}
+                                    </Chip>
+                                    <Button
+                                      isIconOnly
+                                      variant="faded"
+                                      color="danger"
+                                      onClick={() => {
+                                        onDeleteHandler(item.idProducto);
+                                      }}
+                                    >
+                                      <Icon.Trash2 size={18} />
+                                    </Button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <Divider />
-                        </React.Fragment>
-                      ))}
+                            <Divider />
+                          </React.Fragment>
+                        ))}
+                    </div>
                   </CardBody>
 
                   {/* total */}
@@ -231,7 +308,7 @@ export const ModalGenerateAgainOrder = ({
               <Button
                 color="primary"
                 onClick={() => {
-                  onReloadHandle();
+                  onReloadHandler();
                 }}
                 className=""
                 size="md"

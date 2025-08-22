@@ -6,4 +6,5 @@ export type Product = {
   precio: number;
   requiereReceta: boolean;
   idOrdenDetalle: number;
+  activo: boolean;
 };
