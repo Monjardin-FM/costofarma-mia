@@ -12,7 +12,7 @@ export const getOrderDetailService: OrderRepository["getOrderDetail"] = async (
       Authorization: `Bearer ${token()}`,
       "Content-Type": "application/json",
     },
-    searchParams: params.idOrden.toString(),
+    searchParams: { idOrder: params.idOrder.toString() },
   });
   const { body } = await verifyResponse({ response });
   const data = body.data as any[];

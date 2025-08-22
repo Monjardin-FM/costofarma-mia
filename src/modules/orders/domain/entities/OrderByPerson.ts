@@ -1,6 +1,6 @@
 import { Product } from "../../../new-order/domain/entities/product";
 
-export type OrdenPerson = {
+export type OrderByPerson = {
   folio: string;
   idOrden: number;
   fechaCreacion: string;

@@ -1,4 +1,5 @@
 import { NewOrderManagerPage } from "./modules/new-order/web/components/NewOrderManagerPage";
+import { OrderDetailManagerPage } from "./modules/orders/web/components/OrderDetailManagerPage";
 import { OrdersManagerPage } from "./modules/orders/web/components/OrdersManagerPage";
 import { AppUserAuth } from "./modules/user/web/components/AppUserAuthPage";
 import { AppHomePage } from "./presentation/Components/AppHomePage";
@@ -29,6 +30,11 @@ export const routes: IRoute[] = [
         component: OrdersManagerPage,
       },
       { key: "new-order", path: "/new-order", component: NewOrderManagerPage },
+      {
+        key: "order-detail",
+        path: "/orders/:id/:idpersona",
+        component: OrderDetailManagerPage,
+      },
     ],
   },
   {

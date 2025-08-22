@@ -41,6 +41,10 @@ export const OrdersHeader = ({
             onChange={(e) => {
               setSearch(e.target.value);
             }}
+            isClearable={true}
+            onClear={() => {
+              setSearch("");
+            }}
           />
           <Button variant="shadow" color="primary" size="md" type="submit">
             Buscar

@@ -11,7 +11,7 @@ import * as Icon from "react-feather";
 
 export type NewOrderTableProps = {
   items?: Product[];
-  onAdd: (index: number) => void;
+  onAdd: (params: RenderFnParams<Product>) => void;
 };
 
 const getRandomColorSchema = (params: { length: number }) => {
@@ -53,22 +53,23 @@ const NameProductColumn = (params: RenderFnParams<Product>) => {
 
 const PriceColumn = (params: RenderFnParams<Product>) => {
   return (
-    <Chip variant="faded" color="warning" className="font-semibold ">
-      ${params.record.precio.toFixed(2)}
-    </Chip>
+    <div className="flex items-center justify-start">
+      <Chip variant="shadow" color="warning" className="font-semibold ">
+        ${params.record.precio.toFixed(2)}
+      </Chip>
+    </div>
   );
 };
 const QuantityColumn = (params: RenderFnParams<Product>) => {
   return (
-    <Chip variant="faded" color="primary" className="font-semibold ">
+    <Chip variant="shadow" color="primary" className="font-semibold ">
       {params.record.cantidad}
     </Chip>
   );
 };
 export const ActionColumn = ({
   onAdd,
-  index,
-}: NewOrderTableProps & RenderFnParams<Product>) => {
+}: RenderFnParams<Product> & { onAdd: () => void }) => {
   return (
     <div className="flex items-center justify-start gpa-5">
       <Tooltip
@@ -80,10 +81,10 @@ export const ActionColumn = ({
         offset={1}
         showArrow
         closeDelay={10}
-        // disableAnimation
+        disableAnimation
       >
         <Button
-          onClick={() => onAdd(index)}
+          onClick={() => onAdd()}
           size="sm"
           variant="shadow"
           color="success"
@@ -95,7 +96,7 @@ export const ActionColumn = ({
     </div>
   );
 };
-export const NewOrderTable = ({ onAdd, items }: NewOrderTableProps) => {
+export const NewOrderTable = ({ onAdd, items = [] }: NewOrderTableProps) => {
   const columns: AppDataGridColumn<Product>[] = [
     {
       key: "name",
@@ -107,18 +108,17 @@ export const NewOrderTable = ({ onAdd, items }: NewOrderTableProps) => {
       key: "price",
       title: "Precio",
       render: PriceColumn,
+      align: "left",
     },
     {
       key: "quantity",
-      title: "Cantidad",
+      title: "Inventario",
       render: QuantityColumn,
     },
     {
       key: "actions",
       title: "Acciones",
-      render: ({ index, record }) => {
-        return ActionColumn({ index, record, onAdd });
-      },
+      render: (data) => ActionColumn({ ...data, onAdd: () => onAdd(data) }),
     },
   ];
   return (

@@ -1,4 +1,4 @@
-import creditCards from "../../assets/img/cards1.png";
+import creditCards from "../../assets//img/cards1.png";
 import debitCards from "../../assets/img/cards2.png";
 import openpayLogo from "../../assets/img/openpay.png";
 import encrypt from "../../assets/img/security.png";

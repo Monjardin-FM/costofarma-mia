@@ -65,7 +65,7 @@ export const AppAsideV2 = ({
                 }
               >
                 <AppAsideLink
-                  icon={<Icon.PlusCircle size={20} />}
+                  icon={<Icon.Box size={20} />}
                   label="Pedidos"
                   to="/orders"
                 />

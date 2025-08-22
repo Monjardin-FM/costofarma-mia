@@ -4,8 +4,11 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Card } from "../../Card/Card";
 import cardExample from "../../assets/img/cvv.png";
 import { AppFormLabel } from "../../presentation/Components/AppForm";
-import { AppTextField } from "../../presentation/Components/AppTextField";
-
+import { Button, Chip, Input, Tooltip } from "@nextui-org/react";
+import * as Icon from "react-feather";
+import { useToggle } from "react-use";
+import { ModalDetailPayment } from "../orders/web/components/modals/ModalDetailPayment";
+import { OrderDetail } from "../orders/domain/entities/OrderDetail";
 type CardInfoProps = {
   cardInfoForm: any;
   cardFormat: string;
@@ -13,6 +16,7 @@ type CardInfoProps = {
   emailURL?: string;
   amount?: number;
   cupon?: string;
+  items?: OrderDetail[];
 };
 
 export const CardInfoForm = ({
@@ -21,26 +25,29 @@ export const CardInfoForm = ({
   setCardFormat,
   emailURL,
   amount,
-  cupon,
+  items,
 }: CardInfoProps) => {
   const [flagCardNumberValid, setFlagCardNumber] = useState(false);
   const [parent] = useAutoAnimate();
   const [CVV2Flag, setCVV2Flag] = useState();
   const [flagRotate, setFlagRotate] = useState(false);
-
+  const [modalDetailPayment, setModalDetailPayment] = useToggle(false);
+  // Function to handle the focus and blur events for the CVV input
   const onCVVFocus = () => {
     setFlagRotate(true);
   };
+  // Function to handle the blur event for the CVV input
   const onCVVBlur = () => {
     setFlagRotate(false);
   };
-
+  // Function to validate the card number and set the card type
   const handleValidateCard = () => {
     const typeTarjeta = window.OpenPay.card.cardType(
       cardInfoForm.values.card_number
     );
+    return typeTarjeta;
   };
-
+  // Function to format the card number input
   const handleChangeCard = (e: any) => {
     const cardValue = e.target.value
       .replace(/\D/g, "")
@@ -53,7 +60,7 @@ export const CardInfoForm = ({
           }`}${`${cardValue[4] ? ` ${cardValue[4]}` : ""}`}`)
     );
   };
-
+  // Effect to validate the card number and CVV inputs
   useEffect(() => {
     if (cardInfoForm.values.card_number.length > 1) {
       const flagCardNumber = window.OpenPay.card.validateCardNumber(
@@ -62,6 +69,7 @@ export const CardInfoForm = ({
       setFlagCardNumber(flagCardNumber);
     }
   }, [cardInfoForm.values.card_number]);
+  // Effect to validate the CVV input based on the card number
   useEffect(() => {
     const cvv2Flag = window.OpenPay.card.validateCVC(
       cardInfoForm.values.cvv2,
@@ -72,235 +80,257 @@ export const CardInfoForm = ({
 
   return (
     <>
+      <ModalDetailPayment
+        isVisible={modalDetailPayment}
+        onClose={setModalDetailPayment}
+        items={items}
+      />
       <div className="pt-2">
-        <div className="grid grid-cols-12 mb-5">
-          <div className="col-span-12 font-semibold text-lg text-center color-primary max-sm:text-sm max-sm:text-center mb-3">
-            <span>Pago de membresía</span>
-            {amount === 1914 ? (
-              <span> a 12 MSI</span>
-            ) : amount === 175 ? (
-              <span> mensual (pago recurrente)</span>
-            ) : (
-              <span> a 12 meses de contado</span>
-            )}
-            <br />
-            <span>{`$${amount}`} </span>
-            <span className="text-sm font-semibold">(IVA incluido)</span>
+        <div className="grid grid-cols-12">
+          <div className="col-span-12 font-semibold text-lg text-center color-primary max-sm:text-sm max-sm:text-center mb-8">
+            <span className="text-lg text-primaryColor-600">
+              Total a pagar:{" "}
+            </span>
+            <Chip
+              color="primary"
+              variant="shadow"
+              className="font-semibold text-lg "
+            >
+              <p className="flex items-center justify-center gap-x-2">
+                <span>{`$${amount}`} </span>
+                <Tooltip
+                  content="Ver detalles del pedido"
+                  disableAnimation
+                  showArrow
+                  color="primary"
+                >
+                  <Button
+                    isIconOnly
+                    variant="light"
+                    color="default"
+                    size="sm"
+                    onClick={() => setModalDetailPayment(true)}
+                  >
+                    <Icon.Eye size={18} color="white" />
+                  </Button>
+                </Tooltip>
+              </p>
+            </Chip>
+            {/* <span className="text-sm font-semibold">(IVA incluido)</span> */}
           </div>
-          <div className="col-span-6 flex flex-col justify-center items-center max-sm:col-span-12 gap-5">
+          <div className="col-span-6 flex flex-col justify-start items-center max-sm:col-span-12 gap-5">
             <Card
               cardNumber={cardFormat}
               cardForm={cardInfoForm.values}
               flagRotate={flagRotate}
-            />{" "}
-            {amount === 175 && (
-              <div className="w-full flex flex-col items-center justify-center px-5 text-justify">
-                <span className="sm:text-sm text-xs text-gray-700 self-start">
-                  Al proporcionar los datos de su tarjeta de débito o crédito,
-                  usted autoriza expresamente a FarmaLeal a almacenar de manera
-                  segura su información de pago y a realizar cargos recurrentes
-                  según los términos acordados.
-                </span>
-              </div>
-            )}
-          </div>
-          <div className=" gap-x-5 rounded-lg pb-2 grid grid-cols-12 col-span-6 max-sm:col-span-12 max-sm:gap-4">
-            <div className="col-span-12 font-semibold text-xl color-primary max-sm:text-sm max-sm:text-center max-sm:my-3">
-              Datos de tarjeta
+            />
+            <div className="flex flex-col items-center justify-center px-5 text-justify">
+              <span className="sm:text-sm text-xs text-gray-700 self-start">
+                Al proporcionar los datos de su tarjeta de débito o crédito,
+                usted autoriza expresamente a FarmaLeal a almacenar de manera
+                segura su información de pago y a realizar cargos recurrentes
+                según los términos acordados.
+              </span>
             </div>
+          </div>
+          <div className=" gap-x-5 rounded-lg gap-3 grid grid-cols-12 col-span-6 max-sm:col-span-12 max-sm:gap-4">
             <div
               ref={parent}
               className="col-span-6 w-full  flex flex-col gap-2 justify-center items-start"
             >
-              <AppFormLabel label="Nombre(s):" />
-
-              <AppTextField
-                dataOpenCard="name"
+              <Input
+                label="Nombre (s)"
+                data-openpay-card={"name"}
                 name="name"
                 onChange={cardInfoForm.handleChange}
-                placeholder=""
                 value={cardInfoForm.values.name}
-                className="w-full "
                 onBlur={cardInfoForm.handleBlur}
                 inputMode="text"
+                errorMessage={
+                  cardInfoForm.errors.name ? cardInfoForm.errors.name : ""
+                }
+                isRequired
+                color="primary"
+                radius="md"
+                isInvalid={!!cardInfoForm.errors.name}
+                className="w-full"
               />
-              {cardInfoForm.errors.name && (
-                <div className="border border-danger-800 bg-danger-100 rounded-md bg w-full p-1 relative -top-2 ">
-                  <span className="text-danger-500 font-semibold text-sm max-sm:text-xs">
-                    {cardInfoForm.errors.name}
-                  </span>
-                </div>
-              )}
             </div>
             <div
               ref={parent}
               className="col-span-6 w-full  flex flex-col gap-2 justify-center items-start"
             >
-              <AppFormLabel label="Apellidos:" />
-
-              <AppTextField
-                dataOpenCard="lastName"
+              <Input
+                label="Apellidos"
+                data-openpay-card={"lastName"}
                 name="lastName"
                 onChange={cardInfoForm.handleChange}
-                placeholder=""
                 value={cardInfoForm.values.lastName}
-                className="w-full "
                 onBlur={cardInfoForm.handleBlur}
                 inputMode="text"
+                errorMessage={
+                  cardInfoForm.errors.lastName
+                    ? cardInfoForm.errors.lastName
+                    : ""
+                }
+                isRequired
+                color="primary"
+                radius="md"
+                isInvalid={!!cardInfoForm.errors.lastName}
+                className="w-full"
               />
-              {cardInfoForm.errors.lastName && (
-                <div className="border border-danger-800 bg-danger-100 rounded-md bg w-full p-1 relative -top-2 ">
-                  <span className="text-danger-500 font-semibold text-sm max-sm:text-xs">
-                    {cardInfoForm.errors.lastName}
-                  </span>
-                </div>
-              )}
             </div>
             <div
               ref={parent}
               className="col-span-6 w-full  flex flex-col gap-2 justify-center items-start"
             >
-              <AppFormLabel label="Correo:" />
-
-              <AppTextField
-                // dataOpenCard="email"
+              <Input
+                label="Correo electrónico"
                 name="email"
                 onChange={cardInfoForm.handleChange}
-                placeholder=""
                 value={cardInfoForm.values.email}
-                className="w-full "
                 onBlur={cardInfoForm.handleBlur}
                 inputMode="text"
+                errorMessage={
+                  cardInfoForm.errors.email ? cardInfoForm.errors.email : ""
+                }
+                isRequired
+                color="primary"
+                radius="md"
+                isInvalid={!!cardInfoForm.errors.email}
+                className="w-full"
                 disabled={emailURL ? true : false}
               />
-              {cardInfoForm.errors.email && (
-                <div className="border border-danger-800 bg-danger-100 rounded-md bg w-full p-1 relative -top-2 ">
-                  <span className="text-danger-500 font-semibold text-sm max-sm:text-xs">
-                    {cardInfoForm.errors.email}
-                  </span>
-                </div>
-              )}
             </div>
             <div
               ref={parent}
               className="col-span-6 w-full  flex flex-col gap-2 justify-center items-start"
             >
-              <AppFormLabel label="Teléfono:" />
-
-              <AppTextField
-                dataOpenCard="phoneNumber"
+              <Input
+                label="Teléfono"
+                data-openpay-card={"phoneNumber"}
                 name="phoneNumber"
                 onChange={cardInfoForm.handleChange}
-                placeholder=""
                 value={cardInfoForm.values.phoneNumber}
-                className="w-full "
                 onBlur={cardInfoForm.handleBlur}
                 inputMode="numeric"
+                errorMessage={
+                  cardInfoForm.errors.phoneNumber
+                    ? cardInfoForm.errors.phoneNumber
+                    : ""
+                }
+                isRequired
+                color="primary"
+                radius="md"
+                isInvalid={!!cardInfoForm.errors.phoneNumber}
+                className="w-full"
               />
-              {cardInfoForm.errors.phoneNumber && (
-                <div className="border border-danger-800 bg-danger-100 rounded-md bg w-full p-1 relative -top-2 ">
-                  <span className="text-danger-500 font-semibold text-sm max-sm:text-xs">
-                    {cardInfoForm.errors.phoneNumber}
-                  </span>
-                </div>
-              )}
             </div>
             <div
               ref={parent}
               className="w-full col-span-12 flex flex-col gap-2 justify-center items-start text-lg font-extralight"
             >
-              <AppFormLabel label="Número de Tarjeta:" />
-              <AppTextField
-                placeholder={"0000 0000 0000 0000"}
+              <Input
+                label="Número de Tarjeta"
+                placeholder="0000 0000 0000 0000"
                 name="card_number"
-                value={cardFormat}
                 onChange={(e: any) => {
                   cardInfoForm.handleChange(e);
                   handleChangeCard(e);
                 }}
-                className={
-                  !flagCardNumberValid || cardFormat === ""
-                    ? "w-full bg-danger-100"
-                    : "w-full bg-success-200"
-                }
+                value={cardFormat}
                 inputMode="numeric"
+                errorMessage={
+                  !flagCardNumberValid || cardFormat === ""
+                    ? "Tarjeta inválida"
+                    : "Tarjeta válida"
+                }
+                isRequired
+                color="primary"
+                radius="md"
+                isInvalid={!flagCardNumberValid || cardFormat === ""}
+                className="w-full"
                 maxLength={19}
+                isClearable={true}
+                onClear={() => {
+                  setCardFormat("");
+                  cardInfoForm.setFieldValue("card_number", "");
+                }}
               />
-              {(!flagCardNumberValid || cardFormat === "") && (
-                <div className="border border-danger-800 rounded-md bg w-full p-1 relative -top-2 bg-danger-100">
-                  <span className="text-danger-500 font-semibold text-sm max-sm:text-xs">
-                    {"Tarjeta Inválida"}
-                  </span>
-                </div>
-              )}
             </div>
             <div
               ref={parent}
               className="w-full col-span-6 flex flex-col gap-2 justify-center items-start text-lg font-extralight"
             >
-              <AppFormLabel label="Fecha de expiración:" />
+              <AppFormLabel
+                label="Fecha de expiración:"
+                className="text-primaryColor-500 text-sm font-semibold"
+              />
               <div className="flex flex-row gap-3 ">
-                <AppTextField
+                <Input
                   placeholder="MM"
                   name="expiration_month"
+                  onChange={cardInfoForm.handleChange}
                   value={cardInfoForm.values.expiration_month}
-                  onChange={cardInfoForm.handleChange}
-                  className="w-full"
                   inputMode="numeric"
                   maxLength={2}
+                  isRequired
+                  color="primary"
+                  radius="md"
+                  className="w-full"
+                  isInvalid={cardInfoForm.errors.expiration_month}
+                  errorMessage={"Mes inválido"}
                 />
-                <AppTextField
-                  placeholder="YY"
+                <Input
                   name="expiration_year"
-                  value={cardInfoForm.values.expiration_year}
                   onChange={cardInfoForm.handleChange}
-                  className="w-full"
+                  value={cardInfoForm.values.expiration_year}
                   inputMode="numeric"
+                  placeholder="YY"
+                  isRequired
+                  color="primary"
+                  radius="md"
+                  className="w-full"
                   maxLength={2}
+                  isInvalid={cardInfoForm.errors.expiration_year}
+                  errorMessage={"Año inválido"}
                 />
               </div>
-              {(cardInfoForm.errors.expiration_month ||
-                cardInfoForm.errors.expiration_year) && (
-                <div className="border border-danger-800 rounded-md bg w-full p-1 relative -top-2 bg-danger-100">
-                  <span className="text-danger-500 font-semibold text-sm max-sm:text-xs">
-                    {"Fecha Inválida"}
-                  </span>
-                </div>
-              )}
             </div>
             <div
               ref={parent}
-              className="w-full col-span-6 flex flex-col gap-2 justify-center items-start text-lg font-extralight"
+              className="w-full col-span-6 flex flex-col gap-2 justify-end items-start text-lg font-extralight"
             >
-              <AppFormLabel label="Código CVV:" />
+              <AppFormLabel
+                label="CVV:"
+                className="text-primaryColor-500 text-sm font-semibold"
+              />
               <div className="flex flex-row items-center gap-2">
-                <AppTextField
-                  placeholder="CVV"
-                  value={cardInfoForm.values.cvv2}
+                <Input
                   name="cvv2"
                   onChange={cardInfoForm.handleChange}
-                  className="w-1/2 "
+                  value={cardInfoForm.values.cvv2}
                   onBlur={() => {
                     onCVVBlur();
                     handleValidateCard();
                   }}
-                  onFocus={onCVVFocus}
                   inputMode="numeric"
+                  placeholder="XXX"
+                  isRequired
+                  color="primary"
+                  radius="md"
+                  className="w-full"
+                  isInvalid={!CVV2Flag || cardInfoForm.values.cvv2 === ""}
+                  errorMessage={"CVV inválido"}
+                  onFocus={onCVVFocus}
                 />
 
                 <div className="full max-sm:hidden">
                   <img src={cardExample} />
                 </div>
               </div>
-              {!CVV2Flag && (
-                <div className="border border-danger-800 rounded-md bg w-full p-1 relative -top-2 bg-danger-100">
-                  <span className="text-danger-500 font-semibold text-sm max-sm:text-xs">
-                    {"CVV Inválido"}
-                  </span>
-                </div>
-              )}
             </div>
-            {!emailURL && (
+            {/* {!emailURL && (
               <div
                 ref={parent}
                 className="w-full col-span-6 flex flex-col gap-2 justify-center items-start text-lg font-extralight"
@@ -316,7 +346,7 @@ export const CardInfoForm = ({
                   disabled={cupon ? true : false}
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
 

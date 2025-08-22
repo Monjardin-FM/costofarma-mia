@@ -24,6 +24,12 @@ export const getOrderPersonService: OrderRepository["getOrderPerson"] = async (
     direccion: person.dirección,
     productos: person.productos,
     persona: person.persona,
+    idStatus: person.idStatus,
+    idStatusAutorizacion: person.idStatusAutorizacion,
+    nombreCompleto: person.nombreCompleto,
+    rfc: person.rfc,
+    pagado: person.pagado,
+    idpersona: person.idpersona,
   }));
   return ordenPersons;
 };

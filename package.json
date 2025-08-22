@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:dev": "tsc && vite build --mode development",
+    "build:prod": "tsc && vite build --mode production",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -53,6 +55,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.5.0",
     "react-select": "^5.8.0",
+    "react-spinners": "^0.17.0",
     "react-toastify": "^10.0.5",
     "react-use": "^17.4.0",
     "redux": "^4.2.0",

@@ -54,7 +54,8 @@ export const Card = ({
     if (cardNumber) {
       setCardTypeImg(cardType(cardNumber));
     }
-    // return cardType(cardNumber);
+    return cardType(cardNumber ?? "");
+    // console.log(useCardType);
   }, [cardNumber]);
 
   return (
@@ -93,7 +94,7 @@ export const Card = ({
                       ? discover
                       : VISA
                   }
-                  // alt={useCardType}
+                  alt={useCardType ? useCardType : cardNumber}
                 />
               </div>
               <div className="absolute top-1/3 text-white text-3xl font-bold  w-full h-14 grid grid-cols-1  items-center text-center max-sm:text-2xl max-sm:font-semibold">

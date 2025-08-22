@@ -99,7 +99,7 @@
   "product.uploadPage.authorization": ["admin", "shopper"],
   "shoppingCart.managerPage": ["admin", "operator", "customer"],
   "supply.products.authorization": ["admin", "high_supply_gestor"],
-  "masterOrder.managementPage.authorization": ["admin", "admin_master_order"],
+  "masterOrder.managementPage.authorization": ["admin"],
   "masterOrder.provider.supply.authorization": [
     "admin",
     "admin_supply_master_order"

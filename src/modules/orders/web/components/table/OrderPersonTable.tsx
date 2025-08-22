@@ -31,7 +31,8 @@ const NamePersonColumn = (params: RenderFnParams<Person>) => {
         <AppAvatar
           className={`font-bold tracking-wider text-gray-900 ${getRandomColorSchema(
             {
-              length: params.record.idPersona,
+              length:
+                params.record.nombre.length + params.record.paterno.length,
             }
           )}`}
         >
@@ -54,12 +55,8 @@ const ActionsColumn = ({
 }) => {
   return (
     <Tooltip
-      content="Ver"
+      content="Ver pedidos"
       color="primary"
-      style={{
-        zIndex: 0,
-      }}
-      offset={1}
       showArrow
       closeDelay={10}
       disableAnimation

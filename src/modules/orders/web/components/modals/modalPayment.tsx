@@ -1,13 +1,12 @@
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { Card } from "../../../../../Card/Card";
+import { StepperFormPayment } from "../../../../Modals/StepperFormPayment";
 export type ModalPaymentProps = {
   isVisible: boolean;
   onClose: () => void;
@@ -27,26 +26,11 @@ export const ModalPayment = ({ isVisible, onClose }: ModalPaymentProps) => {
           <>
             <ModalHeader>Pago</ModalHeader>
             <ModalBody>
-              <div className="grid grid-cols-2">
-                <div className="col-span-1">
-                  <Card cardNumber="411111111111" />
-                </div>
-                <div className="col-span-1 flex flex-col gap-3">
-                  <Input label="Nombre del Titular" />
-                  <Input label="Número de tarjeta" />
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="col-span-1">
-                      <Input label="MM" />
-                    </div>
-                    <div className="col-span-1">
-                      <Input label="YYYY" />
-                    </div>
-                    <div className="col-span-1">
-                      <Input label="CVV" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <StepperFormPayment
+                isVisible={isVisible}
+                onClose={onClose}
+                onReload={() => {}}
+              />
             </ModalBody>
             <ModalFooter>
               <Button

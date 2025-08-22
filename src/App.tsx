@@ -6,7 +6,11 @@ import {
 import { store } from "./utils/store";
 import { AppRouter } from "./presentation/Components/AppRouter";
 import { routes } from "./routes";
-
+declare global {
+  interface Window {
+    OpenPay: any;
+  }
+}
 function App() {
   return (
     <Provider store={store}>

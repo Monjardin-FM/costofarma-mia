@@ -10,72 +10,17 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { ShoppingCart } from "../../../domain/entities/shopping-cart";
-import { ShoppingCartPatientInfoValues } from "./ShoppingCartPatientInfo";
-import { useCreateNewOrder } from "../../hooks/use-create-order";
-
-import { AppToast } from "../../../../../presentation/Components/AppToast";
-import { useNavigate } from "react-router-dom";
-import { FormInfoClient } from "../forms/FormInfoClient";
-export type ShoppingCartConfirmOrderProps = {
+import { OrderDetail } from "../../../domain/entities/OrderDetail";
+export type ModalDetailPaymentProps = {
   isVisible: boolean;
   onClose: () => void;
-  items?: ShoppingCart;
-  patientInfo: ShoppingCartPatientInfoValues;
-  onEdit?: () => void;
-  onConfirm?: () => void;
+  items?: OrderDetail[];
 };
-export const ShoppingCartConfirmOrder = ({
+export const ModalDetailPayment = ({
   isVisible,
   onClose,
   items = [],
-  patientInfo,
-  onEdit = () => {},
-  onConfirm = () => {},
-}: ShoppingCartConfirmOrderProps) => {
-  const { createNewOrder, error } = useCreateNewOrder();
-  const navigate = useNavigate();
-
-  const onGenerate = async () => {
-    await createNewOrder({
-      persona: {
-        nombre: patientInfo.nombre,
-        paterno: patientInfo.paterno,
-        materno: patientInfo.materno,
-        rfc: patientInfo.rfc,
-      },
-      direccion: {
-        Calle: patientInfo.Calle,
-        Colonia: patientInfo.Colonia ?? "",
-        Municipio: patientInfo.Municipio.toString(),
-        Estado: patientInfo.Estado.toString(),
-        CP: patientInfo.CP,
-        Referencia1: patientInfo.Referencia1 ?? "",
-        Referencia2: patientInfo.Referencia2 ?? "",
-        Telefono: patientInfo.Telefono,
-        Mail: patientInfo.Mail,
-      },
-      productos:
-        items
-          ?.filter((item) => item.idProducto !== undefined && item.cantidad > 0)
-          .map((item) => ({
-            idProducto: item.idProducto!.toString(),
-            cantidad: item.cantidad.toString(),
-          })) ?? [],
-      receta: "",
-    });
-    if (!error) {
-      AppToast().fire({
-        title: "Pedido creado",
-        icon: "success",
-        text: "El pedido se generó correctamente",
-      });
-      onClose();
-      onConfirm();
-      navigate("/orders");
-    }
-  };
-
+}: ModalDetailPaymentProps) => {
   return (
     <Modal
       isOpen={isVisible}
@@ -91,12 +36,6 @@ export const ShoppingCartConfirmOrder = ({
             <ModalHeader>Resúmen de pedido</ModalHeader>
             <ModalBody>
               <>
-                <FormInfoClient
-                  patientFormValues={patientInfo}
-                  setPatientFormValues={() => {}}
-                  mode="view"
-                  onEdit={onEdit}
-                />
                 <Card className="bg-warn-50">
                   <CardBody className="flex flex-col items-start justify-start gap-3 ">
                     {items.length > 0 && (
@@ -147,16 +86,13 @@ export const ShoppingCartConfirmOrder = ({
             </ModalBody>
             <ModalFooter>
               <Button
-                color="danger"
+                color="primary"
                 onClick={onClose}
                 className=""
                 size="md"
-                variant="bordered"
+                variant="shadow"
               >
-                Cancelar
-              </Button>
-              <Button color="primary" onClick={onGenerate}>
-                Generar pedido
+                Ok
               </Button>
             </ModalFooter>
           </>

@@ -28,6 +28,7 @@ type ShoppingCartFormProps = {
   mode: ShoppingCartFormMode;
   onSubmit: (data: ShoppingCartFormValues) => void;
   initialValues?: ShoppingCartFormValues;
+  onDelete?: () => void;
 };
 const ShoppingCartSchema = Yup.object().shape({
   cantidad: Yup.number()
@@ -49,6 +50,7 @@ export const ShoppingCartForm = ({
     requiereReceta: false,
   },
   onSubmit,
+  onDelete = () => {},
 }: ShoppingCartFormProps) => {
   return (
     <Modal
@@ -113,7 +115,7 @@ export const ShoppingCartForm = ({
                       <Button onPress={onClose}>Cancel</Button>
                       {mode === "update" && (
                         <Button
-                          //   onClick={() => onDelete()}
+                          onClick={() => onDelete()}
                           type="button"
                           color="danger"
                           variant="bordered"
@@ -122,7 +124,11 @@ export const ShoppingCartForm = ({
                         </Button>
                       )}
 
-                      <Button type="submit" color="primary">
+                      <Button
+                        type="submit"
+                        color="primary"
+                        isDisabled={values.cantidad <= 0}
+                      >
                         {mode === "create" ? "Guardar" : "Actualizar"}
                       </Button>
                     </div>

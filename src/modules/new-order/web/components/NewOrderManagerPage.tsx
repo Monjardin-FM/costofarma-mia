@@ -41,8 +41,8 @@ export const NewOrderManagerPage = () => {
     addItem: addItemToShoppingCart,
     updateItem,
     cart: shoppingCartItems,
-    // removeItem,
-    // clear: clearShoppingCart,
+    removeItem,
+    clear: clearShoppingCart,
   } = useShoppingCart();
   const [shoppingCartValues, setShoppingCartFormValues] =
     useState<ShoppingCartFormValues>();
@@ -125,20 +125,34 @@ export const NewOrderManagerPage = () => {
 
   const onAddHandler = (index: number) => {
     if (products) {
-      const product = products[index];
+      const globalIndex = (page - 1) * rowsPerPage + index; // índice real en products
+      const product = products[globalIndex];
+      if (!product) return;
+
       setShoppingCartFormValues({
         descripcion: product.descripcion,
         ean: product.ean,
-
         cantidad: 0,
         idProducto: product.idProducto,
         precio: product.precio,
         requiereReceta: product.requiereReceta,
         idOrdenDetalle: 0,
       });
-      setProductIndex(index);
+      setProductIndex(globalIndex);
       setShoppingCartFormMode("create");
       toggleShoppingCartForm(true);
+    }
+  };
+  const onDeleteHandler = () => {
+    if (shoppingCartIndex !== null) {
+      removeItem({
+        index: shoppingCartIndex,
+      });
+      toggleShoppingCartForm(false);
+      AppToast().fire({
+        icon: "info",
+        title: "Producto eliminado del carrito de compra",
+      });
     }
   };
   const data = useMemo(() => {
@@ -179,6 +193,7 @@ export const NewOrderManagerPage = () => {
         initialValues={shoppingCartValues}
         onClose={() => toggleShoppingCartForm(false)}
         onSubmit={shoppingCartFormHandler}
+        onDelete={onDeleteHandler}
       />
       {/* Modal de Carrito de compras */}
       <ShoppingCartViewer
@@ -202,6 +217,28 @@ export const NewOrderManagerPage = () => {
         }}
         items={shoppingCartItems}
         patientInfo={patientFormValues}
+        onEdit={() => {
+          toggleCustomerForm(true);
+          setConfirmOrderModal(false);
+        }}
+        onConfirm={() => {
+          setPatientFormValues({
+            rfc: "",
+            nombre: "",
+            paterno: "",
+            materno: "",
+            Calle: "",
+            Colonia: "",
+            Municipio: 0,
+            Estado: 0,
+            CP: "",
+            Referencia1: "",
+            Referencia2: "",
+            Telefono: "",
+            Mail: "",
+          });
+          clearShoppingCart();
+        }}
       />
       <AppPageTransition>
         <div className="items-center mx-auto mb-5">
@@ -253,7 +290,7 @@ export const NewOrderManagerPage = () => {
                 ></Button>
               </Tooltip>
               <Tooltip
-                content="Guardar pedido"
+                content="Generar pedido"
                 color="primary"
                 disableAnimation
               >
@@ -262,26 +299,41 @@ export const NewOrderManagerPage = () => {
                   size="md"
                   color="primary"
                   onClick={() => setConfirmOrderModal(true)}
+                  isDisabled={
+                    (!patientFormValues.rfc &&
+                      !patientFormValues.nombre &&
+                      !patientFormValues.paterno &&
+                      !patientFormValues.Calle &&
+                      patientFormValues.Municipio === 0 &&
+                      patientFormValues.Estado === 0 &&
+                      !patientFormValues.CP &&
+                      !patientFormValues.Telefono &&
+                      !patientFormValues.Mail) ||
+                    shoppingCartItems.length === 0
+                  }
                 >
                   <Icon.Save size={18} />
                 </Button>
               </Tooltip>
             </div>
             <div className="mt-5 flex flex-col items-center w-full justify-center gap-5 mb-10">
-              <div className="w-full container">
-                <NewOrderTable onAdd={onAddHandler} items={data} />
+              <div className="w-full container mx-auto">
+                <NewOrderTable
+                  onAdd={(data) => onAddHandler(data.index)}
+                  items={data}
+                />
               </div>
               <div>
                 <Pagination
                   loop
-                  // isCompact
+                  isCompact
                   showControls
                   showShadow
                   color="primary"
                   page={page}
                   total={pages}
                   onChange={(page) => setPage(page)}
-                  className="w-full container"
+                  className="w-full"
                 />
               </div>
             </div>

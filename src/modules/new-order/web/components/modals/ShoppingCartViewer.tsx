@@ -8,6 +8,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Tooltip,
 } from "@nextui-org/react";
 import { ShoppingCart } from "../../../domain/entities/shopping-cart";
 // import { Player } from "@lottiefiles/react-lottie-player";
@@ -28,7 +29,7 @@ export const ShoppingCartViewer = ({
     <Modal
       isOpen={isVisible}
       onClose={onClose}
-      size="2xl"
+      size="4xl"
       backdrop="blur"
       scrollBehavior="outside"
       isDismissable={false}
@@ -36,34 +37,64 @@ export const ShoppingCartViewer = ({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader>Productos</ModalHeader>
+            <ModalHeader>Carrito de compra</ModalHeader>
             <ModalBody>
               {items.length > 0 && (
                 <>
                   {items.map((item, index) => (
                     <Card>
                       <CardBody>
-                        <div className="grid grid-cols-3 w-full ">
+                        <div className="grid grid-cols-12 w-full ">
                           <div
                             key={index}
-                            className="col-span-2 flex items-center justify-between"
+                            className="col-span-10 flex items-center justify-between"
                           >
                             <span className="font-semibold text-gray-800">
-                              {item.descripcion} ({item.cantidad} pzas)
+                              {item.descripcion}
                             </span>
-                            <Chip color="warning">
-                              ${(item.precio * item.cantidad).toFixed(2)}
-                            </Chip>
+                            <div className="flex items-center gap-2">
+                              <span>
+                                {`${
+                                  item.cantidad
+                                } pzas. x $${item.precio.toFixed(2)} = `}
+                              </span>
+                              <Chip color="warning" variant="shadow">
+                                ${(item.precio * item.cantidad).toFixed(2)}
+                              </Chip>
+                            </div>
                           </div>
-                          <div className="col-span-1 flex items-center justify-end">
-                            <Button onClick={() => onTab(index)} isIconOnly>
-                              <Icon.ChevronRight size={20} />
-                            </Button>
+                          <div className="col-span-2 flex items-center justify-end">
+                            <Tooltip
+                              content="Editar artículo"
+                              disableAnimation
+                              color="primary"
+                              showArrow
+                              closeDelay={10}
+                            >
+                              <Button onClick={() => onTab(index)} isIconOnly>
+                                <Icon.ChevronRight size={20} />
+                              </Button>
+                            </Tooltip>
                           </div>
                         </div>
                       </CardBody>
                     </Card>
                   ))}
+                  <div className="items-center justify-end mt-4 grid grid-cols-12 w-full">
+                    <div className="col-span-10 flex items-center justify-end">
+                      <Chip color="warning">
+                        <span className="font-semibold">
+                          Total: $
+                          {items
+                            .reduce(
+                              (acc, item) => acc + item.precio * item.cantidad,
+                              0
+                            )
+                            .toFixed(2)}
+                        </span>
+                      </Chip>
+                    </div>
+                  </div>
                 </>
               )}
 
