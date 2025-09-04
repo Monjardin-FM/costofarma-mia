@@ -7,4 +7,7 @@ export type Product = {
   requiereReceta: boolean;
   idOrdenDetalle: number;
   activo: boolean;
+  banControlado: boolean;
+  banCronico: boolean;
+  banRefrigerado: boolean;
 };

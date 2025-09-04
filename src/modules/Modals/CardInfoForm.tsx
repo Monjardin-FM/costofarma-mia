@@ -17,6 +17,7 @@ type CardInfoProps = {
   amount?: number;
   cupon?: string;
   items?: OrderDetail[];
+  mode: "page" | "modal";
 };
 
 export const CardInfoForm = ({
@@ -26,6 +27,7 @@ export const CardInfoForm = ({
   emailURL,
   amount,
   items,
+  mode,
 }: CardInfoProps) => {
   const [flagCardNumberValid, setFlagCardNumber] = useState(false);
   const [parent] = useAutoAnimate();
@@ -98,22 +100,26 @@ export const CardInfoForm = ({
             >
               <p className="flex items-center justify-center gap-x-2">
                 <span>{`$${amount}`} </span>
-                <Tooltip
-                  content="Ver detalles del pedido"
-                  disableAnimation
-                  showArrow
-                  color="primary"
-                >
-                  <Button
-                    isIconOnly
-                    variant="light"
-                    color="default"
-                    size="sm"
-                    onClick={() => setModalDetailPayment(true)}
+                {mode === "modal" ? (
+                  <Tooltip
+                    content="Ver detalles del pedido"
+                    disableAnimation
+                    showArrow
+                    color="primary"
                   >
-                    <Icon.Eye size={18} color="white" />
-                  </Button>
-                </Tooltip>
+                    <Button
+                      isIconOnly
+                      variant="light"
+                      color="default"
+                      size="sm"
+                      onClick={() => setModalDetailPayment(true)}
+                    >
+                      <Icon.Eye size={18} color="white" />
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  ""
+                )}
               </p>
             </Chip>
             {/* <span className="text-sm font-semibold">(IVA incluido)</span> */}

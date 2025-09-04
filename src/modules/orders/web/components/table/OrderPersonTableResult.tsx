@@ -14,6 +14,7 @@ export type OrderPersonTableResultProps = {
   onPay: (params: RenderFnParams<OrderByPerson>) => void;
   onDelete: (params: RenderFnParams<OrderByPerson>) => void;
   onGenerateAgain: (params: RenderFnParams<OrderByPerson>) => void;
+  onViewTIcket: (params: RenderFnParams<OrderByPerson>) => void;
   loadingDeleteOrder: boolean;
 };
 export const getRandomColorSchema = (params: { length: number }) => {
@@ -107,12 +108,14 @@ const ActionsColumn = ({
   record,
   onDelete,
   onGenerateAgain,
+  onViewTIcket,
   loadingDeleteOrder,
 }: RenderFnParams<OrderByPerson> & {
   onPay: () => void;
   onView: () => void;
   onDelete: () => void;
   onGenerateAgain: () => void;
+  onViewTIcket: () => void;
   loadingDeleteOrder: boolean;
 }) => {
   return (
@@ -159,6 +162,29 @@ const ActionsColumn = ({
           color="primary"
         >
           <Icon.Eye size={18} />
+        </Button>
+      </Tooltip>
+      <Tooltip
+        content="Descargar ticket"
+        color="success"
+        style={{
+          zIndex: 0,
+        }}
+        offset={1}
+        showArrow
+        closeDelay={10}
+        disableAnimation
+      >
+        <Button
+          onClick={() => {
+            onViewTIcket();
+          }}
+          size="sm"
+          variant="shadow"
+          isIconOnly
+          color="success"
+        >
+          <Icon.Download size={18} />
         </Button>
       </Tooltip>
       <Tooltip
@@ -217,6 +243,7 @@ export const OrderPersonTableResult = ({
   onView,
   onDelete,
   onGenerateAgain,
+  onViewTIcket,
   items = [],
   loadingDeleteOrder,
 }: OrderPersonTableResultProps) => {
@@ -258,6 +285,9 @@ export const OrderPersonTableResult = ({
           },
           onGenerateAgain: () => {
             onGenerateAgain(data);
+          },
+          onViewTIcket: () => {
+            onViewTIcket(data);
           },
           loadingDeleteOrder: loadingDeleteOrder,
         }),

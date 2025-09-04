@@ -1,6 +1,6 @@
 import { api } from "../../../../utils/api";
 import { verifyResponse } from "../../../../utils/check-response";
-import { token } from "../../../../utils/token";
+// import { token } from "../../../../utils/token";
 import { OrderDetail } from "../../domain/entities/OrderDetail";
 import { OrderRepository } from "../../domain/repositories/order-repository";
 
@@ -9,7 +9,7 @@ export const getOrderDetailService: OrderRepository["getOrderDetail"] = async (
 ) => {
   const response = await api().get("Order/OrderDetail", {
     headers: {
-      Authorization: `Bearer ${token()}`,
+      // Authorization: `Bearer ${token()}`,
       "Content-Type": "application/json",
     },
     searchParams: { idOrder: params.idOrder.toString() },

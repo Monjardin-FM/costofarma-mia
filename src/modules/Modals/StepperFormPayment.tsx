@@ -8,11 +8,19 @@ import { useToggle } from "react-use";
 import { DataInformation } from "./DataInformation";
 import { Stepper } from "../../presentation/Components/AppStepper/app-stepper";
 import { Loader } from "../../presentation/Components/Loader/Loader";
-import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  Tooltip,
+} from "@nextui-org/react";
 import { useGetOrderDetail } from "../orders/web/hooks/use-get-order-detail";
 import { OrderDetail } from "../orders/domain/entities/OrderDetail";
-import { token } from "../../utils/token";
-
+// import { token } from "../../utils/token";
+import * as Icon from "react-feather";
+import { ModalSharePaymentOrder } from "../orders/web/components/modals/ModalSharePaymentOrder";
 export type StepperFormPaymentProps = {
   isVisible: boolean;
   onClose: () => void;
@@ -43,6 +51,8 @@ export const StepperFormPayment = ({
   const [cardFormat, setCardFormat] = useState("");
   const [loadingPayment, setLoadingPayment] = useState(false);
   const [isLoadingCardValidate, setIsloadingValidateCard] = useToggle(false);
+  const [modalSharePaymentOrder, toggleModalSharePaymentOrder] =
+    useToggle(false);
   const [amount, setAmount] = useState(0);
   const [paymentData, setPaymentData] = useState({
     deviceSessionId: "",
@@ -109,7 +119,7 @@ export const StepperFormPayment = ({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token()}`,
+            // Authorization: `Bearer ${token()}`,
           },
 
           body: JSON.stringify({
@@ -211,6 +221,13 @@ export const StepperFormPayment = ({
   }, [orderDetail]);
   return (
     <>
+      <ModalSharePaymentOrder
+        isVisible={modalSharePaymentOrder}
+        onClose={() => {
+          toggleModalSharePaymentOrder(false);
+        }}
+        idOrder={idOrder}
+      />
       <Modal
         onClose={onClose}
         isOpen={isVisible}
@@ -222,7 +239,34 @@ export const StepperFormPayment = ({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader>Pago de la orden</ModalHeader>
+              <ModalHeader>
+                <div className="flex flex-col items-start justify-center">
+                  <p className="flex items-center gap-3">
+                    <span>Pago de la orden {idOrder}</span>
+                    <Tooltip
+                      content="Compartir link de pago"
+                      disableAnimation
+                      color="warning"
+                      showArrow
+                      closeDelay={10}
+                    >
+                      <Button
+                        isIconOnly
+                        color="warning"
+                        variant="shadow"
+                        onClick={() => toggleModalSharePaymentOrder(true)}
+                      >
+                        <Icon.Share2 size={18} />
+                      </Button>
+                    </Tooltip>
+                  </p>
+                  <span className="text-sm text-gray-800 font-normal">
+                    Si requiere factura, favor de mandar un correo a
+                    info@costofarma.mx con su número de orden y sus
+                    datos fiscales
+                  </span>
+                </div>
+              </ModalHeader>
               <ModalBody>
                 {/* This loader is used to show a loading spinner when the card is being
       validated */}
@@ -334,6 +378,7 @@ export const StepperFormPayment = ({
                                     amount={amount}
                                     cupon={cupon ? cupon : ""}
                                     items={orderDetail}
+                                    mode="modal"
                                   />
                                 </div>
                                 <div className="flex flex-row gap-3">

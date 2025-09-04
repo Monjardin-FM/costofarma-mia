@@ -2,6 +2,7 @@ import { OrdenPerson } from "../entities/OrdenPerson";
 import { OrderByPerson } from "../entities/OrderByPerson";
 import { OrderDetail } from "../entities/OrderDetail";
 import { Person } from "../entities/Person";
+import { PersonById } from "../entities/PersonById";
 export type reloadOrderParams = {
   direccion: {
     Calle: string;
@@ -27,4 +28,5 @@ export type OrderRepository = {
   deleteOrder(params: { idOrden: number }): Promise<Boolean>;
   getOrdenByPerson(): Promise<OrderByPerson[]>;
   reloadOrder(params: reloadOrderParams, idPerson: number): Promise<void>;
+  getPersonById(params: { idPersona: number }): Promise<PersonById>;
 };

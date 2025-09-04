@@ -19,8 +19,8 @@ import { AppSwal } from "../../../../presentation/Components/AppSwal";
 import { useGetOrderByPerson } from "../hooks/get-order-by-person";
 import { OrdenPerson } from "../../domain/entities/OrdenPerson";
 import { useGetOrderPerson } from "../hooks/use-get-order-person";
-import { useGetOrderDetail } from "../hooks/use-get-order-detail";
 import { ModalGenerateAgainOrder } from "./modals/ModalGenerateAgainOrder";
+import { ModalTicket } from "./modals/Ticket/ModalTicket";
 export const OrdersManagerPage = () => {
   const navigate = useNavigate();
   const { getPerson, person } = useGetPerson();
@@ -28,15 +28,15 @@ export const OrdersManagerPage = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(0);
   const [search, setSearch] = useState<string>("");
-  const [togglemodaResultPerson, setModalResultPerson] = useToggle(false);
   const [idPerson, setIdPerson] = useState(0);
+  const [togglemodaResultPerson, setModalResultPerson] = useToggle(false);
   const [modalPayment, setModalPayment] = useToggle(false);
+  const [modalGenerateOrder, setModalGenerateOrder] = useToggle(false);
+  const [modalTicket, toggleModalTicket] = useToggle(false);
   const [toggleReload, setToggleReload] = useToggle(false);
   const { getOrdersByPerson, ordersByPerson } = useGetOrderByPerson();
-  const { getOrderDetail, orderDetail } = useGetOrderDetail();
-  const [modalGenerateOrder, setModalGenerateOrder] = useToggle(false);
   const [sortedOrders, setSortedOrders] = useState<OrdenPerson[]>([]);
-  const [idOrder, setIdOrder] = useState<number | null>(null);
+  const [idOrder, setIdOrder] = useState<number>();
   const {
     deleteOrder,
     error: errorDeleteOrder,
@@ -145,11 +145,7 @@ export const OrdersManagerPage = () => {
       setSortedOrders(orderPerson);
     }
   }, [orderPerson]);
-  useEffect(() => {
-    if (idOrder) {
-      getOrderDetail({ idOrder: idOrder });
-    }
-  }, [idOrder]);
+
   return (
     <AppAuthorizationGuard
       redirect={{ to: "/" }}
@@ -177,9 +173,15 @@ export const OrdersManagerPage = () => {
         onClose={() => {
           setModalGenerateOrder(false);
         }}
-        items={orderDetail}
+        // items={orderDetail}
+        idOrder={idOrder}
         idPerson={idPerson}
         onReload={() => setToggleReload(!toggleReload)}
+      />
+      <ModalTicket
+        isVisible={modalTicket}
+        onClose={() => toggleModalTicket(false)}
+        idOrder={idOrder}
       />
       <AppPageTransition>
         <div className="items-center mx-auto mb-5">
@@ -222,6 +224,10 @@ export const OrdersManagerPage = () => {
                     setIdOrder(record.record.idOrden);
                     setModalGenerateOrder(true);
                     setToggleReload(!toggleReload);
+                  }}
+                  onViewTIcket={(record) => {
+                    toggleModalTicket(true);
+                    setIdOrder(record.record.idOrden);
                   }}
                   items={data}
                   loadingDeleteOrder={loadingDeleteOrder}

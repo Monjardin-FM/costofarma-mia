@@ -40,9 +40,47 @@ const NameProductColumn = (params: RenderFnParams<Product>) => {
         </AppAvatar>
       </div>
       <div className="flex flex-col">
-        <span className="font-bold tracking-wider text-info-900">
-          {params.record.descripcion}
-        </span>
+        <div className="flex gap-2 items-center">
+          <span className="font-bold tracking-wider text-info-900">
+            {params.record.descripcion}
+          </span>
+          {params.record.banControlado && (
+            <Tooltip
+              content="Medicamento controlado"
+              disableAnimation
+              color="warning"
+            >
+              <Icon.Shield size={15} color="yellow" />
+            </Tooltip>
+          )}
+          {params.record.banCronico && (
+            <Tooltip
+              content="Medicamento crónico"
+              disableAnimation
+              color="danger"
+            >
+              <Icon.LifeBuoy size={15} color="red" />
+            </Tooltip>
+          )}
+          {params.record.banRefrigerado && (
+            <Tooltip
+              content="Medicamento refrigerado"
+              disableAnimation
+              color="primary"
+            >
+              <Icon.Thermometer size={15} color="blue" />
+            </Tooltip>
+          )}
+          {params.record.requiereReceta && (
+            <Tooltip
+              content="Este medicamento requiere receta"
+              disableAnimation
+              color="secondary"
+            >
+              <Icon.Layout size={15} color="#A020F0" />
+            </Tooltip>
+          )}
+        </div>
         <span className="font-semibold text-gray-600 text-xs">
           {params.record.ean}
         </span>

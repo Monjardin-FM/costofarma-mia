@@ -14,7 +14,10 @@ import {
 } from "@nextui-org/react";
 import { OrderDetail } from "../../../domain/entities/OrderDetail";
 import { FormInfoClient } from "../../../../new-order/web/components/forms/FormInfoClient";
-import { ShoppingCartPatientInfoValues } from "../../../../new-order/web/components/modals/ShoppingCartPatientInfo";
+import {
+  ShoppingCartPatientInfo,
+  ShoppingCartPatientInfoValues,
+} from "../../../../new-order/web/components/modals/ShoppingCartPatientInfo";
 import React, { useEffect, useState } from "react";
 import { useReloadOrder } from "../../hooks/use-reload-order";
 import { AppToast } from "../../../../../presentation/Components/AppToast";
@@ -23,25 +26,34 @@ import { useToggle } from "react-use";
 import * as Icon from "react-feather";
 import { Product } from "../../../../new-order/domain/entities/product";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useGetOrderDetail } from "../../hooks/use-get-order-detail";
+import { usegetPersonById } from "../../hooks/use-get-person-by-id";
 
 type ModalGenerateAgainOrderProps = {
   isVisible: boolean;
   onClose: () => void;
-  items?: OrderDetail[];
+  // items?: OrderDetail[];
+  idOrder?: number;
   onReload: () => void;
   idPerson: number;
 };
 export const ModalGenerateAgainOrder = ({
   isVisible,
   onClose,
-  items = [],
+  // items = [],
+  idOrder = 0,
   onReload,
   idPerson,
 }: ModalGenerateAgainOrderProps) => {
-  const [itemsList, setItems] = useState<OrderDetail[]>(items);
+  const [itemsList, setItems] = useState<OrderDetail[]>([]);
   const { reloadOrder, loading, error } = useReloadOrder();
   const [modalAddProduct, toggleModalAddProduct] = useToggle(false);
   const [animation] = useAutoAnimate();
+  const { getOrderDetail, orderDetail } = useGetOrderDetail();
+  const { getPersonById, personById } = usegetPersonById();
+
+  const [onCustomerForm, toggleCustomerForm] = useToggle(false);
+
   const [patientFormValues, setPatientFormValues] =
     useState<ShoppingCartPatientInfoValues>({
       rfc: "",
@@ -59,7 +71,10 @@ export const ModalGenerateAgainOrder = ({
       Mail: "",
     });
   const onAddHandler = (product: Product) => {
-    if (itemsList.some((item) => item.idProducto === product.idProducto)) {
+    if (
+      itemsList &&
+      itemsList.some((item) => item.idProducto === product.idProducto)
+    ) {
       AppToast().fire({
         title: "Producto ya agregado",
         text: "Este producto ya lo agregaste a la lista",
@@ -67,6 +82,7 @@ export const ModalGenerateAgainOrder = ({
       });
       return;
     }
+
     setItems((prevItems) => [...prevItems, { ...product, cantidad: 1 }]);
     AppToast().fire({
       title: "Producto agregado",
@@ -75,7 +91,9 @@ export const ModalGenerateAgainOrder = ({
     });
   };
   const onDeleteHandler = (index: number) => {
-    const filteredItems = itemsList.filter((item) => item.idProducto !== index);
+    const filteredItems = itemsList?.filter(
+      (item) => item.idProducto !== index
+    );
     setItems(filteredItems);
   };
   const onReloadHandler = async () => {
@@ -130,11 +148,11 @@ export const ModalGenerateAgainOrder = ({
   };
 
   // 👉 generar el arreglo productos con solo idProducto y cantidad
-  const productos = itemsList.map((item) => ({
+  const productos = itemsList?.map((item) => ({
     idProducto: item.idProducto.toString(),
     cantidad: item.cantidad.toString(),
   }));
-  const total = itemsList.reduce(
+  const total = itemsList?.reduce(
     (acc, item) => acc + item.precio * item.cantidad,
     0
   );
@@ -163,14 +181,48 @@ export const ModalGenerateAgainOrder = ({
       onClose();
     }
   }, [error]);
+  const resetProducts = () => {
+    getOrderDetail({ idOrder: idOrder });
+  };
   useEffect(() => {
-    if (isVisible) setItems(items);
-  }, [isVisible]);
+    if (idOrder) {
+      getOrderDetail({ idOrder: idOrder });
+    }
+  }, [idOrder]);
+  useEffect(() => {
+    if (orderDetail) {
+      setItems(orderDetail);
+    }
+  }, [orderDetail]);
+  useEffect(() => {
+    if (idPerson) {
+      getPersonById({ idPersona: idPerson });
+    }
+  }, [idPerson]);
+  useEffect(() => {
+    if (personById) {
+      setPatientFormValues({
+        nombre: personById.nombre,
+        paterno: personById.paterno,
+        materno: personById.materno,
+        rfc: personById.rfc,
+        Calle: personById.direccion.calle,
+        CP: personById.direccion.cp,
+        Mail: personById.direccion.mail,
+        Telefono: personById.direccion.telefono,
+        Colonia: personById.direccion.colonia,
+        Referencia1: personById.direccion.referencia1,
+        Referencia2: personById.direccion.referencia2,
+        Estado: personById.direccion.idEstado,
+        Municipio: personById.direccion.idMunicipio,
+      });
+    }
+  }, [personById]);
   return (
     <Modal
       isOpen={isVisible}
       onClose={onClose}
-      size="full"
+      size="5xl"
       backdrop="blur"
       scrollBehavior="outside"
       isDismissable={false}
@@ -209,13 +261,14 @@ export const ModalGenerateAgainOrder = ({
                     <Button
                       isIconOnly
                       color="default"
-                      onClick={() => setItems(items)}
+                      onClick={() => resetProducts()}
                     >
                       <Icon.RefreshCw size={18} />
                     </Button>
                   </Tooltip>
                 </div>
-                <Card className="bg-warn-50 col-span-6">
+
+                <Card className="bg-warn-50 col-span-12">
                   <CardBody>
                     <div
                       className="flex flex-col items-start justify-start gap-3"
@@ -287,11 +340,22 @@ export const ModalGenerateAgainOrder = ({
                     <pre>{JSON.stringify(productos, null, 2)}</pre>
                   </div> */}
                 </Card>
-                <Card className="col-span-6 p-3">
-                  <FormInfoClient
-                    mode="regenerate"
+                <Card className="col-span-12 p-3">
+                  <ShoppingCartPatientInfo
+                    isVisible={onCustomerForm}
+                    onClose={() => toggleCustomerForm(false)}
                     patientFormValues={patientFormValues}
                     setPatientFormValues={setPatientFormValues}
+                  />
+
+                  <FormInfoClient
+                    mode={"view"}
+                    patientFormValues={patientFormValues}
+                    setPatientFormValues={setPatientFormValues}
+                    onEdit={() => {
+                      toggleCustomerForm(true);
+                      // setConfirmOrderModal(false);
+                    }}
                   />
                 </Card>
               </div>

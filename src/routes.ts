@@ -1,6 +1,7 @@
 import { NewOrderManagerPage } from "./modules/new-order/web/components/NewOrderManagerPage";
 import { OrderDetailManagerPage } from "./modules/orders/web/components/OrderDetailManagerPage";
 import { OrdersManagerPage } from "./modules/orders/web/components/OrdersManagerPage";
+import { PaymentOrderManagerPage } from "./modules/orders/web/components/PaymentOrderManagerPage";
 import { AppUserAuth } from "./modules/user/web/components/AppUserAuthPage";
 import { AppHomePage } from "./presentation/Components/AppHomePage";
 import { AppLayout } from "./presentation/Components/AppLayout";
@@ -12,6 +13,11 @@ export const routes: IRoute[] = [
     key: "auth-user",
     path: "/sign",
     component: AppUserAuth,
+  },
+  {
+    key: "payment-order",
+    path: "/orders/payorder/:idOrder",
+    component: PaymentOrderManagerPage,
   },
   {
     key: "private-layout",

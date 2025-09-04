@@ -25,6 +25,10 @@ export const getProductService: NewOrderRepository["getProduct"] = async (
     precio: product.precio,
     requiereReceta: product.requiereReceta,
     idOrdenDetalle: product.idOrdenDetalle,
+    activo: product.activo,
+    banControlado: product.banControlado,
+    banCronico: product.banCronico,
+    banRefrigerado: product.banRefrigerado,
   }));
   return products;
 };

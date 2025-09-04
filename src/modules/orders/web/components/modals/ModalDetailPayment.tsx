@@ -25,7 +25,7 @@ export const ModalDetailPayment = ({
     <Modal
       isOpen={isVisible}
       onClose={onClose}
-      size="5xl"
+      size="3xl"
       backdrop="blur"
       scrollBehavior="outside"
       isDismissable={false}

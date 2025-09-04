@@ -35,9 +35,9 @@ export const OrderDetailManagerPage = () => {
         onClose={() => {
           setModalGenerateOrder(false);
         }}
-        items={orderDetail}
         idPerson={idpersona ? parseInt(idpersona) : 0}
         onReload={() => navigate(`/orders`)}
+        idOrder={parseInt(id ?? "")}
       />
       <AppPageTransition>
         <div className="items-center mx-auto mb-5">
