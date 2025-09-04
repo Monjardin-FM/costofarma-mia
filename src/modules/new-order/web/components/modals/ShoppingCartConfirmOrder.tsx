@@ -61,6 +61,7 @@ export const ShoppingCartConfirmOrder = ({
           .map((item) => ({
             idProducto: item.idProducto!.toString(),
             cantidad: item.cantidad.toString(),
+            ean: item.ean,
           })) ?? [],
       receta: "",
     });
