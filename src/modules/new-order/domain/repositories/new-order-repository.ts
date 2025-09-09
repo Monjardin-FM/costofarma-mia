@@ -20,6 +20,7 @@ export type createOrderParams = {
   productos: {
     idProducto: string;
     cantidad: string;
+    ean: string;
   }[];
   receta: string;
 };
