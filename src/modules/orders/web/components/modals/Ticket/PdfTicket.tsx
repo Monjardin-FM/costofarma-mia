@@ -6,9 +6,9 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { OrderDetail } from "../../../../domain/entities/OrderDetail";
+import { Product } from "../../../../../new-order/domain/entities/product";
 type TicketPDFProps = {
-  items: OrderDetail[];
+  items: Product[];
   idOrder: number | null;
 };
 

@@ -7,10 +7,9 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { TicketPDF } from "./PdfTicket";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { PDFViewer } from "@react-pdf/renderer";
 import { useGetOrderDetail } from "../../../hooks/use-get-order-detail";
 import { useEffect } from "react";
-import * as Icon from "react-feather";
 
 type ModalTicketProps = {
   isVisible: boolean;
@@ -42,12 +41,12 @@ export const ModalTicket = ({
           <>
             <ModalHeader>Ticket</ModalHeader>
             <ModalBody>
-              {orderDetail && orderDetail.length > 0 ? (
+              {orderDetail && orderDetail.productos.length > 0 ? (
                 <div className="flex flex-col gap-4">
                   {/* Botón de descarga */}
-                  <PDFDownloadLink
+                  {/* <PDFDownloadLink
                     document={
-                      <TicketPDF items={orderDetail} idOrder={idOrder} />
+                      <TicketPDF items={orderDetail.productos} idOrder={idOrder} />
                     }
                     fileName="ticket.pdf"
                   >
@@ -64,11 +63,14 @@ export const ModalTicket = ({
                         </Button>
                       )
                     }
-                  </PDFDownloadLink>
+                  </PDFDownloadLink> */}
                   {/* Vista previa del PDF */}
                   <div className="h-[600px] border">
                     <PDFViewer width="100%" height="100%">
-                      <TicketPDF items={orderDetail} idOrder={idOrder} />
+                      <TicketPDF
+                        items={orderDetail.productos}
+                        idOrder={idOrder}
+                      />
                     </PDFViewer>
                   </div>
                 </div>

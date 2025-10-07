@@ -10,11 +10,11 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { OrderDetail } from "../../../domain/entities/OrderDetail";
+import { Product } from "../../../../new-order/domain/entities/product";
 export type ModalDetailPaymentProps = {
   isVisible: boolean;
   onClose: () => void;
-  items?: OrderDetail[];
+  items?: Product[];
 };
 export const ModalDetailPayment = ({
   isVisible,

@@ -12,7 +12,6 @@ import {
   ModalHeader,
   Tooltip,
 } from "@nextui-org/react";
-import { OrderDetail } from "../../../domain/entities/OrderDetail";
 import { FormInfoClient } from "../../../../new-order/web/components/forms/FormInfoClient";
 import {
   ShoppingCartPatientInfo,
@@ -45,7 +44,7 @@ export const ModalGenerateAgainOrder = ({
   onReload,
   idPerson,
 }: ModalGenerateAgainOrderProps) => {
-  const [itemsList, setItems] = useState<OrderDetail[]>([]);
+  const [itemsList, setItems] = useState<Product[]>([]);
   const { reloadOrder, loading, error } = useReloadOrder();
   const [modalAddProduct, toggleModalAddProduct] = useToggle(false);
   const [animation] = useAutoAnimate();
@@ -191,7 +190,7 @@ export const ModalGenerateAgainOrder = ({
   }, [idOrder]);
   useEffect(() => {
     if (orderDetail) {
-      setItems(orderDetail);
+      setItems(orderDetail.productos);
     }
   }, [orderDetail]);
   useEffect(() => {

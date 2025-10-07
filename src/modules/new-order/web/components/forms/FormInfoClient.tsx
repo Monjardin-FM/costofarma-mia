@@ -35,7 +35,7 @@ export const FormInfoClient = ({
   const { colonias, getColonias } = useGetColonias();
 
   const initialValues: ShoppingCartPatientInfoValues = {
-    rfc: patientFormValues.rfc ?? "",
+    rfc: patientFormValues.Mail ?? "",
     nombre: patientFormValues.nombre ?? "",
     paterno: patientFormValues.paterno ?? "",
     materno: patientFormValues.materno ?? "",
@@ -312,7 +312,6 @@ export const FormInfoClient = ({
                     type="submit"
                     color="primary"
                     isDisabled={
-                      !values.rfc ||
                       !values.nombre ||
                       !values.paterno ||
                       !values.materno ||
@@ -343,7 +342,6 @@ export const FormInfoClient = ({
                     type="submit"
                     color="primary"
                     isDisabled={
-                      !values.rfc ||
                       !values.nombre ||
                       !values.paterno ||
                       !values.materno ||

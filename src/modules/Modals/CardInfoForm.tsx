@@ -8,7 +8,7 @@ import { Button, Chip, Input, Tooltip } from "@nextui-org/react";
 import * as Icon from "react-feather";
 import { useToggle } from "react-use";
 import { ModalDetailPayment } from "../orders/web/components/modals/ModalDetailPayment";
-import { OrderDetail } from "../orders/domain/entities/OrderDetail";
+import { Product } from "../new-order/domain/entities/product";
 type CardInfoProps = {
   cardInfoForm: any;
   cardFormat: string;
@@ -16,7 +16,7 @@ type CardInfoProps = {
   emailURL?: string;
   amount?: number;
   cupon?: string;
-  items?: OrderDetail[];
+  items?: Product[];
   mode: "page" | "modal";
 };
 

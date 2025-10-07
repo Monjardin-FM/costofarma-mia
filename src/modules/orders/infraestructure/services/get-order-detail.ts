@@ -15,17 +15,41 @@ export const getOrderDetailService: OrderRepository["getOrderDetail"] = async (
     searchParams: { idOrder: params.idOrder.toString() },
   });
   const { body } = await verifyResponse({ response });
-  const data = body.data as any[];
+  const data = body.data as any;
 
-  const ordenDetail = data.map<OrderDetail>((orderDetail) => ({
-    idProducto: orderDetail.idProducto,
-    ean: orderDetail.ean,
-    descripcion: orderDetail.descripcion,
-    cantidad: orderDetail.cantidad,
-    precio: orderDetail.precio,
-    requiereReceta: orderDetail.requiereReceta,
-    idOrdenDetalle: orderDetail.idOrdenDetalle,
-    activo: orderDetail.activo,
-  }));
-  return ordenDetail;
+  const orderDetail: OrderDetail = {
+    idOrden: data.idOrden,
+    fechaCreacion: data.fechaCreacion,
+    direccion: {
+      idDomicilio: data.direccion.idDomicilio,
+      idMunicipio: data.direccion.idMunicipio,
+      idEstado: data.direccion.idEstado,
+    },
+    productos: data.productos.map((item: any) => ({
+      idProducto: item.idProducto,
+      ean: item.ean,
+      descripcion: item.descripcion,
+      cantidad: item.cantidad,
+      piezasGratis: item.piezasGratis,
+      precio: item.precio,
+      requiereReceta: item.requiereReceta,
+      idOrdenDetalle: item.idOrdenDetalle,
+      activo: item.activo,
+      banCronico: item.banCronico,
+      banRefrigerado: item.banRefrigerado,
+      banControlado: item.banControlado,
+    })),
+    persona: {
+      idUser: data.persona.idUser,
+      idPersona: data.persona.idPersona,
+      idPersonaConvenio: data.persona.idPersonaConvenio,
+      idGenero: data.persona.idGenero,
+      idConvenio: data.persona.idConvenio,
+    },
+    idStatus: data.idStatus,
+    idStatusAutorizacion: data.idStatusAutorizacion,
+    pagado: data.pagado,
+    idpersona: data.idpersona,
+  };
+  return orderDetail;
 };

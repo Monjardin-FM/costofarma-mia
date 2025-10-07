@@ -5,6 +5,7 @@ export type createOrderParams = {
     nombre: string;
     paterno: string;
     materno: string;
+    telefono: string;
   };
   direccion: {
     Calle: string;

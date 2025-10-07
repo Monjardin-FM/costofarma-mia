@@ -33,7 +33,7 @@ export const ShoppingCartConfirmOrder = ({
   onEdit = () => {},
   onConfirm = () => {},
 }: ShoppingCartConfirmOrderProps) => {
-  const { createNewOrder, error } = useCreateNewOrder();
+  const { createNewOrder, error, loading } = useCreateNewOrder();
   const navigate = useNavigate();
 
   const onGenerate = async () => {
@@ -42,7 +42,8 @@ export const ShoppingCartConfirmOrder = ({
         nombre: patientInfo.nombre,
         paterno: patientInfo.paterno,
         materno: patientInfo.materno,
-        rfc: patientInfo.rfc,
+        rfc: patientInfo.Mail,
+        telefono: patientInfo.Telefono,
       },
       direccion: {
         Calle: patientInfo.Calle,
@@ -156,7 +157,12 @@ export const ShoppingCartConfirmOrder = ({
               >
                 Cancelar
               </Button>
-              <Button color="primary" onClick={onGenerate}>
+              <Button
+                color="primary"
+                onClick={onGenerate}
+                isLoading={loading}
+                isDisabled={loading}
+              >
                 Generar pedido
               </Button>
             </ModalFooter>

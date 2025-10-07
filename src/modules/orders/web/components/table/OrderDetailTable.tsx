@@ -5,18 +5,18 @@ import {
   AppDataGridColumn,
   RenderFnParams,
 } from "../../../../../presentation/Components/AppDataGrid";
-import { OrderDetail } from "../../../domain/entities/OrderDetail";
 import { getRandomColorSchema } from "./OrderPersonTableResult";
 import * as Icon from "react-feather";
+import { Product } from "../../../../new-order/domain/entities/product";
 
 export type OrderDetailTableResultProps = {
-  items?: OrderDetail[];
+  items?: Product[];
   //   onView: (params: RenderFnParams<OrderDetail>) => void;
   //   onPay: (params: RenderFnParams<OrderDetail>) => void;
   //   onDelete: (params: RenderFnParams<OrderDetail>) => void;
   //   loadingDeleteOrder: boolean;
 };
-const NameProductColumn = (params: RenderFnParams<OrderDetail>) => {
+const NameProductColumn = (params: RenderFnParams<Product>) => {
   return (
     <div className="flex items-center space-x-3">
       <div>
@@ -42,7 +42,7 @@ const NameProductColumn = (params: RenderFnParams<OrderDetail>) => {
     </div>
   );
 };
-const PriceColumn = (params: RenderFnParams<OrderDetail>) => {
+const PriceColumn = (params: RenderFnParams<Product>) => {
   return (
     <div className="flex items-center justify-start">
       <Chip variant="shadow" color="warning" className="font-semibold">
@@ -51,7 +51,7 @@ const PriceColumn = (params: RenderFnParams<OrderDetail>) => {
     </div>
   );
 };
-const QuantityColumn = (params: RenderFnParams<OrderDetail>) => {
+const QuantityColumn = (params: RenderFnParams<Product>) => {
   return (
     <Chip variant="faded" color="primary" className="font-semibold ">
       {params.record.cantidad}
@@ -60,7 +60,7 @@ const QuantityColumn = (params: RenderFnParams<OrderDetail>) => {
 };
 
 export const OrderDetailTable = ({ items }: OrderDetailTableResultProps) => {
-  const columns: AppDataGridColumn<OrderDetail>[] = [
+  const columns: AppDataGridColumn<Product>[] = [
     {
       key: "name",
       title: "Nombre",
@@ -86,10 +86,6 @@ export const OrderDetailTable = ({ items }: OrderDetailTableResultProps) => {
     //   },
   ];
   return (
-    <AppDataGrid<OrderDetail>
-      columns={columns}
-      dataSource={items}
-      itemKey="id"
-    />
+    <AppDataGrid<Product> columns={columns} dataSource={items} itemKey="id" />
   );
 };

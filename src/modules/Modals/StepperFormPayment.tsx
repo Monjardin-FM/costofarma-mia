@@ -203,8 +203,8 @@ export const StepperFormPayment = ({
       setLoadingPayment(false);
     };
   }, [isVisible]);
-  const calculateCost = (orderDetail: OrderDetail[]) => {
-    const total = orderDetail.reduce((acc, item) => {
+  const calculateCost = (orderDetail: OrderDetail) => {
+    const total = orderDetail.productos.reduce((acc, item) => {
       return acc + item.precio * item.cantidad;
     }, 0);
     setAmount(Number(total.toFixed(2)));
@@ -377,7 +377,7 @@ export const StepperFormPayment = ({
                                     emailURL={emailURL}
                                     amount={amount}
                                     cupon={cupon ? cupon : ""}
-                                    items={orderDetail}
+                                    items={orderDetail?.productos}
                                     mode="modal"
                                   />
                                 </div>

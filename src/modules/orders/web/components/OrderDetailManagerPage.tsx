@@ -69,7 +69,7 @@ export const OrderDetailManagerPage = () => {
               </Tooltip>
             </div>
             <div className="w-full container mx-auto">
-              <OrderDetailTable items={orderDetail} />
+              <OrderDetailTable items={orderDetail?.productos} />
             </div>
           </section>
         </div>

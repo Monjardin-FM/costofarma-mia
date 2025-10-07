@@ -24,7 +24,7 @@ export type reloadOrderParams = {
 export type OrderRepository = {
   getPerson(params: { rfc: string }): Promise<Person>;
   getOrderPerson(params: { idPerson: number }): Promise<OrdenPerson[]>;
-  getOrderDetail(params: { idOrder: number }): Promise<OrderDetail[]>;
+  getOrderDetail(params: { idOrder: number }): Promise<OrderDetail>;
   deleteOrder(params: { idOrden: number }): Promise<Boolean>;
   getOrdenByPerson(): Promise<OrderByPerson[]>;
   reloadOrder(params: reloadOrderParams, idPerson: number): Promise<void>;
