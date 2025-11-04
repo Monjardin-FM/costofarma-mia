@@ -8,7 +8,7 @@ import { AppButton } from "../AppButton";
 import { useUser } from "../../../modules/user/web/hooks/use-user";
 import { UserRole } from "../../../modules/user/domain/entities/user-role";
 import { capitalize } from "../../../utils/capitalize";
-import CostoFarmaLogo from "../../../assets/img/FarmaCosto_Logotipo-04.png";
+import CostoFarmaLogo from "../../../assets/img/farmaleal-logo.png";
 import * as Icon from "react-feather";
 import { Suspense } from "react";
 export type AppAsideV2Props = {
@@ -41,7 +41,7 @@ export const AppAsideV2 = ({
           >
             <div className="flex justify-center w-full">
               <img
-                className="w-32 h-auto"
+                className="w-24 h-auto"
                 src={CostoFarmaLogo}
                 alt="CostoFarma Logo"
               />
@@ -68,6 +68,19 @@ export const AppAsideV2 = ({
                   icon={<Icon.Box size={20} />}
                   label="Pedidos"
                   to="/orders"
+                />
+              </AppAuthorizationGuard>
+              <AppAuthorizationGuard
+                roles={
+                  AppConfig[
+                    "masterOrder.managementPage.authorization"
+                  ] as UserRole[]
+                }
+              >
+                <AppAsideLink
+                  icon={<Icon.UserPlus size={20} />}
+                  label="Pacientes"
+                  to="/patients"
                 />
               </AppAuthorizationGuard>
             </div>

@@ -6,8 +6,8 @@ import React, {
   useContext,
   Children,
   ComponentProps,
-} from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+} from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type StepperState = {
   step: number;
@@ -78,8 +78,8 @@ const StepperStep = (params: StepperStepProps) => {
   return (
     <motion.div
       animate={{
-        width: isActivated ? '2rem' : '0.75rem',
-        backgroundColor: isActivated ? '#8dcfb8' : '#d7e2dd',
+        width: isActivated ? "2rem" : "0.75rem",
+        backgroundColor: isActivated ? "#8dcfb8" : "#d7e2dd",
       }}
       className="h-1 rounded-full"
     />
@@ -112,7 +112,7 @@ const StepperItems = ({ children, className }: StepperItemsProps) => {
   }, {});
 
   return (
-    <AnimatePresence exitBeforeEnter initial={false}>
+    <AnimatePresence initial={false}>
       <motion.div
         className={className}
         key={step}
@@ -137,7 +137,7 @@ const StepperContent = ({
   children,
   step,
   ...props
-}: ComponentProps<'div'> & {
+}: ComponentProps<"div"> & {
   step: number;
 }) => {
   return <div {...props}>{children}</div>;

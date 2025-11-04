@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import AuthPageBackground from "../../../../../assets/img/bg-costofarma.jpg";
-import CostoFarmaLogo from "../../../../../assets/img/FarmaCosto_Logotipo-04.png";
+import CostoFarmaLogo from "../../../../../assets/img/farmaleal-logo.png";
 import { AppPageTransition } from "../../../../../presentation/Components/AppPageTransition";
 import { AppBackgroundImageMotion } from "../../../../../presentation/Components/AppBackgroundImageMotion";
 import { AppUserAuthForm } from "../AppUserAuthForm";
@@ -13,7 +13,7 @@ export const AppUserAuth = () => {
   return (
     <>
       {user ? (
-        <Navigate to="/" />
+        <Navigate to="/confirm-code" />
       ) : (
         <AppPageTransition>
           <div className="flex min-h-screen min-w-full">
@@ -25,7 +25,7 @@ export const AppUserAuth = () => {
                 <div className="w-full max-w-md ">
                   <div className="rounded-xl">
                     <img
-                      className="mx-auto w-48"
+                      className="mx-auto w-36"
                       src={CostoFarmaLogo}
                       alt="CostoFarma Logo"
                     />

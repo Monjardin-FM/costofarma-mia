@@ -15,6 +15,7 @@ import {
 import AppSelect from "../../../../../presentation/Components/AppSelect";
 import { AppFormField } from "../../../../../presentation/Components/AppForm";
 import * as Icon from "react-feather";
+import AppFileDropzone from "./AppFileDropZone";
 export type ShoppingCartViewerProps = {
   patientFormValues: ShoppingCartPatientInfoValues;
   setPatientFormValues: (values: ShoppingCartPatientInfoValues) => void;
@@ -76,6 +77,10 @@ export const FormInfoClient = ({
           setFieldValue,
         }) => {
           // Cargar Municipios cuando cambia Estado
+          const handleFileSelect = (file: File) => {
+            console.log("Archivo seleccionado:", file);
+            // Aquí puedes subirlo a tu backend o guardarlo en tu estado global
+          };
           useEffect(() => {
             if (values.Estado > 0) {
               getMunicipios({
@@ -105,7 +110,9 @@ export const FormInfoClient = ({
             <Form onSubmit={handleSubmit} autoComplete="off ">
               <Accordion
                 // isCompact={mode === "view" ? true : false}
-                defaultExpandedKeys={mode === "view" ? [] : ["1", "2"]}
+                defaultExpandedKeys={
+                  mode === "view" ? [] : ["1", "2", "3", "4", "5"]
+                }
                 variant="splitted"
               >
                 <AccordionItem
@@ -294,6 +301,57 @@ export const FormInfoClient = ({
                       onChange={handleChange}
                       readOnly={mode === "view"}
                     />
+                  </div>
+                </AccordionItem>
+                <AccordionItem
+                  key="3"
+                  aria-label="Aseguradora"
+                  title="Aseguradora"
+                >
+                  <div className="grid grid-cols-6 gap-4 mb-4">
+                    <Input
+                      className="col-span-2"
+                      label="Poliza"
+                      name="poliza"
+                    />
+                    <AppFormField className="col-span-2">
+                      <AppSelect
+                        name="Aseguradora"
+                        // value={values.Municipio}
+                        onChange={handleChange}
+                        disabled={mode === "view"}
+                      >
+                        <option value="">Selecciona una aseguradora</option>
+                        <option value="">Aseguradora 1</option>
+                        <option value="">Aseguradora 2</option>
+                        <option value="">Aseguradora 3</option>
+                      </AppSelect>
+                    </AppFormField>
+                    <AppFormField className="col-span-2">
+                      <AppSelect
+                        name="Brocker"
+                        // value={values.Municipio}
+                        onChange={handleChange}
+                        disabled={mode === "view"}
+                      >
+                        <option value="">Selecciona un brocker</option>
+                        <option value="">Brocker 1</option>
+                        <option value="">Brocker 2</option>
+                        <option value="">Brocker 3</option>
+                      </AppSelect>
+                    </AppFormField>
+                  </div>
+                </AccordionItem>
+                <AccordionItem key="4" aria-label="Receta" title="Receta">
+                  <div className="grid grid-cols-6 gap-4 mb-4">
+                    <AppFileDropzone
+                      label="Subir receta médica"
+                      onFileSelect={handleFileSelect}
+                      accept="application/pdf,image/*"
+                    />
+                    <span className="col-span-6 text-danger-500">
+                      *Obligatoria (para generar reembolso)
+                    </span>
                   </div>
                 </AccordionItem>
               </Accordion>

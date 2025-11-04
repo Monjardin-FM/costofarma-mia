@@ -31,7 +31,7 @@ export const AppHomePage = () => (
               /> */}
             </div>
             <h2 className="text-gray-800 text-xl mt-10 text-center">
-              CostoFarma
+              FarmaLeal
             </h2>
             <p className="text-gray-700 mt-2 text-center max-w-3xl">
               We are working to improve the experience of our users.

@@ -6,6 +6,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Radio,
+  RadioGroup,
 } from "@nextui-org/react";
 import { ShoppingCartFormMode } from "../NewOrderManagerPage";
 import * as Yup from "yup";
@@ -108,6 +110,18 @@ export const ShoppingCartForm = ({
                         onChange={handleChange}
                         errorMessage={errors.cantidad}
                       />
+                      <RadioGroup
+                        label="Recurrencia"
+                        orientation="horizontal"
+                        className="col-span-4"
+                      >
+                        <Radio value="0">Semanal</Radio>
+                        <Radio value="1">Quincenal</Radio>
+                        <Radio value="2">Mensual</Radio>
+                        <Radio value="3">Bimestral</Radio>
+                        <Radio value="4">Trimestral</Radio>
+                        <Radio value="5">Semestral</Radio>
+                      </RadioGroup>
                     </div>
                   </ModalBody>
                   <ModalFooter>

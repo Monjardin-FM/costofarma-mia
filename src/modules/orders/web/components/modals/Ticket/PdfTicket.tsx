@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 100,
-    height: 100,
+    // height: 100,
     // marginRight: 10,
   },
   headerText: {
@@ -73,7 +73,7 @@ export const TicketPDF = ({ items, idOrder }: TicketPDFProps) => (
     <Page size="LETTER" style={styles.page}>
       {/* Encabezado con logo + texto */}
       <View style={styles.headerContainer}>
-        <Image src="/FarmaCosto_Logotipo-04.png" style={styles.logo} />
+        <Image src="/farmaleal-logo.png" style={styles.logo} />
         {/* 👆 pon aquí la ruta de tu logo (puede ser /public/logo.png en Next.js o URL) */}
         {/* <Text style={styles.headerText}>CostoFarma</Text> */}
       </View>
@@ -109,10 +109,17 @@ export const TicketPDF = ({ items, idOrder }: TicketPDFProps) => (
         </Text>
       </View>
       {/* Pie de página */}
-      <Text style={styles.footer}>
-        Si requiere factura, favor de mandar un correo a info@costofarma.mx con
-        su número de orden y sus datos fiscales.
-      </Text>
+
+      <View style={styles.footer}>
+        <Text>
+          Este es un ticket sin validez, tu factura se generará de forma
+          automática al recibir tu pago y se te enviara al correo.
+        </Text>
+        <Text>
+          Si requiere factura, favor de mandar un correo a info@costofarma.mx
+          con su número de orden y sus datos fiscales.
+        </Text>
+      </View>
     </Page>
   </Document>
 );

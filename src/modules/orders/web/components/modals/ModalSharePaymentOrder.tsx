@@ -37,7 +37,7 @@ export const ModalSharePaymentOrder = ({
       "\u{1F48A} ¡Hola!\n" +
       "Aquí tienes tu link para completar tu pago:\n" +
       `\u{1F449} ${url}\n\n` +
-      "\u{2705} Gracias por elegir a COSTOFARMA, ¡tu salud es lo más importante!";
+      "\u{2705} Gracias por elegir a FarmaLeal, ¡tu salud es lo más importante!";
 
     // EncodeURIComponent para que no se rompa en la URL
     const whatsappUrl = `https://api.whatsapp.com/send?phone=52${phone}&text=${encodeURIComponent(
