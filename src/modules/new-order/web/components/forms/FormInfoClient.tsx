@@ -123,7 +123,7 @@ export const FormInfoClient = ({
                   {/* Datos Persona */}
                   {/* <h2 className="text-lg font-bold">Datos del Paciente</h2> */}
                   <div className="grid grid-cols-6 gap-4">
-                    {/* <Input
+                    <Input
                       className="col-span-2"
                       label="RFC"
                       name="rfc"
@@ -134,7 +134,7 @@ export const FormInfoClient = ({
                       isRequired
                       errorMessage="Campo requerido"
                       readOnly={mode === "view"}
-                    /> */}
+                    />
                     <Input
                       className="col-span-2"
                       label="Nombre"

@@ -8,6 +8,10 @@ import {
 import { UIColorScheme } from "../../../../../presentation/types/UIColorScheme";
 import { OrderByPerson } from "../../../domain/entities/OrderByPerson";
 import * as Icon from "react-feather";
+import { AppAuthorizationGuard } from "../../../../../presentation/Components/AppAuthorizationGuard";
+import { UserRole } from "../../../../user/domain/entities/user-role";
+import AppConfig from "../../../../../settings.json";
+
 export type OrderPersonTableResultProps = {
   items?: OrderByPerson[];
   onView: (params: RenderFnParams<OrderByPerson>) => void;
@@ -16,6 +20,7 @@ export type OrderPersonTableResultProps = {
   onGenerateAgain: (params: RenderFnParams<OrderByPerson>) => void;
   onViewTIcket: (params: RenderFnParams<OrderByPerson>) => void;
   loadingDeleteOrder: boolean;
+  tour?: React.ReactNode;
 };
 export const getRandomColorSchema = (params: { length: number }) => {
   const colors: UIColorScheme[] = [
@@ -110,6 +115,7 @@ const ActionsColumn = ({
   onGenerateAgain,
   onViewTIcket,
   loadingDeleteOrder,
+  tour,
 }: RenderFnParams<OrderByPerson> & {
   onPay: () => void;
   onView: () => void;
@@ -117,30 +123,11 @@ const ActionsColumn = ({
   onGenerateAgain: () => void;
   onViewTIcket: () => void;
   loadingDeleteOrder: boolean;
+  tour?: React.ReactNode;
 }) => {
   return (
     <div className="flex items-center justify-end gap-3">
-      {record.idStatus === 6 && !record.pagado && (
-        <Tooltip
-          content="Pagar"
-          color="warning"
-          style={{ zIndex: 0 }}
-          offset={1}
-          showArrow
-          closeDelay={10}
-          disableAnimation
-        >
-          <Button
-            onClick={() => onPay()}
-            size="sm"
-            variant="shadow"
-            isIconOnly
-            color="warning"
-          >
-            <Icon.CreditCard size={18} />
-          </Button>
-        </Tooltip>
-      )}
+      {tour}
       <Tooltip
         content="Ver detalle del pedido"
         color="primary"
@@ -161,7 +148,7 @@ const ActionsColumn = ({
           isIconOnly
           color="primary"
         >
-          <Icon.Eye size={18} />
+          <Icon.Eye size={18} id="DetallePedido" />
         </Button>
       </Tooltip>
       <Tooltip
@@ -184,57 +171,88 @@ const ActionsColumn = ({
           isIconOnly
           color="success"
         >
-          <Icon.Download size={18} />
+          <Icon.Download size={18} id="VerTicket" />
         </Button>
       </Tooltip>
-      <Tooltip
-        content="Volver a generar pedido"
-        color="secondary"
-        style={{
-          zIndex: 0,
-        }}
-        offset={1}
-        showArrow
-        closeDelay={10}
-        disableAnimation
+      <AppAuthorizationGuard
+        roles={
+          AppConfig[
+            "masterOrder.managementPage.actionsAuthorization"
+          ] as UserRole[]
+        }
       >
-        <Button
-          onClick={() => {
-            onGenerateAgain();
-          }}
-          size="sm"
-          variant="shadow"
-          isIconOnly
+        {record.idStatus === 6 && !record.pagado && (
+          <Tooltip
+            content="Pagar"
+            color="warning"
+            style={{ zIndex: 0 }}
+            offset={1}
+            showArrow
+            closeDelay={10}
+            disableAnimation
+          >
+            <Button
+              onClick={() => onPay()}
+              size="sm"
+              variant="shadow"
+              isIconOnly
+              color="warning"
+            >
+              <Icon.CreditCard size={18} id="PagarPedido" />
+            </Button>
+          </Tooltip>
+        )}
+
+        <Tooltip
+          content="Volver a generar pedido"
           color="secondary"
-        >
-          <Icon.RefreshCw size={18} />
-        </Button>
-      </Tooltip>
-      <Tooltip
-        content="Eliminar pedido"
-        color="danger"
-        style={{
-          zIndex: 0,
-        }}
-        offset={1}
-        showArrow
-        closeDelay={10}
-        disableAnimation
-      >
-        <Button
-          onClick={() => {
-            onDelete();
+          style={{
+            zIndex: 0,
           }}
-          size="sm"
-          variant="shadow"
-          isIconOnly
-          color="danger"
-          isLoading={loadingDeleteOrder}
-          isDisabled={loadingDeleteOrder}
+          offset={1}
+          showArrow
+          closeDelay={10}
+          disableAnimation
         >
-          <Icon.Trash size={18} />
-        </Button>
-      </Tooltip>
+          <Button
+            onClick={() => {
+              onGenerateAgain();
+            }}
+            size="sm"
+            variant="shadow"
+            isIconOnly
+            color="secondary"
+          >
+            <Icon.RefreshCw size={18} id="GenerarOtraVez" />
+          </Button>
+        </Tooltip>
+
+        <Tooltip
+          content="Eliminar pedido"
+          color="danger"
+          style={{
+            zIndex: 0,
+          }}
+          offset={1}
+          showArrow
+          closeDelay={10}
+          disableAnimation
+        >
+          <Button
+            onClick={() => {
+              onDelete();
+            }}
+            size="sm"
+            variant="shadow"
+            isIconOnly
+            color="danger"
+            isLoading={loadingDeleteOrder}
+            isDisabled={loadingDeleteOrder}
+          >
+            <Icon.Trash size={18} id="EliminarPedido" />
+          </Button>
+        </Tooltip>
+      </AppAuthorizationGuard>
     </div>
   );
 };

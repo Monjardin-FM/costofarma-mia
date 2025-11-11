@@ -22,8 +22,31 @@ import {
   ShoppingCartPatientInfoValues,
 } from "./modals/ShoppingCartPatientInfo";
 import { ShoppingCartConfirmOrder } from "./modals/ShoppingCartConfirmOrder";
+import { useTour } from "../../../../presentation/Components/AppTour/useTour";
+import { Step } from "react-joyride";
 export type ShoppingCartFormMode = "create" | "update";
-
+const STEPS: Step[] = [
+  {
+    target: "#carrito", // clase o selector del elemento
+    content: "Aquí puedes ver el carrito de compra",
+    placement: "left",
+  },
+  {
+    target: "#patient-info", // clase o selector del elemento
+    content: "Aquí puedes ingresar la información del paciente",
+    placement: "left",
+  },
+  {
+    target: "#save-order", // clase o selector del elemento
+    content: "Desde este botón puedes guardar el pedido",
+    placement: "left",
+  },
+  {
+    target: "#agregar-carrito", // clase o selector del elemento
+    content: "Desde este botón puedes agregar el producto al carrito de compra",
+    placement: "left",
+  },
+];
 export const NewOrderManagerPage = () => {
   const [search, setSearch] = useState<string>("");
   const { getProduct, products } = useGetProduct();
@@ -48,6 +71,21 @@ export const NewOrderManagerPage = () => {
     useState<ShoppingCartFormValues>();
   const [shoppingCartFormMode, setShoppingCartFormMode] =
     useState<ShoppingCartFormMode>("create");
+  const tourAcciones = useTour(STEPS, "TourAccionesNuevaOrden");
+  useEffect(() => {
+    // Si el usuario ya completó el tour, no lo vuelvas a ejecutar
+    const tourDone = localStorage.getItem("TourAccionesNuevaOrden");
+    if (tourDone === "done") return;
+
+    // Si ya hay productos y el tour aún no está corriendo, lo lanzamos
+    if (products && products.length > 0 && !tourAcciones.run) {
+      const timeout = setTimeout(() => {
+        tourAcciones.setRun(true);
+      }, 400); // Esperamos un poco para asegurar que el DOM esté listo
+
+      return () => clearTimeout(timeout);
+    }
+  }, [products, tourAcciones]);
   const rowsPerPage = 10;
   const [patientFormValues, setPatientFormValues] =
     useState<ShoppingCartPatientInfoValues>({
@@ -183,7 +221,9 @@ export const NewOrderManagerPage = () => {
     <AppAuthorizationGuard
       redirect={{ to: "/" }}
       roles={
-        AppConfig["masterOrder.managementPage.authorization"] as UserRole[]
+        AppConfig[
+          "masterOrder.managementPage.actionsAuthorization"
+        ] as UserRole[]
       }
     >
       {/* Formulario para agregar al carrito de compra */}
@@ -250,6 +290,7 @@ export const NewOrderManagerPage = () => {
           />
           <section className="container px-4 mt-12 pb-16 mx-auto">
             <div className="flex justify-end gap-2">
+              {tourAcciones.tour}
               <div className="flex-none relative">
                 {shoppingCartItems.length > 0 && (
                   <div className="absolute -right-2 -top-2 h-6 w-6 bg-primary-500 rounded-full font-semibold text-primary-100 text-sm flex items-center justify-center z-50">
@@ -269,7 +310,7 @@ export const NewOrderManagerPage = () => {
                       size="md"
                       isIconOnly
                     >
-                      <Icon.ShoppingCart size={18} />
+                      <Icon.ShoppingCart size={18} id="carrito" />
                     </Button>
                   </Tooltip>
                 </div>
@@ -283,7 +324,7 @@ export const NewOrderManagerPage = () => {
                   variant="shadow"
                   size="md"
                   color="default"
-                  startContent={<User size={18} />}
+                  startContent={<User size={18} id="patient-info" />}
                   onClick={() => {
                     toggleCustomerForm(true);
                   }}
@@ -313,7 +354,7 @@ export const NewOrderManagerPage = () => {
                     shoppingCartItems.length === 0
                   }
                 >
-                  <Icon.Save size={18} />
+                  <Icon.Save size={18} id="save-order" />
                 </Button>
               </Tooltip>
             </div>
@@ -322,6 +363,7 @@ export const NewOrderManagerPage = () => {
                 <NewOrderTable
                   onAdd={(data) => onAddHandler(data.index)}
                   items={data}
+                  tour={tourAcciones.tour}
                 />
               </div>
               <div>

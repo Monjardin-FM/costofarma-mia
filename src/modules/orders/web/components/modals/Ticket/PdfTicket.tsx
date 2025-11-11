@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   footer: {
-    position: "absolute",
-    bottom: 20,
+    flexDirection: "row",
+    marginTop: 30,
     left: 0,
     right: 0,
-    textAlign: "center",
-    fontSize: 10,
+    textAlign: "left",
+    fontSize: 13,
     color: "grey",
   },
 });
@@ -114,10 +114,6 @@ export const TicketPDF = ({ items, idOrder }: TicketPDFProps) => (
         <Text>
           Este es un ticket sin validez, tu factura se generará de forma
           automática al recibir tu pago y se te enviara al correo.
-        </Text>
-        <Text>
-          Si requiere factura, favor de mandar un correo a info@costofarma.mx
-          con su número de orden y sus datos fiscales.
         </Text>
       </View>
     </Page>

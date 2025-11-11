@@ -1,18 +1,33 @@
 import { Button, Input } from "@nextui-org/react";
 import { AppHero } from "../../../../presentation/Components/AppHero";
 import { AppHeading } from "../../../../presentation/Components/AppHeading";
+import { Step } from "react-joyride";
+import { useEffect } from "react";
+import { useTour } from "../../../../presentation/Components/AppTour/useTour";
 type NewOrderHeaderProps = {
   onSearch: (search: string) => void;
   search: string;
   setSearch: (search: string) => void;
   mode: "new" | "addProduct";
 };
+const STEPS: Step[] = [
+  {
+    target: "#medicine", // clase o selector del elemento
+    content: "Puedes buscar medicamentos por nombre o código aquí",
+    placement: "right",
+  },
+];
 export const NewOrderHeader = ({
   onSearch,
   search,
   setSearch,
   mode,
 }: NewOrderHeaderProps) => {
+  const tourBuscarMedicamento = useTour(STEPS, "TourBuscarMedicamento");
+  useEffect(() => {
+    tourBuscarMedicamento.run;
+  }, [tourBuscarMedicamento]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -44,6 +59,7 @@ export const NewOrderHeader = ({
               : " w-3/4 flex items-center justify-between gap-2 "
           }
         >
+          {tourBuscarMedicamento.tour}
           <Input
             id="medicine"
             name="medicine"

@@ -11,20 +11,37 @@ import { capitalize } from "../../../utils/capitalize";
 import CostoFarmaLogo from "../../../assets/img/farmaleal-logo.png";
 import * as Icon from "react-feather";
 import { Suspense } from "react";
+import { useTour } from "../AppTour/useTour";
+import { Step } from "react-joyride";
+
 export type AppAsideV2Props = {
   isVisible?: boolean;
   onClose?: () => void;
 };
-
+const STEPS: Step[] = [
+  {
+    target: "#Ordenes", // clase o selector del elemento
+    content: "Aquí puedes ver los pedidos realizados",
+    placement: "right",
+  },
+  {
+    target: "#Pacientes", // clase o selector del elemento
+    content: "Módulo para gestionar pacientes",
+    placement: "right",
+  },
+];
 export const AppAsideV2 = ({
   isVisible = false,
   onClose = () => {},
 }: AppAsideV2Props) => {
+  const tour2 = useTour(STEPS, "TourMenu2");
   const ref = useRef(null);
-  useClickAway(ref, onClose);
+  useClickAway(ref, () => {
+    // Solo cerrar el menú si el tour no está corriendo
+    if (!tour2.run) onClose();
+  });
 
   const { signOut, user } = useUser();
-
   return (
     <Suspense fallback="loading">
       <AnimatePresence>
@@ -64,8 +81,9 @@ export const AppAsideV2 = ({
                   ] as UserRole[]
                 }
               >
+                {tour2.tour}
                 <AppAsideLink
-                  icon={<Icon.Box size={20} />}
+                  icon={<Icon.Box size={20} id="Ordenes" />}
                   label="Pedidos"
                   to="/orders"
                 />
@@ -73,12 +91,12 @@ export const AppAsideV2 = ({
               <AppAuthorizationGuard
                 roles={
                   AppConfig[
-                    "masterOrder.managementPage.authorization"
+                    "masterPatient.managementPage.authorization"
                   ] as UserRole[]
                 }
               >
                 <AppAsideLink
-                  icon={<Icon.UserPlus size={20} />}
+                  icon={<Icon.UserPlus size={20} id="Pacientes" />}
                   label="Pacientes"
                   to="/patients"
                 />

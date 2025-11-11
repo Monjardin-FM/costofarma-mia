@@ -14,7 +14,7 @@ export const AppPatientManagerPage = () => {
     <AppAuthorizationGuard
       redirect={{ to: "/" }}
       roles={
-        AppConfig["masterOrder.managementPage.authorization"] as UserRole[]
+        AppConfig["masterPatient.managementPage.authorization"] as UserRole[]
       }
     >
       <AppCreatePatientModal

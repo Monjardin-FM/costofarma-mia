@@ -21,6 +21,47 @@ import { OrdenPerson } from "../../domain/entities/OrdenPerson";
 import { useGetOrderPerson } from "../hooks/use-get-order-person";
 import { ModalGenerateAgainOrder } from "./modals/ModalGenerateAgainOrder";
 import { ModalTicket } from "./modals/Ticket/ModalTicket";
+import { Step } from "react-joyride";
+import { useTour } from "../../../../presentation/Components/AppTour/useTour";
+
+const STEPS: Step[] = [
+  {
+    target: "#rfc", // clase o selector del elemento
+    content: "Puedes buscar por RFC del paciente",
+    placement: "bottom",
+  },
+  {
+    target: "#CrearPedido", // clase o selector del elemento
+    content: "Aquí puedes crear un nuevo pedido",
+    placement: "left",
+  },
+  {
+    target: "#DetallePedido",
+    content: "Puedes ver el detalle del pedido aquí",
+    placement: "left",
+  },
+  {
+    target: "#VerTicket", // clase o selector del elemento
+    content: "Visualiza el ticket del pedido realizado",
+    placement: "left",
+  },
+  {
+    target: "#PagarPedido", // clase o selector del elemento
+    content: "Realiza el pago del pedido aquí",
+    placement: "left",
+  },
+  {
+    target: "#GenerarOtraVez", // clase o selector del elemento
+    content: "Genera el pedido nuevamente para este paciente",
+    placement: "left",
+  },
+
+  {
+    target: "#EliminarPedido", // clase o selector del elemento
+    content: "Elimina el pedido si es necesario",
+    placement: "left",
+  },
+];
 export const OrdersManagerPage = () => {
   const navigate = useNavigate();
   const { getPerson, person } = useGetPerson();
@@ -42,6 +83,10 @@ export const OrdersManagerPage = () => {
     error: errorDeleteOrder,
     loading: loadingDeleteOrder,
   } = useDeleteOrder();
+  const tourPedidos = useTour(STEPS, "TourPedidos");
+  useEffect(() => {
+    tourPedidos.run;
+  }, [tourPedidos]);
   const rowsPerPage = 10;
   const data = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -148,10 +193,10 @@ export const OrdersManagerPage = () => {
 
   return (
     <AppAuthorizationGuard
-      redirect={{ to: "/" }}
       roles={
         AppConfig["masterOrder.managementPage.authorization"] as UserRole[]
       }
+      redirect={{ to: "/" }}
     >
       <ModalResultPerson
         items={person}
@@ -189,20 +234,31 @@ export const OrdersManagerPage = () => {
             onSearch={onSearch}
             search={search}
             setSearch={setSearch}
+            tour={tourPedidos.tour}
           />
           <section className="container px-4 mt-12 pb-16 mx-auto">
             <div className="flex justify-end">
-              <Button
-                variant="shadow"
-                size="sm"
-                color="success"
-                onClick={() => {
-                  navigate("/new-order");
-                }}
-                startContent={<Icon.PlusCircle size={18} />}
+              <AppAuthorizationGuard
+                roles={
+                  AppConfig[
+                    "masterOrder.managementPage.actionsAuthorization"
+                  ] as UserRole[]
+                }
               >
-                Crear Pedido
-              </Button>
+                {tourPedidos.tour}
+                <Button
+                  variant="shadow"
+                  size="sm"
+                  color="success"
+                  onClick={() => {
+                    navigate("/new-order");
+                  }}
+                  startContent={<Icon.PlusCircle size={18} />}
+                  id="CrearPedido"
+                >
+                  Crear Pedido
+                </Button>
+              </AppAuthorizationGuard>
             </div>
             <div className="mt-5 flex flex-col items-center w-full justify-center gap-5 mb-10">
               <div className="w-full container mx-auto">
@@ -231,6 +287,7 @@ export const OrdersManagerPage = () => {
                   }}
                   items={data}
                   loadingDeleteOrder={loadingDeleteOrder}
+                  tour={tourPedidos.tour}
                 />
               </div>
               <div>

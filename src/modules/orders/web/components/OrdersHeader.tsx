@@ -1,15 +1,21 @@
 import { Button, Input } from "@nextui-org/react";
 import { AppHero } from "../../../../presentation/Components/AppHero";
 import { AppHeading } from "../../../../presentation/Components/AppHeading";
+import { AppAuthorizationGuard } from "../../../../presentation/Components/AppAuthorizationGuard";
+import { UserRole } from "../../../user/domain/entities/user-role";
+import AppConfig from "../../../../settings.json";
+
 type OrdersHeaderProps = {
   onSearch: (search: string) => void;
   search: string;
   setSearch: (search: string) => void;
+  tour: React.ReactNode;
 };
 export const OrdersHeader = ({
   onSearch,
   search,
   setSearch,
+  tour,
 }: OrdersHeaderProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,30 +32,39 @@ export const OrdersHeader = ({
         <AppHeading size="xl" className="text-gray-100">
           Pedidos Activos
         </AppHeading>
-        <form
-          onSubmit={handleSubmit}
-          className="w-2/3 gap-2 flex flex-row items-center justify-center rounded-lg"
+        <AppAuthorizationGuard
+          roles={
+            AppConfig[
+              "masterOrder.managementPage.actionsAuthorization"
+            ] as UserRole[]
+          }
         >
-          <Input
-            value={search}
-            id="rfc"
-            name="rfc"
-            radius="full"
-            size="sm"
-            variant="faded"
-            label="Buscar por RFC"
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-            isClearable={true}
-            onClear={() => {
-              setSearch("");
-            }}
-          />
-          <Button variant="shadow" color="primary" size="md" type="submit">
-            Buscar
-          </Button>
-        </form>
+          {tour}
+          <form
+            onSubmit={handleSubmit}
+            className="w-2/3 gap-2 flex flex-row items-center justify-center rounded-lg"
+          >
+            <Input
+              value={search}
+              id="rfc"
+              name="rfc"
+              radius="full"
+              size="sm"
+              variant="faded"
+              label="Buscar por RFC"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              isClearable={true}
+              onClear={() => {
+                setSearch("");
+              }}
+            />
+            <Button variant="shadow" color="primary" size="md" type="submit">
+              Buscar
+            </Button>
+          </form>
+        </AppAuthorizationGuard>
       </section>
     </AppHero>
   );

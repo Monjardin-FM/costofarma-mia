@@ -37,16 +37,16 @@ export const routes: IRoute[] = [
         // exact: true,
         component: AppHomePage,
       },
-      {
-        key: "orders",
-        path: "/orders",
-        component: OrdersManagerPage,
-      },
       { key: "new-order", path: "/new-order", component: NewOrderManagerPage },
       {
         key: "order-detail",
         path: "/orders/:id/:idpersona",
         component: OrderDetailManagerPage,
+      },
+      {
+        key: "orders",
+        path: "/orders",
+        component: OrdersManagerPage,
       },
       {
         key: "patient-manager",

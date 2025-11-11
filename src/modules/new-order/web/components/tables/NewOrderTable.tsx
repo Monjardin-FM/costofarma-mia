@@ -12,6 +12,7 @@ import * as Icon from "react-feather";
 export type NewOrderTableProps = {
   items?: Product[];
   onAdd: (params: RenderFnParams<Product>) => void;
+  tour?: React.ReactNode;
 };
 
 const getRandomColorSchema = (params: { length: number }) => {
@@ -107,9 +108,11 @@ const QuantityColumn = (params: RenderFnParams<Product>) => {
 };
 export const ActionColumn = ({
   onAdd,
-}: RenderFnParams<Product> & { onAdd: () => void }) => {
+  tour,
+}: RenderFnParams<Product> & { onAdd: () => void; tour?: React.ReactNode }) => {
   return (
     <div className="flex items-center justify-start gpa-5">
+      {tour}
       <Tooltip
         content="Agregar a pedido"
         color="success"
@@ -127,6 +130,7 @@ export const ActionColumn = ({
           variant="shadow"
           color="success"
           isIconOnly
+          id="agregar-carrito"
         >
           <Icon.PlusCircle size={18} />
         </Button>

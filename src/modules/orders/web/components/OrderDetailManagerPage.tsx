@@ -44,29 +44,37 @@ export const OrderDetailManagerPage = () => {
           <OrderDetailHeader />
           <section className="container px-4 mt-12 pb-16 mx-auto">
             <div className="flex justify-end mb-4">
-              <Tooltip
-                content="Volver a generar pedido"
-                color="secondary"
-                style={{
-                  zIndex: 0,
-                }}
-                offset={1}
-                showArrow
-                closeDelay={10}
-                disableAnimation
+              <AppAuthorizationGuard
+                roles={
+                  AppConfig[
+                    "masterOrder.managementPage.actionsAuthorization"
+                  ] as UserRole[]
+                }
               >
-                <Button
-                  onClick={() => {
-                    setModalGenerateOrder(true);
-                  }}
-                  size="sm"
-                  variant="shadow"
-                  isIconOnly
+                <Tooltip
+                  content="Volver a generar pedido"
                   color="secondary"
+                  style={{
+                    zIndex: 0,
+                  }}
+                  offset={1}
+                  showArrow
+                  closeDelay={10}
+                  disableAnimation
                 >
-                  <Icon.RefreshCw size={18} />
-                </Button>
-              </Tooltip>
+                  <Button
+                    onClick={() => {
+                      setModalGenerateOrder(true);
+                    }}
+                    size="sm"
+                    variant="shadow"
+                    isIconOnly
+                    color="secondary"
+                  >
+                    <Icon.RefreshCw size={18} />
+                  </Button>
+                </Tooltip>
+              </AppAuthorizationGuard>
             </div>
             <div className="w-full container mx-auto">
               <OrderDetailTable items={orderDetail?.productos} />
