@@ -24,6 +24,7 @@ export type ShoppingCartConfirmOrderProps = {
   patientInfo: ShoppingCartPatientInfoValues;
   onEdit?: () => void;
   onConfirm?: () => void;
+  onPay: () => Promise<boolean>;
 };
 export const ShoppingCartConfirmOrder = ({
   isVisible,
@@ -32,40 +33,45 @@ export const ShoppingCartConfirmOrder = ({
   patientInfo,
   onEdit = () => {},
   onConfirm = () => {},
+  onPay,
 }: ShoppingCartConfirmOrderProps) => {
   const { createNewOrder, error, loading } = useCreateNewOrder();
   const navigate = useNavigate();
-
   const onGenerate = async () => {
-    await createNewOrder({
-      persona: {
-        nombre: patientInfo.nombre,
-        paterno: patientInfo.paterno,
-        materno: patientInfo.materno,
-        rfc: patientInfo.Mail,
-        telefono: patientInfo.Telefono,
-      },
-      direccion: {
-        Calle: patientInfo.Calle,
-        Colonia: patientInfo.Colonia ?? "",
-        Municipio: patientInfo.Municipio.toString(),
-        Estado: patientInfo.Estado.toString(),
-        CP: patientInfo.CP,
-        Referencia1: patientInfo.Referencia1 ?? "",
-        Referencia2: patientInfo.Referencia2 ?? "",
-        Telefono: patientInfo.Telefono,
-        Mail: patientInfo.Mail,
-      },
-      productos:
-        items
-          ?.filter((item) => item.idProducto !== undefined && item.cantidad > 0)
-          .map((item) => ({
-            idProducto: item.idProducto!.toString(),
-            cantidad: item.cantidad.toString(),
-            ean: item.ean,
-          })) ?? [],
-      receta: "",
-    });
+    const responsePay = await onPay(); // Espera hasta que el pago termine
+    if (responsePay) {
+      await createNewOrder({
+        persona: {
+          nombre: patientInfo.nombre,
+          paterno: patientInfo.paterno,
+          materno: patientInfo.materno,
+          rfc: patientInfo.Mail,
+          telefono: patientInfo.Telefono,
+        },
+        direccion: {
+          Calle: patientInfo.Calle,
+          Colonia: patientInfo.Colonia ?? "",
+          Municipio: patientInfo.Municipio.toString(),
+          Estado: patientInfo.Estado.toString(),
+          CP: patientInfo.CP,
+          Referencia1: patientInfo.Referencia1 ?? "",
+          Referencia2: patientInfo.Referencia2 ?? "",
+          Telefono: patientInfo.Telefono,
+          Mail: patientInfo.Mail,
+        },
+        productos:
+          items
+            ?.filter(
+              (item) => item.idProducto !== undefined && item.cantidad > 0
+            )
+            .map((item) => ({
+              idProducto: item.idProducto!.toString(),
+              cantidad: item.cantidad.toString(),
+              ean: item.ean,
+            })) ?? [],
+        receta: "",
+      });
+    }
     if (!error) {
       AppToast().fire({
         title: "Pedido creado",
@@ -163,7 +169,7 @@ export const ShoppingCartConfirmOrder = ({
                 isLoading={loading}
                 isDisabled={loading}
               >
-                Generar pedido
+                Siguiente
               </Button>
             </ModalFooter>
           </>

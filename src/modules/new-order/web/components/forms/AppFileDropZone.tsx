@@ -7,7 +7,7 @@ interface AppFileDropzoneProps {
 }
 
 const AppFileDropzone: React.FC<AppFileDropzoneProps> = ({
-  label = "Subir receta",
+  label = "Subir documento",
   onFileSelect,
   accept = "application/pdf,image/*",
 }) => {

@@ -25,7 +25,7 @@ export const CardInfoForm = ({
   cardFormat,
   setCardFormat,
   emailURL,
-  amount,
+  // amount,
   items,
   mode,
 }: CardInfoProps) => {
@@ -99,7 +99,7 @@ export const CardInfoForm = ({
               className="font-semibold text-lg "
             >
               <p className="flex items-center justify-center gap-x-2">
-                <span>{`$${amount}`} </span>
+                <span>{`$459.99`} </span>
                 {mode === "modal" ? (
                   <Tooltip
                     content="Ver detalles del pedido"

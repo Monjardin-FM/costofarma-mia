@@ -21,13 +21,15 @@ import { OrderDetail } from "../orders/domain/entities/OrderDetail";
 // import { token } from "../../utils/token";
 import * as Icon from "react-feather";
 import { ModalSharePaymentOrder } from "../orders/web/components/modals/ModalSharePaymentOrder";
+import { DeliverInfo } from "../new-order/web/components/DeliverInfo";
 export type StepperFormPaymentProps = {
   isVisible: boolean;
   onClose: () => void;
   emailURL?: string;
   cupon?: string;
   idOrder?: number | null;
-  onReload: () => void;
+  onReload?: () => void;
+  onPay?: () => boolean;
 };
 export type DataCard = {
   adress: "" | null;
@@ -45,7 +47,8 @@ export const StepperFormPayment = ({
   cupon,
   emailURL,
   idOrder,
-  onReload,
+  onReload = () => {},
+  onPay,
 }: StepperFormPaymentProps) => {
   const { orderDetail, getOrderDetail } = useGetOrderDetail();
   const [cardFormat, setCardFormat] = useState("");
@@ -104,6 +107,19 @@ export const StepperFormPayment = ({
     }),
     onSubmit: () => {},
   });
+  // onPay = () => {
+  //   setLoadingPayment(true);
+  //   Swal.fire({
+  //     title: "Pago exitoso",
+  //     text: "Pago realizado correctamente.",
+  //     icon: "success",
+  //     confirmButtonText: "Ok",
+  //     confirmButtonColor: "#15A186",
+  //   });
+  //   setLoadingPayment(false);
+  //   onClose();
+  //   return true;
+  // };
   // This function is used to handle the payment process
   const handlePaymentOP = async (
     endpoint: string = "/Order/PayOrder"
@@ -179,6 +195,7 @@ export const StepperFormPayment = ({
       throw error;
     }
   };
+  console.log(handlePaymentOP);
 
   // This function is used to handle idevice session id and token id. And confure the OpenPay API
   useEffect(() => {
@@ -260,11 +277,11 @@ export const StepperFormPayment = ({
                       </Button>
                     </Tooltip>
                   </p>
-                  <span className="text-sm text-gray-800 font-normal">
+                  {/* <span className="text-sm text-gray-800 font-normal">
                     Si requiere factura, favor de mandar un correo a
                     info@costofarma.mx con su número de orden y sus
                     datos fiscales
-                  </span>
+                  </span> */}
                 </div>
               </ModalHeader>
               <ModalBody>
@@ -296,6 +313,7 @@ export const StepperFormPayment = ({
                     </span>
                   </div>
                 </Loader>
+                <DeliverInfo />
                 <Stepper initialValue={{ step: 1 }}>
                   {({ handleChange }) => {
                     const onSubmit = () => {
@@ -426,11 +444,28 @@ export const StepperFormPayment = ({
                                   <AppButton
                                     colorScheme="info"
                                     onClick={() => {
-                                      handlePaymentOP();
+                                      setLoadingPayment(true);
+
+                                      // Simulamos el proceso de pago con un pequeño delay
+                                      setTimeout(() => {
+                                        Swal.fire({
+                                          title: "Pago exitoso",
+                                          text: "Pago simulado correctamente.",
+                                          icon: "success",
+                                          confirmButtonText: "Ok",
+                                          confirmButtonColor: "#15A186",
+                                        }).then(() => {
+                                          setLoadingPayment(false);
+                                          if (onPay) onPay(); // 🔥 Notifica al padre que el pago terminó
+                                          onClose(); // 🔒 Cierra el modal
+                                        });
+                                      }, 1500); // Simulamos 1.5 segundos de "proceso"
                                     }}
                                     isDisabled={loadingPayment}
                                   >
-                                    Realizar Pago
+                                    {loadingPayment
+                                      ? "Procesando..."
+                                      : "Realizar Pago"}
                                   </AppButton>
                                 </div>
                               </div>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGetColonias } from "../../hooks/use-get-colonias";
 import { useGetEstados } from "../../hooks/use-get-estados";
 import { useGetMunicipios } from "../../hooks/use-get-municipios";
@@ -9,6 +9,7 @@ import {
   Accordion,
   AccordionItem,
   Button,
+  Chip,
   Input,
   ModalFooter,
 } from "@nextui-org/react";
@@ -16,6 +17,7 @@ import AppSelect from "../../../../../presentation/Components/AppSelect";
 import { AppFormField } from "../../../../../presentation/Components/AppForm";
 import * as Icon from "react-feather";
 import AppFileDropzone from "./AppFileDropZone";
+import { HistoricPrescription } from "../modals/HistoricPrescription";
 export type ShoppingCartViewerProps = {
   patientFormValues: ShoppingCartPatientInfoValues;
   setPatientFormValues: (values: ShoppingCartPatientInfoValues) => void;
@@ -34,7 +36,12 @@ export const FormInfoClient = ({
   const { getMunicipios, municipios } = useGetMunicipios();
   const { getEstados, estados } = useGetEstados();
   const { colonias, getColonias } = useGetColonias();
-
+  const [modalHistoricPrescription, setModalHistoricPrescription] =
+    useState(false);
+  const [selectedPrescription, setSelectedPrescription] = useState<{
+    id: number;
+    name: string;
+  } | null>(null);
   const initialValues: ShoppingCartPatientInfoValues = {
     rfc: patientFormValues.Mail ?? "",
     nombre: patientFormValues.nombre ?? "",
@@ -55,6 +62,15 @@ export const FormInfoClient = ({
   }, []);
   return (
     <>
+      <HistoricPrescription
+        isVisible={modalHistoricPrescription}
+        onClose={() => {
+          setModalHistoricPrescription(false);
+        }}
+        onSelectPrescription={(prescription) => {
+          setSelectedPrescription(prescription);
+        }}
+      />
       <Formik
         enableReinitialize
         initialValues={initialValues}
@@ -76,11 +92,15 @@ export const FormInfoClient = ({
           // errors,
           setFieldValue,
         }) => {
-          // Cargar Municipios cuando cambia Estado
-          const handleFileSelect = (file: File) => {
+          const handleRecetaSelect = (file: File) => {
             console.log("Archivo seleccionado:", file);
             // Aquí puedes subirlo a tu backend o guardarlo en tu estado global
           };
+          const handleInfoSelect = (file: File) => {
+            console.log("Archivo seleccionado:", file);
+            // Aquí puedes subirlo a tu backend o guardarlo en tu estado global
+          };
+          // Cargar Municipios cuando cambia Estado
           useEffect(() => {
             if (values.Estado > 0) {
               getMunicipios({
@@ -123,6 +143,10 @@ export const FormInfoClient = ({
                   {/* Datos Persona */}
                   {/* <h2 className="text-lg font-bold">Datos del Paciente</h2> */}
                   <div className="grid grid-cols-6 gap-4">
+                    <span className="col-span-6 font-semibold text-sm mb-2 text-gray-700">
+                      En caso de ser menor de edad favor de utilizar la
+                      información del contratante
+                    </span>
                     <Input
                       className="col-span-2"
                       label="RFC"
@@ -342,15 +366,57 @@ export const FormInfoClient = ({
                     </AppFormField>
                   </div>
                 </AccordionItem>
-                <AccordionItem key="4" aria-label="Receta" title="Receta">
+                <AccordionItem key="4" aria-label="Receta" title="Documentos">
                   <div className="grid grid-cols-6 gap-4 mb-4">
+                    <div className="col-span-6 flex items-center gap-4">
+                      <Button
+                        color="primary"
+                        onPress={() => setModalHistoricPrescription(true)}
+                        startContent={<Icon.Eye size={16} />}
+                      >
+                        Ver historial de recetas
+                      </Button>
+                      {selectedPrescription && (
+                        <>
+                          <Chip
+                            className="rounded-lg text-sm"
+                            color="primary"
+                            variant="flat"
+                          >
+                            Receta seleccionada:{" "}
+                            <strong>{selectedPrescription.name}</strong>
+                          </Chip>
+                          <Button
+                            color="danger"
+                            size="sm"
+                            isIconOnly
+                            onPress={() => setSelectedPrescription(null)}
+                          >
+                            <Icon.Trash2 size={16} />
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                    {!selectedPrescription && (
+                      <div className="col-span-6">
+                        <AppFileDropzone
+                          label="Receta médica"
+                          onFileSelect={handleRecetaSelect}
+                          accept="application/pdf,image/*"
+                        />
+                        <span className="col-span-6 text-danger-500">
+                          *Obligatoria (para generar reembolso)
+                        </span>
+                      </div>
+                    )}
                     <AppFileDropzone
-                      label="Subir receta médica"
-                      onFileSelect={handleFileSelect}
+                      label="Informe Médico"
+                      onFileSelect={handleInfoSelect}
                       accept="application/pdf,image/*"
                     />
                     <span className="col-span-6 text-danger-500">
-                      *Obligatoria (para generar reembolso)
+                      Recuerda actualizar tu informe médico periódicamente —
+                      consulta con tu broker.
                     </span>
                   </div>
                 </AccordionItem>

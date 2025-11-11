@@ -24,6 +24,8 @@ import {
 import { ShoppingCartConfirmOrder } from "./modals/ShoppingCartConfirmOrder";
 import { useTour } from "../../../../presentation/Components/AppTour/useTour";
 import { Step } from "react-joyride";
+import { StepperFormPayment } from "../../../Modals/StepperFormPayment";
+import { DeliverInfo } from "./DeliverInfo";
 export type ShoppingCartFormMode = "create" | "update";
 const STEPS: Step[] = [
   {
@@ -57,6 +59,10 @@ export const NewOrderManagerPage = () => {
   const [shoppingCartIndex, setShoppingCartIndex] = useState<number | null>(
     null
   );
+  const [onPaymentComplete, setOnPaymentComplete] = useState<
+    (() => void) | null
+  >(null);
+  const [modalPayment, setModalPayment] = useState(false);
   const [confirmOrderModal, setConfirmOrderModal] = useToggle(false);
   const [onShoppingCartViewer, toggleShoppingCartViewer] = useToggle(false);
   const [onCustomerForm, toggleCustomerForm] = useToggle(false);
@@ -202,6 +208,20 @@ export const NewOrderManagerPage = () => {
   const onSearch = (search: string) => {
     getProduct({ description: search });
   };
+  // const onPayStep = () => {
+  //   return true;
+  // };
+  const onPay = () => {
+    return new Promise<boolean>((resolve) => {
+      const handlePaymentDone = () => {
+        resolve(true);
+        setModalPayment(false);
+      };
+
+      setOnPaymentComplete(() => handlePaymentDone);
+      setModalPayment(true);
+    });
+  };
   useEffect(() => {
     if (search.length > 1 || search.length === 0) {
       const timeDelay = setTimeout(() => {
@@ -249,12 +269,26 @@ export const NewOrderManagerPage = () => {
         patientFormValues={patientFormValues}
         setPatientFormValues={setPatientFormValues}
       />
+      <StepperFormPayment
+        isVisible={modalPayment}
+        onClose={() => {
+          setModalPayment(false);
+        }}
+        // idOrder={}
+        onPay={() => {
+          if (onPaymentComplete) {
+            onPaymentComplete(); // se resuelve la promesa
+          }
+          return true;
+        }}
+      />
       {/* Modal para confirmar pedido */}
       <ShoppingCartConfirmOrder
         isVisible={confirmOrderModal}
         onClose={() => {
           setConfirmOrderModal(false);
         }}
+        onPay={onPay}
         items={shoppingCartItems}
         patientInfo={patientFormValues}
         onEdit={() => {
@@ -289,74 +323,77 @@ export const NewOrderManagerPage = () => {
             mode="new"
           />
           <section className="container px-4 mt-12 pb-16 mx-auto">
-            <div className="flex justify-end gap-2">
-              {tourAcciones.tour}
-              <div className="flex-none relative">
-                {shoppingCartItems.length > 0 && (
-                  <div className="absolute -right-2 -top-2 h-6 w-6 bg-primary-500 rounded-full font-semibold text-primary-100 text-sm flex items-center justify-center z-50">
-                    <span>{shoppingCartItems.length}</span>
-                  </div>
-                )}
-                <div className="group relative inline-block text-center">
-                  <Tooltip
-                    content="Ver Carrito de Compra"
-                    color="primary"
-                    disableAnimation
-                  >
-                    <Button
-                      onClick={() => toggleShoppingCartViewer(true)}
-                      title="Ver carrito de compra"
-                      type="button"
-                      size="md"
-                      isIconOnly
+            <div className="flex justify-between gap-2">
+              <DeliverInfo />
+              <div className="flex flex-row items-center justify-end gap-2">
+                {tourAcciones.tour}
+                <div className="flex-none relative">
+                  {shoppingCartItems.length > 0 && (
+                    <div className="absolute -right-2 -top-2 h-6 w-6 bg-primary-500 rounded-full font-semibold text-primary-100 text-sm flex items-center justify-center z-50">
+                      <span>{shoppingCartItems.length}</span>
+                    </div>
+                  )}
+                  <div className="group relative inline-block text-center">
+                    <Tooltip
+                      content="Ver Carrito de Compra"
+                      color="primary"
+                      disableAnimation
                     >
-                      <Icon.ShoppingCart size={18} id="carrito" />
-                    </Button>
-                  </Tooltip>
+                      <Button
+                        onClick={() => toggleShoppingCartViewer(true)}
+                        title="Ver carrito de compra"
+                        type="button"
+                        size="md"
+                        isIconOnly
+                      >
+                        <Icon.ShoppingCart size={18} id="carrito" />
+                      </Button>
+                    </Tooltip>
+                  </div>
                 </div>
-              </div>
-              <Tooltip
-                content="Información del paciente"
-                color="primary"
-                disableAnimation
-              >
-                <Button
-                  variant="shadow"
-                  size="md"
-                  color="default"
-                  startContent={<User size={18} id="patient-info" />}
-                  onClick={() => {
-                    toggleCustomerForm(true);
-                  }}
-                  isIconOnly
-                ></Button>
-              </Tooltip>
-              <Tooltip
-                content="Generar pedido"
-                color="primary"
-                disableAnimation
-              >
-                <Button
-                  isIconOnly
-                  size="md"
+                <Tooltip
+                  content="Información del paciente"
                   color="primary"
-                  onClick={() => setConfirmOrderModal(true)}
-                  isDisabled={
-                    (!patientFormValues.rfc &&
-                      !patientFormValues.nombre &&
-                      !patientFormValues.paterno &&
-                      !patientFormValues.Calle &&
-                      patientFormValues.Municipio === 0 &&
-                      patientFormValues.Estado === 0 &&
-                      !patientFormValues.CP &&
-                      !patientFormValues.Telefono &&
-                      !patientFormValues.Mail) ||
-                    shoppingCartItems.length === 0
-                  }
+                  disableAnimation
                 >
-                  <Icon.Save size={18} id="save-order" />
-                </Button>
-              </Tooltip>
+                  <Button
+                    variant="shadow"
+                    size="md"
+                    color="default"
+                    startContent={<User size={18} id="patient-info" />}
+                    onClick={() => {
+                      toggleCustomerForm(true);
+                    }}
+                    isIconOnly
+                  ></Button>
+                </Tooltip>
+                <Tooltip
+                  content="Generar pedido"
+                  color="primary"
+                  disableAnimation
+                >
+                  <Button
+                    isIconOnly
+                    size="md"
+                    color="primary"
+                    onClick={() => setConfirmOrderModal(true)}
+                    isDisabled={
+                      (!patientFormValues.rfc &&
+                        !patientFormValues.nombre &&
+                        !patientFormValues.paterno &&
+                        !patientFormValues.Calle &&
+                        patientFormValues.Municipio === 0 &&
+                        patientFormValues.Estado === 0 &&
+                        !patientFormValues.CP &&
+                        !patientFormValues.Telefono &&
+                        !patientFormValues.Mail) ||
+                      shoppingCartItems.length === 0
+                    }
+                  >
+                    <Icon.Save size={18} id="save-order" />
+                  </Button>
+                </Tooltip>
+              </div>
             </div>
             <div className="mt-5 flex flex-col items-center w-full justify-center gap-5 mb-10">
               <div className="w-full container mx-auto">
