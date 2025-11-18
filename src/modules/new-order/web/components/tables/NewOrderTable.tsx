@@ -99,13 +99,13 @@ const PriceColumn = (params: RenderFnParams<Product>) => {
     </div>
   );
 };
-const QuantityColumn = (params: RenderFnParams<Product>) => {
-  return (
-    <Chip variant="shadow" color="primary" className="font-semibold ">
-      {params.record.cantidad}
-    </Chip>
-  );
-};
+// const QuantityColumn = (params: RenderFnParams<Product>) => {
+//   return (
+//     <Chip variant="shadow" color="primary" className="font-semibold ">
+//       {params.record.cantidad}
+//     </Chip>
+//   );
+// };
 export const ActionColumn = ({
   onAdd,
   tour,
@@ -152,11 +152,12 @@ export const NewOrderTable = ({ onAdd, items = [] }: NewOrderTableProps) => {
       render: PriceColumn,
       align: "left",
     },
-    {
-      key: "quantity",
-      title: "Inventario",
-      render: QuantityColumn,
-    },
+    // {
+    //   key: "quantity",
+    //   title: "Inventario",
+    //   render: QuantityColumn,
+    //   hidden: true,
+    // },
     {
       key: "actions",
       title: "Acciones",

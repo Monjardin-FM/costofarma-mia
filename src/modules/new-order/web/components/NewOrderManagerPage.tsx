@@ -354,7 +354,7 @@ export const NewOrderManagerPage = () => {
                   </div>
                 </div>
                 <Tooltip
-                  content="Información del paciente"
+                  content="Información del asegurado"
                   color="primary"
                   disableAnimation
                 >

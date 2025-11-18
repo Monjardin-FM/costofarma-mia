@@ -18,6 +18,8 @@ import { AppFormField } from "../../../../../presentation/Components/AppForm";
 import * as Icon from "react-feather";
 import AppFileDropzone from "./AppFileDropZone";
 import { HistoricPrescription } from "../modals/HistoricPrescription";
+import { useGetBrokers } from "../../hooks/use-get-brokets";
+import { useGetAseguradoras } from "../../hooks/use-get-aseguradoras";
 export type ShoppingCartViewerProps = {
   patientFormValues: ShoppingCartPatientInfoValues;
   setPatientFormValues: (values: ShoppingCartPatientInfoValues) => void;
@@ -36,6 +38,8 @@ export const FormInfoClient = ({
   const { getMunicipios, municipios } = useGetMunicipios();
   const { getEstados, estados } = useGetEstados();
   const { colonias, getColonias } = useGetColonias();
+  const { brokers, getBrokers } = useGetBrokers();
+  const { aseguradoras, getAseguradoras } = useGetAseguradoras();
   const [modalHistoricPrescription, setModalHistoricPrescription] =
     useState(false);
   const [selectedPrescription, setSelectedPrescription] = useState<{
@@ -59,6 +63,8 @@ export const FormInfoClient = ({
   };
   useEffect(() => {
     getEstados();
+    getBrokers();
+    getAseguradoras();
   }, []);
   return (
     <>
@@ -79,7 +85,7 @@ export const FormInfoClient = ({
           onClose();
           AppToast().fire({
             title: "Información guardada",
-            text: "La información del paciente ha sido guardada correctamente.",
+            text: "La información del asegurado ha sido guardada correctamente.",
             icon: "success",
           });
         }}
@@ -137,8 +143,8 @@ export const FormInfoClient = ({
               >
                 <AccordionItem
                   key="1"
-                  aria-label="Datos del Paciente"
-                  title="Datos del Paciente"
+                  aria-label="Datos del Asegurado"
+                  title="Datos del Asegurado"
                 >
                   {/* Datos Persona */}
                   {/* <h2 className="text-lg font-bold">Datos del Paciente</h2> */}
@@ -350,22 +356,29 @@ export const FormInfoClient = ({
                         disabled={mode === "view"}
                       >
                         <option value="">Selecciona una aseguradora</option>
-                        <option value="">Aseguradora 1</option>
-                        <option value="">Aseguradora 2</option>
-                        <option value="">Aseguradora 3</option>
+                        {aseguradoras?.map((aseguradora) => (
+                          <option
+                            key={aseguradora.idAseguradora}
+                            value={aseguradora.idAseguradora}
+                          >
+                            {aseguradora.descripcion}
+                          </option>
+                        ))}
                       </AppSelect>
                     </AppFormField>
                     <AppFormField className="col-span-2">
                       <AppSelect
-                        name="Brocker"
+                        name="Broker"
                         // value={values.Municipio}
                         onChange={handleChange}
                         disabled={mode === "view"}
                       >
                         <option value="">Selecciona un brocker</option>
-                        <option value="">Brocker 1</option>
-                        <option value="">Brocker 2</option>
-                        <option value="">Brocker 3</option>
+                        {brokers?.map((broker) => (
+                          <option key={broker.idBroker} value={broker.idBroker}>
+                            {broker.descripcion}
+                          </option>
+                        ))}
                       </AppSelect>
                     </AppFormField>
                   </div>

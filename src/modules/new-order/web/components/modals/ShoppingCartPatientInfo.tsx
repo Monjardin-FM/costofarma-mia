@@ -41,7 +41,7 @@ export const ShoppingCartPatientInfo = ({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader>Información del Paciente</ModalHeader>
+            <ModalHeader>Información del Asegurado</ModalHeader>
             <ModalBody>
               <FormInfoClient
                 patientFormValues={patientFormValues}
