@@ -34,12 +34,13 @@ export const AppHomePage = () => (
               FarmaLeal
             </h2>
             <p className="text-gray-700 mt-2 text-center max-w-3xl">
-              We are working to improve the experience of our users.
+              Estamos trabajando para mejorar la experiencia de nuestros
+              usuarios
             </p>
 
             <div className="mt-12 flex items-center space-x-4 text-center">
               <div className="text-center text-sm font-semibold text-gray-600">
-                Developed by FarmaLeal
+                Desarrollado por FarmaLeal
               </div>
 
               {/* <div>

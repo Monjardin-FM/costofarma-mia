@@ -13,7 +13,7 @@ export const AppUserAuth = () => {
   return (
     <>
       {user ? (
-        <Navigate to="/confirm-code" />
+        <Navigate to="/" />
       ) : (
         <AppPageTransition>
           <div className="flex min-h-screen min-w-full">

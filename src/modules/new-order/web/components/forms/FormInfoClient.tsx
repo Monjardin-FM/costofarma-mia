@@ -143,10 +143,14 @@ export const FormInfoClient = ({
                   {/* Datos Persona */}
                   {/* <h2 className="text-lg font-bold">Datos del Paciente</h2> */}
                   <div className="grid grid-cols-6 gap-4">
-                    <span className="col-span-6 font-semibold text-sm mb-2 text-gray-700">
-                      En caso de ser menor de edad favor de utilizar la
-                      información del contratante
-                    </span>
+                    <div className="col-span-6">
+                      <Chip variant="dot" color="success" size="lg">
+                        <span className="text-gray-900  font-semibold text-lg">
+                          En caso de ser menor de edad favor de utilizar la
+                          información del titular (Persona física)
+                        </span>
+                      </Chip>
+                    </div>
                     <Input
                       className="col-span-2"
                       label="RFC"
@@ -398,26 +402,39 @@ export const FormInfoClient = ({
                       )}
                     </div>
                     {!selectedPrescription && (
-                      <div className="col-span-6">
+                      <>
                         <AppFileDropzone
                           label="Receta médica"
                           onFileSelect={handleRecetaSelect}
                           accept="application/pdf,image/*"
                         />
-                        <span className="col-span-6 text-danger-500">
+                        {/* <span className="col-span-6 text-danger-500">
                           *Obligatoria (para generar reembolso)
-                        </span>
-                      </div>
+                        </span> */}
+                        <Chip
+                          className="col-span-6"
+                          variant="shadow"
+                          color="danger"
+                          size="lg"
+                        >
+                          Tu receta debe actualizarse cada 6 meses
+                        </Chip>
+                      </>
                     )}
                     <AppFileDropzone
                       label="Informe Médico"
                       onFileSelect={handleInfoSelect}
                       accept="application/pdf,image/*"
                     />
-                    <span className="col-span-6 text-danger-500">
-                      Recuerda actualizar tu informe médico periódicamente —
-                      consulta con tu broker.
-                    </span>
+                    <Chip
+                      className="col-span-6 "
+                      variant="shadow"
+                      color="danger"
+                      size="lg"
+                    >
+                      Recuerda actualizar tu informe médico cada 6 meses —
+                      consulta con tu broker
+                    </Chip>
                   </div>
                 </AccordionItem>
               </Accordion>

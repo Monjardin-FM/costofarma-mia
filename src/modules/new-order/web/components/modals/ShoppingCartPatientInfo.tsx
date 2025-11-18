@@ -33,7 +33,7 @@ export const ShoppingCartPatientInfo = ({
     <Modal
       isOpen={isVisible}
       onClose={onClose}
-      size="4xl"
+      size="5xl"
       backdrop="blur"
       scrollBehavior="outside"
       isDismissable={false}

@@ -3,7 +3,7 @@
   "ToastErrorAuth": "Autenticación fallida",
   "ValidateMail": "Correo electrónico requerido",
   "ValidatePassword": "Contraseña requerida",
-  "LabelMail": "Teléfono",
-  "LabelPassword": "Clave",
+  "LabelMail": "Correo",
+  "LabelPassword": "Contraseña",
   "ButtonSignIn": "Iniciar Sesión"
 }

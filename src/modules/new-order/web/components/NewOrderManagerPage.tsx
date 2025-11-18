@@ -323,8 +323,10 @@ export const NewOrderManagerPage = () => {
             mode="new"
           />
           <section className="container px-4 mt-12 pb-16 mx-auto">
-            <div className="flex justify-between gap-2">
+            <div className="flex items-center justify-center">
               <DeliverInfo />
+            </div>
+            <div className="flex justify-end gap-2">
               <div className="flex flex-row items-center justify-end gap-2">
                 {tourAcciones.tour}
                 <div className="flex-none relative">
