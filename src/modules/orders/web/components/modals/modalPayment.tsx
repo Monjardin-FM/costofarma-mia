@@ -30,6 +30,7 @@ export const ModalPayment = ({ isVisible, onClose }: ModalPaymentProps) => {
                 isVisible={isVisible}
                 onClose={onClose}
                 onReload={() => {}}
+                items={[]}
               />
             </ModalBody>
             <ModalFooter>

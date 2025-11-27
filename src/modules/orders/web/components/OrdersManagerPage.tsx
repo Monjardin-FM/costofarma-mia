@@ -11,7 +11,6 @@ import { useToggle } from "react-use";
 import { ModalResultPerson } from "./modals/ModalResultPerson";
 // import { useGetOrderPerson } from "../hooks/use-get-order-person";
 import { OrderPersonTableResult } from "./table/OrderPersonTableResult";
-import { StepperFormPayment } from "../../../Modals/StepperFormPayment";
 import * as Icon from "react-feather";
 import { useDeleteOrder } from "../hooks/use-delete-order";
 import { AppToast } from "../../../../presentation/Components/AppToast";
@@ -71,7 +70,6 @@ export const OrdersManagerPage = () => {
   const [search, setSearch] = useState<string>("");
   const [idPerson, setIdPerson] = useState(0);
   const [togglemodaResultPerson, setModalResultPerson] = useToggle(false);
-  const [modalPayment, setModalPayment] = useToggle(false);
   const [modalGenerateOrder, setModalGenerateOrder] = useToggle(false);
   const [modalTicket, toggleModalTicket] = useToggle(false);
   const [toggleReload, setToggleReload] = useToggle(false);
@@ -198,6 +196,7 @@ export const OrdersManagerPage = () => {
       }
       redirect={{ to: "/" }}
     >
+      {/* Modal con el resultado de buscar asegurado */}
       <ModalResultPerson
         items={person}
         setIdPerson={setIdPerson}
@@ -205,14 +204,7 @@ export const OrdersManagerPage = () => {
         onClose={() => setModalResultPerson(false)}
         onSearchOrderPerson={onSearchOrderPerson}
       />
-      <StepperFormPayment
-        isVisible={modalPayment}
-        onClose={() => {
-          setModalPayment(false);
-        }}
-        idOrder={idOrder}
-        onReload={() => setToggleReload(!toggleReload)}
-      />
+
       <ModalGenerateAgainOrder
         isVisible={modalGenerateOrder}
         onClose={() => {
@@ -265,7 +257,7 @@ export const OrdersManagerPage = () => {
                 <OrderPersonTableResult
                   onPay={(record) => {
                     setIdOrder(record.record.idOrden);
-                    setModalPayment(true);
+                    // setModalPayment(true);
                   }}
                   onView={(record) => {
                     navigate(

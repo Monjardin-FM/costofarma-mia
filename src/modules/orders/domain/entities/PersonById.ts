@@ -22,4 +22,10 @@ export type PersonById = {
     idMunicipio: number;
     idEstado: number;
   };
+  mail: string;
+  asegurado: {
+    poliza: string;
+    idAseguradora: number;
+    broker: number;
+  };
 };

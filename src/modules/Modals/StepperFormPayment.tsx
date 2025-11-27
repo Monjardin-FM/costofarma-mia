@@ -8,28 +8,19 @@ import { useToggle } from "react-use";
 import { DataInformation } from "./DataInformation";
 import { Stepper } from "../../presentation/Components/AppStepper/app-stepper";
 import { Loader } from "../../presentation/Components/Loader/Loader";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Tooltip,
-} from "@nextui-org/react";
-import { useGetOrderDetail } from "../orders/web/hooks/use-get-order-detail";
-import { OrderDetail } from "../orders/domain/entities/OrderDetail";
-// import { token } from "../../utils/token";
-import * as Icon from "react-feather";
-import { ModalSharePaymentOrder } from "../orders/web/components/modals/ModalSharePaymentOrder";
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+
 import { DeliverInfo } from "../new-order/web/components/DeliverInfo";
+import { ShoppingCart } from "../new-order/domain/entities/shopping-cart";
+import { token } from "../../utils/token";
 export type StepperFormPaymentProps = {
   isVisible: boolean;
   onClose: () => void;
   emailURL?: string;
   cupon?: string;
-  idOrder?: number | null;
   onReload?: () => void;
-  onPay?: () => boolean;
+  onPay?: () => void | Promise<void>;
+  items: ShoppingCart;
 };
 export type DataCard = {
   adress: "" | null;
@@ -46,16 +37,13 @@ export const StepperFormPayment = ({
   onClose,
   cupon,
   emailURL,
-  idOrder,
   onReload = () => {},
   onPay,
+  items,
 }: StepperFormPaymentProps) => {
-  const { orderDetail, getOrderDetail } = useGetOrderDetail();
   const [cardFormat, setCardFormat] = useState("");
   const [loadingPayment, setLoadingPayment] = useState(false);
   const [isLoadingCardValidate, setIsloadingValidateCard] = useToggle(false);
-  const [modalSharePaymentOrder, toggleModalSharePaymentOrder] =
-    useToggle(false);
   const [amount, setAmount] = useState(0);
   const [paymentData, setPaymentData] = useState({
     deviceSessionId: "",
@@ -107,35 +95,19 @@ export const StepperFormPayment = ({
     }),
     onSubmit: () => {},
   });
-  // onPay = () => {
-  //   setLoadingPayment(true);
-  //   Swal.fire({
-  //     title: "Pago exitoso",
-  //     text: "Pago realizado correctamente.",
-  //     icon: "success",
-  //     confirmButtonText: "Ok",
-  //     confirmButtonColor: "#15A186",
-  //   });
-  //   setLoadingPayment(false);
-  //   onClose();
-  //   return true;
-  // };
-  // This function is used to handle the payment process
+
   const handlePaymentOP = async (
-    endpoint: string = "/Order/PayOrder"
+    endpoint: string = "/Order/PayOrderWOOrder"
   ): Promise<any> => {
     setLoadingPayment(true);
-
     try {
       const response = await fetch(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }${endpoint}?idOrder=${idOrder}`,
+        `${import.meta.env.VITE_REACT_APP_API_URL}${endpoint}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Authorization: `Bearer ${token()}`,
+            Authorization: `Bearer ${token()}`,
           },
 
           body: JSON.stringify({
@@ -146,24 +118,23 @@ export const StepperFormPayment = ({
             lastName: cardInfoForm.values.lastName,
             phoneNumber: cardInfoForm.values.phoneNumber,
             email: cardInfoForm.values.email,
-            msi: 0,
-            cupon: "",
           }),
         }
       );
 
       const data = await response.json();
       setLoadingPayment(false);
-
-      if (data.data.result) {
+      if (data.isSuccess) {
         Swal.fire({
           title: "Pago exitoso",
           text: "Pago realizado correctamente.",
           icon: "success",
           confirmButtonText: "Ok",
           confirmButtonColor: "#15A186",
+          timer: 2000,
         });
 
+        if (onPay) onPay();
         cardInfoForm.resetForm();
         setCardFormat("");
         setPaymentData({
@@ -173,29 +144,41 @@ export const StepperFormPayment = ({
         onClose();
         onReload();
       } else {
+        // extraer mensaje de error del backend
+        const backendError =
+          data?.error?.errors?.["System.Exception"] ||
+          data?.error?.message ||
+          data?.message ||
+          "Ocurrió un error desconocido.";
+
         Swal.fire({
-          title: "Error ",
-          text: data.message,
+          title: "Error",
+          text: backendError,
           icon: "error",
           confirmButtonText: "Ok",
           confirmButtonColor: "#15A186",
         });
       }
-
       return data;
     } catch (error: any) {
       setLoadingPayment(false);
+
+      const errorMsg =
+        error?.response?.data?.error?.message ||
+        error?.message ||
+        "No se pudo procesar el pago.";
+
       Swal.fire({
         title: "Error de conexión",
-        text: error.message || "No se pudo procesar el pago.",
+        text: errorMsg,
         icon: "error",
         confirmButtonText: "Ok",
         confirmButtonColor: "#15A186",
       });
+
       throw error;
     }
   };
-  console.log(handlePaymentOP);
 
   // This function is used to handle idevice session id and token id. And confure the OpenPay API
   useEffect(() => {
@@ -220,31 +203,27 @@ export const StepperFormPayment = ({
       setLoadingPayment(false);
     };
   }, [isVisible]);
-  const calculateCost = (orderDetail: OrderDetail) => {
-    const total = orderDetail.productos.reduce((acc, item) => {
+  const calculateCost = (items: ShoppingCart) => {
+    const total = items.reduce((acc, item) => {
       return acc + item.precio * item.cantidad;
     }, 0);
     setAmount(Number(total.toFixed(2)));
   };
+
   useEffect(() => {
-    if (idOrder) {
-      getOrderDetail({ idOrder: idOrder });
+    if (items) {
+      calculateCost(items);
     }
-  }, [idOrder]);
-  useEffect(() => {
-    if (orderDetail) {
-      calculateCost(orderDetail);
-    }
-  }, [orderDetail]);
+  }, [items]);
   return (
     <>
-      <ModalSharePaymentOrder
+      {/* <ModalSharePaymentOrder
         isVisible={modalSharePaymentOrder}
         onClose={() => {
           toggleModalSharePaymentOrder(false);
         }}
         idOrder={idOrder}
-      />
+      /> */}
       <Modal
         onClose={onClose}
         isOpen={isVisible}
@@ -259,8 +238,8 @@ export const StepperFormPayment = ({
               <ModalHeader>
                 <div className="flex flex-col items-start justify-center">
                   <p className="flex items-center gap-3">
-                    <span>Pago de la orden {idOrder}</span>
-                    <Tooltip
+                    <span>Pago de la orden</span>
+                    {/* <Tooltip
                       content="Compartir link de pago"
                       disableAnimation
                       color="warning"
@@ -271,11 +250,11 @@ export const StepperFormPayment = ({
                         isIconOnly
                         color="warning"
                         variant="shadow"
-                        onClick={() => toggleModalSharePaymentOrder(true)}
+                        onPress={() => toggleModalSharePaymentOrder(true)}
                       >
                         <Icon.Share2 size={18} />
                       </Button>
-                    </Tooltip>
+                    </Tooltip> */}
                   </p>
                   {/* <span className="text-sm text-gray-800 font-normal">
                     Si requiere factura, favor de mandar un correo a
@@ -395,7 +374,7 @@ export const StepperFormPayment = ({
                                     emailURL={emailURL}
                                     amount={amount}
                                     cupon={cupon ? cupon : ""}
-                                    items={orderDetail?.productos}
+                                    items={items}
                                     mode="modal"
                                   />
                                 </div>
@@ -444,22 +423,8 @@ export const StepperFormPayment = ({
                                   <AppButton
                                     colorScheme="info"
                                     onClick={() => {
-                                      setLoadingPayment(true);
-
-                                      // Simulamos el proceso de pago con un pequeño delay
-                                      setTimeout(() => {
-                                        Swal.fire({
-                                          title: "Pago exitoso",
-                                          text: "Pago simulado correctamente.",
-                                          icon: "success",
-                                          confirmButtonText: "Ok",
-                                          confirmButtonColor: "#15A186",
-                                        }).then(() => {
-                                          setLoadingPayment(false);
-                                          if (onPay) onPay(); // 🔥 Notifica al padre que el pago terminó
-                                          onClose(); // 🔒 Cierra el modal
-                                        });
-                                      }, 1500); // Simulamos 1.5 segundos de "proceso"
+                                      handlePaymentOP();
+                                      // console.log(paymentData);
                                     }}
                                     isDisabled={loadingPayment}
                                   >

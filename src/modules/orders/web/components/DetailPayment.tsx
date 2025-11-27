@@ -1,0 +1,53 @@
+import { Card, CardBody, Chip, Divider } from "@nextui-org/react";
+import { ShoppingCart } from "../../../new-order/domain/entities/shopping-cart";
+
+type DetailPaymentProps = {
+  items?: ShoppingCart;
+};
+export const DetailPayment = ({ items = [] }: DetailPaymentProps) => {
+  return (
+    <Card className="bg-warn-50">
+      <CardBody className="flex flex-col items-start justify-start gap-3 ">
+        {items.length > 0 && (
+          <>
+            {items.map((item, index) => (
+              <>
+                <div className="grid grid-cols-12 w-full ">
+                  <div
+                    key={index}
+                    className="col-span-12 flex items-center justify-between"
+                  >
+                    <span className="font-semibold text-gray-800">
+                      {item.descripcion}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span>
+                        {`${item.cantidad} pzas. x $${item.precio.toFixed(
+                          2
+                        )} = `}
+                      </span>
+                      <Chip color="warning" variant="shadow">
+                        ${(item.precio * item.cantidad).toFixed(2)}
+                      </Chip>
+                    </div>
+                  </div>
+                </div>
+                <Divider />
+              </>
+            ))}
+          </>
+        )}
+      </CardBody>
+      <div className="flex items-center justify-end p-3">
+        <Chip color="warning">
+          <span className="font-semibold">
+            Total: $
+            {items
+              .reduce((acc, item) => acc + item.precio * item.cantidad, 0)
+              .toFixed(2)}
+          </span>
+        </Chip>
+      </div>
+    </Card>
+  );
+};

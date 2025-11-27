@@ -6,11 +6,16 @@ import { NewOrderRepository } from "../../domain/repositories/new-order-reposito
 export const createOrderService: NewOrderRepository["createOrder"] = async (
   params
 ) => {
-  const response = await api().post("Order/OrderNewPerson", {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-    json: params,
-  });
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const idPersona = user.id;
+  const response = await api().post(
+    `Order/OrderPerson?idPersona=${idPersona}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token()}`,
+      },
+      json: params,
+    }
+  );
   await verifyResponse({ response });
 };

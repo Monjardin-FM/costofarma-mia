@@ -10,4 +10,5 @@ export type Product = {
   banControlado: boolean;
   banCronico: boolean;
   banRefrigerado: boolean;
+  recurrencia?: string;
 };

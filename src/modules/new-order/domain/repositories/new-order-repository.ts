@@ -6,6 +6,9 @@ export type createOrderParams = {
     paterno: string;
     materno: string;
     telefono: string;
+    mailafectado: string;
+    afectado?: string;
+    parentesco?: string;
   };
   direccion: {
     Calle: string;
@@ -18,12 +21,31 @@ export type createOrderParams = {
     Telefono: string;
     Mail: string;
   };
+  aseguradora: {
+    idAseguradora: number;
+    idBroker: number;
+    poliza: string;
+  };
   productos: {
     idProducto: string;
     cantidad: string;
     ean: string;
+    recurrencia:
+      | "semanal"
+      | "quincenal"
+      | "mensual"
+      | "bimestral"
+      | "trimestral"
+      | "semestral"
+      | ""
+      | string;
   }[];
-  receta: string;
+  documentos: {
+    receta: string;
+    informeMedico: string;
+    recetaExt: string;
+    informeMedicoExt: string;
+  };
 };
 export type NewOrderRepository = {
   getProduct(params: { description: string }): Promise<Product[]>;

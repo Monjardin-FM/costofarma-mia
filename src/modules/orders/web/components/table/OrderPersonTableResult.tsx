@@ -108,9 +108,9 @@ const StatusColumn = (params: RenderFnParams<OrderByPerson>) => {
   );
 };
 const ActionsColumn = ({
-  onPay,
+  // onPay,
   onView,
-  record,
+  // record,
   onDelete,
   onGenerateAgain,
   onViewTIcket,
@@ -140,7 +140,7 @@ const ActionsColumn = ({
         disableAnimation
       >
         <Button
-          onClick={() => {
+          onPress={() => {
             onView();
           }}
           size="sm"
@@ -163,7 +163,7 @@ const ActionsColumn = ({
         disableAnimation
       >
         <Button
-          onClick={() => {
+          onPress={() => {
             onViewTIcket();
           }}
           size="sm"
@@ -181,7 +181,7 @@ const ActionsColumn = ({
           ] as UserRole[]
         }
       >
-        {record.idStatus === 6 && !record.pagado && (
+        {/* {record.idStatus === 6 && !record.pagado && (
           <Tooltip
             content="Pagar"
             color="warning"
@@ -192,7 +192,7 @@ const ActionsColumn = ({
             disableAnimation
           >
             <Button
-              onClick={() => onPay()}
+              onPress={() => onPay()}
               size="sm"
               variant="shadow"
               isIconOnly
@@ -201,7 +201,7 @@ const ActionsColumn = ({
               <Icon.CreditCard size={18} id="PagarPedido" />
             </Button>
           </Tooltip>
-        )}
+        )} */}
 
         <Tooltip
           content="Volver a generar pedido"
@@ -215,7 +215,7 @@ const ActionsColumn = ({
           disableAnimation
         >
           <Button
-            onClick={() => {
+            onPress={() => {
               onGenerateAgain();
             }}
             size="sm"

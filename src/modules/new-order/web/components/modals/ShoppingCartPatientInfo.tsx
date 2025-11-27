@@ -1,5 +1,7 @@
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { FormInfoClient } from "../forms/FormInfoClient";
+import { useEffect } from "react";
+import { usegetPersonById } from "../../../../orders/web/hooks/use-get-person-by-id";
 export type ShoppingCartPatientInfoValues = {
   rfc: string;
   nombre: string;
@@ -14,6 +16,16 @@ export type ShoppingCartPatientInfoValues = {
   Referencia2?: string;
   Telefono: string;
   Mail: string;
+  afectado?: string;
+  parentesco?: string;
+  mailafectado: string;
+  idAseguradora: number;
+  idBroker: number;
+  poliza: string;
+  receta: string;
+  informeMedico: string;
+  recetaExt: string;
+  informeMedicoExt: string;
 };
 export type ShoppingCartAddressProps = {
   isVisible?: boolean;
@@ -21,6 +33,7 @@ export type ShoppingCartAddressProps = {
   patientFormValues: ShoppingCartPatientInfoValues;
   setPatientFormValues: (values: ShoppingCartPatientInfoValues) => void;
   onEdit?: () => void;
+  idPersona: number | null;
 };
 export const ShoppingCartPatientInfo = ({
   isVisible,
@@ -28,7 +41,25 @@ export const ShoppingCartPatientInfo = ({
   setPatientFormValues,
   patientFormValues,
   onEdit = () => {},
+  idPersona,
 }: ShoppingCartAddressProps) => {
+  const { getPersonById, personById } = usegetPersonById();
+
+  useEffect(() => {
+    if (idPersona) {
+      getPersonById({ idPersona });
+    }
+  }, [idPersona]);
+  useEffect(() => {
+    if (personById) {
+      setPatientFormValues({
+        ...patientFormValues,
+        idAseguradora: personById.asegurado.idAseguradora,
+        idBroker: personById.asegurado.broker,
+        poliza: personById.asegurado.poliza,
+      });
+    }
+  }, [personById]);
   return (
     <Modal
       isOpen={isVisible}

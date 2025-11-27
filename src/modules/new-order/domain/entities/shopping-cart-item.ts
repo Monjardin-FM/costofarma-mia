@@ -1,9 +1,10 @@
 export type ShoppingCartItem = {
-  idProducto?: number;
+  idProducto: number;
   ean: string;
   descripcion: string;
   cantidad: number;
   precio: number;
   requiereReceta: boolean;
   idOrdenDetalle: number;
+  recurrencia: string;
 };

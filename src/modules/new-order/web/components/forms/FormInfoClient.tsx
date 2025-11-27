@@ -5,10 +5,12 @@ import { useGetMunicipios } from "../../hooks/use-get-municipios";
 import { ShoppingCartPatientInfoValues } from "../modals/ShoppingCartPatientInfo";
 import { Form, Formik } from "formik";
 import { AppToast } from "../../../../../presentation/Components/AppToast";
+import * as Yup from "yup";
 import {
   Accordion,
   AccordionItem,
   Button,
+  Checkbox,
   Chip,
   Input,
   ModalFooter,
@@ -20,12 +22,14 @@ import AppFileDropzone from "./AppFileDropZone";
 import { HistoricPrescription } from "../modals/HistoricPrescription";
 import { useGetBrokers } from "../../hooks/use-get-brokets";
 import { useGetAseguradoras } from "../../hooks/use-get-aseguradoras";
+import { encodeFileBase64 } from "../../../../../utils/encodefile64";
 export type ShoppingCartViewerProps = {
   patientFormValues: ShoppingCartPatientInfoValues;
   setPatientFormValues: (values: ShoppingCartPatientInfoValues) => void;
   onClose?: () => void;
-  mode: "view" | "edit" | "regenerate";
+  mode: "view" | "edit";
   onEdit?: () => void;
+  loading?: boolean;
 };
 
 export const FormInfoClient = ({
@@ -34,12 +38,14 @@ export const FormInfoClient = ({
   onClose = () => {},
   onEdit = () => {},
   mode,
+  loading,
 }: ShoppingCartViewerProps) => {
   const { getMunicipios, municipios } = useGetMunicipios();
   const { getEstados, estados } = useGetEstados();
   const { colonias, getColonias } = useGetColonias();
   const { brokers, getBrokers } = useGetBrokers();
   const { aseguradoras, getAseguradoras } = useGetAseguradoras();
+  const [isSelected, setIsSelected] = useState(true);
   const [modalHistoricPrescription, setModalHistoricPrescription] =
     useState(false);
   const [selectedPrescription, setSelectedPrescription] = useState<{
@@ -47,7 +53,7 @@ export const FormInfoClient = ({
     name: string;
   } | null>(null);
   const initialValues: ShoppingCartPatientInfoValues = {
-    rfc: patientFormValues.Mail ?? "",
+    rfc: patientFormValues.rfc ?? "",
     nombre: patientFormValues.nombre ?? "",
     paterno: patientFormValues.paterno ?? "",
     materno: patientFormValues.materno ?? "",
@@ -60,12 +66,45 @@ export const FormInfoClient = ({
     Referencia2: patientFormValues.Referencia2 ?? "",
     Telefono: patientFormValues.Telefono ?? "",
     Mail: patientFormValues.Mail ?? "",
+    afectado: patientFormValues.afectado ?? "",
+    parentesco: patientFormValues.parentesco ?? "",
+    mailafectado: patientFormValues.Mail ?? "",
+    idAseguradora: patientFormValues.idAseguradora || 0,
+    idBroker: patientFormValues.idBroker || 0,
+    poliza: patientFormValues.poliza || "",
+    receta: patientFormValues.receta ?? "",
+    informeMedico: patientFormValues.informeMedico ?? "",
+    recetaExt: patientFormValues.recetaExt ?? "",
+    informeMedicoExt: patientFormValues.informeMedicoExt ?? "",
   };
+  const FormSchema = Yup.object().shape({
+    rfc: Yup.string().required(),
+    nombre: Yup.string().required(),
+    paterno: Yup.string().required(),
+    materno: Yup.string().required(),
+    Calle: Yup.string().required(),
+    CP: Yup.string()
+      .matches(/^[0-9]+$/, "El código postal solo debe contener números")
+      .length(5, "El código postal debe tener exactamente 5 dígitos")
+      .required("El código postal es obligatorio"),
+    Telefono: Yup.string()
+      .matches(/^[0-9]+$/, "El teléfono solo debe contener números")
+      .length(10, "El teléfono debe tener exactamente 10 dígitos")
+      .required("El teléfono es obligatorio"),
+    Mail: Yup.string().required().email(),
+    Estado: Yup.number().min(1, "Seleccione un estado"),
+    Municipio: Yup.number().min(1, "Seleccione un municipio"),
+    idAseguradora: Yup.number().min(1, "Seleccione una aseguradora"),
+    // idBroker: Yup.number().min(1, "Seleccione un broker"),
+    poliza: Yup.string().required("La póliza es obligatoria"),
+    receta: Yup.string().required("La receta médica es obligatoria"),
+  });
   useEffect(() => {
     getEstados();
     getBrokers();
     getAseguradoras();
   }, []);
+
   return (
     <>
       <HistoricPrescription
@@ -89,22 +128,41 @@ export const FormInfoClient = ({
             icon: "success",
           });
         }}
+        validationSchema={FormSchema}
+        validateOnMount
         onReset={onClose}
       >
         {({
           handleSubmit,
           values,
           handleChange,
-          // errors,
           setFieldValue,
+          isValid,
+          errors,
         }) => {
-          const handleRecetaSelect = (file: File) => {
-            console.log("Archivo seleccionado:", file);
-            // Aquí puedes subirlo a tu backend o guardarlo en tu estado global
+          const handleRecetaSelect = async (file: File) => {
+            const result = await encodeFileBase64(file);
+            // Forzar a string de manera segura
+            const base64 = typeof result === "string" ? result : String(result);
+            const extension = file.name.split(".").pop()?.toLowerCase() || "";
+            const cleanBase64 = base64.includes("base64,")
+              ? base64.split("base64,")[1]
+              : base64;
+            // console.log({ cleanBase64, extension });
+            setFieldValue("recetaExt", extension);
+            setFieldValue("receta", cleanBase64);
           };
-          const handleInfoSelect = (file: File) => {
-            console.log("Archivo seleccionado:", file);
-            // Aquí puedes subirlo a tu backend o guardarlo en tu estado global
+          const handleInfoSelect = async (file: File) => {
+            const result = await encodeFileBase64(file);
+            // Forzar a string de manera segura
+            const base64 = typeof result === "string" ? result : String(result);
+            const extension = file.name.split(".").pop()?.toLowerCase() || "";
+            const cleanBase64 = base64.includes("base64,")
+              ? base64.split("base64,")[1]
+              : base64;
+            // console.log({ cleanBase64, extension });
+            setFieldValue("informeMedicoExt", extension);
+            setFieldValue("informeMedico", cleanBase64);
           };
           // Cargar Municipios cuando cambia Estado
           useEffect(() => {
@@ -113,16 +171,11 @@ export const FormInfoClient = ({
                 idEstado: values.Estado,
               });
             } else {
-              // setMunicipios([]);
               setFieldValue("Municipio", 0);
             }
           }, [values.Estado, setFieldValue]);
           useEffect(() => {
-            if (
-              values.Municipio > 0 &&
-              values.CP.length === 5
-              // values.CP.trim() !== ""
-            ) {
+            if (values.Municipio > 0 && values.CP.length === 5) {
               getColonias({
                 idMunicipio: Number(values.Municipio),
                 codigoPostal: values.CP,
@@ -147,7 +200,6 @@ export const FormInfoClient = ({
                   title="Datos del Asegurado"
                 >
                   {/* Datos Persona */}
-                  {/* <h2 className="text-lg font-bold">Datos del Paciente</h2> */}
                   <div className="grid grid-cols-6 gap-4">
                     <div className="col-span-6">
                       <Chip variant="dot" color="success" size="lg">
@@ -166,7 +218,7 @@ export const FormInfoClient = ({
                       id="rfc"
                       type="text"
                       isRequired
-                      errorMessage="Campo requerido"
+                      errorMessage={errors.rfc}
                       readOnly={mode === "view"}
                     />
                     <Input
@@ -176,7 +228,7 @@ export const FormInfoClient = ({
                       value={values.nombre}
                       onChange={handleChange}
                       isRequired
-                      errorMessage="Campo requerido"
+                      errorMessage={errors.nombre}
                       readOnly={mode === "view"}
                     />
                     <Input
@@ -187,7 +239,7 @@ export const FormInfoClient = ({
                       type="text"
                       onChange={handleChange}
                       isRequired
-                      errorMessage="Campo requerido"
+                      errorMessage={errors.paterno}
                       readOnly={mode === "view"}
                     />
                     <Input
@@ -198,7 +250,7 @@ export const FormInfoClient = ({
                       type="text"
                       onChange={handleChange}
                       isRequired
-                      errorMessage="Campo requerido"
+                      errorMessage={errors.materno}
                       readOnly={mode === "view"}
                     />
                     <Input
@@ -208,7 +260,7 @@ export const FormInfoClient = ({
                       value={values.Telefono}
                       onChange={handleChange}
                       isRequired
-                      errorMessage="Campo requerido"
+                      errorMessage={errors.Telefono}
                       readOnly={mode === "view"}
                     />
                     <Input
@@ -218,9 +270,36 @@ export const FormInfoClient = ({
                       value={values.Mail}
                       onChange={handleChange}
                       isRequired
-                      errorMessage="Campo requerido"
+                      errorMessage={errors.Mail}
                       readOnly={mode === "view"}
                     />
+                    <Checkbox
+                      isSelected={isSelected}
+                      onValueChange={setIsSelected}
+                      className="col-span-6"
+                    >
+                      Afectado
+                    </Checkbox>
+                    {!isSelected && (
+                      <>
+                        <Input
+                          className="col-span-2"
+                          label="Nombre del afectado"
+                          name="afectado"
+                          value={values.afectado}
+                          onChange={handleChange}
+                          readOnly={mode == "view"}
+                        />
+                        <Input
+                          className="col-span-2"
+                          label="Parentesco"
+                          name="parentesco"
+                          value={values.parentesco}
+                          onChange={handleChange}
+                          readOnly={mode == "view"}
+                        />
+                      </>
+                    )}
                   </div>
                 </AccordionItem>
                 <AccordionItem key="2" aria-label="Dirección" title="Dirección">
@@ -235,7 +314,7 @@ export const FormInfoClient = ({
                       type="text"
                       onChange={handleChange}
                       isRequired
-                      errorMessage="Campo requerido"
+                      errorMessage={errors.Calle}
                       readOnly={mode === "view"}
                     />
 
@@ -284,7 +363,7 @@ export const FormInfoClient = ({
                       value={values.CP}
                       onChange={handleChange}
                       isRequired
-                      errorMessage="Campo requerido"
+                      errorMessage={errors.CP}
                       readOnly={mode === "view"}
                     />
                     {/* Colonias */}
@@ -347,15 +426,20 @@ export const FormInfoClient = ({
                       className="col-span-2"
                       label="Poliza"
                       name="poliza"
+                      value={values.poliza}
+                      onChange={handleChange}
+                      errorMessage={errors.poliza}
+                      isRequired
+                      readOnly={true}
                     />
                     <AppFormField className="col-span-2">
                       <AppSelect
-                        name="Aseguradora"
-                        // value={values.Municipio}
+                        name="idAseguradora"
+                        value={values.idAseguradora}
                         onChange={handleChange}
-                        disabled={mode === "view"}
+                        disabled={true}
                       >
-                        <option value="">Selecciona una aseguradora</option>
+                        <option value="0">Selecciona una aseguradora</option>
                         {aseguradoras?.map((aseguradora) => (
                           <option
                             key={aseguradora.idAseguradora}
@@ -368,12 +452,12 @@ export const FormInfoClient = ({
                     </AppFormField>
                     <AppFormField className="col-span-2">
                       <AppSelect
-                        name="Broker"
-                        // value={values.Municipio}
+                        name="idBroker"
+                        value={values.idBroker}
                         onChange={handleChange}
-                        disabled={mode === "view"}
+                        disabled={true}
                       >
-                        <option value="">Selecciona un brocker</option>
+                        <option value="0">Selecciona un brocker</option>
                         {brokers?.map((broker) => (
                           <option key={broker.idBroker} value={broker.idBroker}>
                             {broker.descripcion}
@@ -386,13 +470,13 @@ export const FormInfoClient = ({
                 <AccordionItem key="4" aria-label="Receta" title="Documentos">
                   <div className="grid grid-cols-6 gap-4 mb-4">
                     <div className="col-span-6 flex items-center gap-4">
-                      <Button
+                      {/* <Button
                         color="primary"
                         onPress={() => setModalHistoricPrescription(true)}
                         startContent={<Icon.Eye size={16} />}
                       >
                         Ver historial de recetas
-                      </Button>
+                      </Button> */}
                       {selectedPrescription && (
                         <>
                           <Chip
@@ -414,30 +498,37 @@ export const FormInfoClient = ({
                         </>
                       )}
                     </div>
-                    {!selectedPrescription && (
-                      <>
-                        <AppFileDropzone
-                          label="Receta médica"
-                          onFileSelect={handleRecetaSelect}
-                          accept="application/pdf,image/*"
-                        />
-                        {/* <span className="col-span-6 text-danger-500">
-                          *Obligatoria (para generar reembolso)
-                        </span> */}
+                    <>
+                      <AppFileDropzone
+                        label="Receta médica"
+                        onFileSelect={handleRecetaSelect}
+                        accept="application/pdf,image/*"
+                        mode={mode}
+                      />
+                      {values.receta === "" && (
                         <Chip
-                          className="col-span-6"
-                          variant="shadow"
+                          className="mt-2"
+                          variant="bordered"
                           color="danger"
-                          size="lg"
                         >
-                          Tu receta debe actualizarse cada 6 meses
+                          La receta e obligatoria
                         </Chip>
-                      </>
-                    )}
+                      )}
+
+                      <Chip
+                        className="col-span-6"
+                        variant="shadow"
+                        color="danger"
+                        size="lg"
+                      >
+                        Tu receta debe actualizarse cada 6 meses
+                      </Chip>
+                    </>
                     <AppFileDropzone
                       label="Informe Médico"
                       onFileSelect={handleInfoSelect}
                       accept="application/pdf,image/*"
+                      mode={mode}
                     />
                     <Chip
                       className="col-span-6 "
@@ -456,27 +547,13 @@ export const FormInfoClient = ({
                 <ModalFooter>
                   <Button
                     color="default"
-                    onClick={onClose}
+                    onPress={onClose}
                     className=""
                     size="md"
                   >
                     Cancelar
                   </Button>
-                  <Button
-                    type="submit"
-                    color="primary"
-                    isDisabled={
-                      !values.nombre ||
-                      !values.paterno ||
-                      !values.materno ||
-                      !values.Calle ||
-                      !values.CP ||
-                      !values.Telefono ||
-                      !values.Mail ||
-                      values.Estado === 0 ||
-                      values.Municipio === 0
-                    }
-                  >
+                  <Button type="submit" color="primary" isDisabled={!isValid}>
                     Guardar
                   </Button>
                 </ModalFooter>
@@ -484,29 +561,16 @@ export const FormInfoClient = ({
                 <ModalFooter>
                   <Button
                     color="primary"
-                    onClick={onEdit}
+                    onPress={onEdit}
                     startContent={<Icon.Edit size={18} />}
+                    isDisabled={loading}
                   >
                     Editar Información
                   </Button>
                 </ModalFooter>
               ) : (
                 <ModalFooter>
-                  <Button
-                    type="submit"
-                    color="primary"
-                    isDisabled={
-                      !values.nombre ||
-                      !values.paterno ||
-                      !values.materno ||
-                      !values.Calle ||
-                      !values.CP ||
-                      !values.Telefono ||
-                      !values.Mail ||
-                      values.Estado === 0 ||
-                      values.Municipio === 0
-                    }
-                  >
+                  <Button type="submit" color="primary" isDisabled={!isValid}>
                     Guardar
                   </Button>
                 </ModalFooter>

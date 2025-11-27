@@ -1,4 +1,3 @@
-import { Button, Input } from "@nextui-org/react";
 import { AppHero } from "../../../../presentation/Components/AppHero";
 import { AppHeading } from "../../../../presentation/Components/AppHeading";
 import { AppAuthorizationGuard } from "../../../../presentation/Components/AppAuthorizationGuard";
@@ -11,18 +10,13 @@ type OrdersHeaderProps = {
   setSearch: (search: string) => void;
   tour: React.ReactNode;
 };
-export const OrdersHeader = ({
-  onSearch,
-  search,
-  setSearch,
-  tour,
-}: OrdersHeaderProps) => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const rfc = formData.get("rfc") as string;
-    onSearch(rfc);
-  };
+export const OrdersHeader = ({ tour }: OrdersHeaderProps) => {
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.currentTarget);
+  //   const rfc = formData.get("rfc") as string;
+  //   onSearch(rfc);
+  // };
   return (
     <AppHero
       size="base"
@@ -40,7 +34,7 @@ export const OrdersHeader = ({
           }
         >
           {tour}
-          <form
+          {/* <form
             onSubmit={handleSubmit}
             className="w-2/3 gap-2 flex flex-row items-center justify-center rounded-lg"
           >
@@ -63,7 +57,7 @@ export const OrdersHeader = ({
             <Button variant="shadow" color="primary" size="md" type="submit">
               Buscar
             </Button>
-          </form>
+          </form> */}
         </AppAuthorizationGuard>
       </section>
     </AppHero>

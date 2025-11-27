@@ -8,7 +8,7 @@ import { Button, Chip, Input, Tooltip } from "@nextui-org/react";
 import * as Icon from "react-feather";
 import { useToggle } from "react-use";
 import { ModalDetailPayment } from "../orders/web/components/modals/ModalDetailPayment";
-import { Product } from "../new-order/domain/entities/product";
+import { ShoppingCart } from "../new-order/domain/entities/shopping-cart";
 type CardInfoProps = {
   cardInfoForm: any;
   cardFormat: string;
@@ -16,7 +16,7 @@ type CardInfoProps = {
   emailURL?: string;
   amount?: number;
   cupon?: string;
-  items?: Product[];
+  items: ShoppingCart;
   mode: "page" | "modal";
 };
 
@@ -25,9 +25,9 @@ export const CardInfoForm = ({
   cardFormat,
   setCardFormat,
   emailURL,
-  // amount,
   items,
   mode,
+  amount,
 }: CardInfoProps) => {
   const [flagCardNumberValid, setFlagCardNumber] = useState(false);
   const [parent] = useAutoAnimate();
@@ -91,7 +91,7 @@ export const CardInfoForm = ({
         <div className="grid grid-cols-12">
           <div className="col-span-12 font-semibold text-lg text-center color-primary max-sm:text-sm max-sm:text-center mb-8">
             <span className="text-lg text-primaryColor-600">
-              Total a pagar:{" "}
+              Total a pagar:
             </span>
             <Chip
               color="primary"
@@ -99,7 +99,7 @@ export const CardInfoForm = ({
               className="font-semibold text-lg "
             >
               <p className="flex items-center justify-center gap-x-2">
-                <span>{`$459.99`} </span>
+                <span>{`$${amount}`} </span>
                 {mode === "modal" ? (
                   <Tooltip
                     content="Ver detalles del pedido"
@@ -112,7 +112,7 @@ export const CardInfoForm = ({
                       variant="light"
                       color="default"
                       size="sm"
-                      onClick={() => setModalDetailPayment(true)}
+                      onPress={() => setModalDetailPayment(true)}
                     >
                       <Icon.Eye size={18} color="white" />
                     </Button>

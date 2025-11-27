@@ -10,6 +10,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Select,
+  SelectItem,
   Tooltip,
 } from "@nextui-org/react";
 import { FormInfoClient } from "../../../../new-order/web/components/forms/FormInfoClient";
@@ -18,16 +20,19 @@ import {
   ShoppingCartPatientInfoValues,
 } from "../../../../new-order/web/components/modals/ShoppingCartPatientInfo";
 import React, { useEffect, useState } from "react";
-import { useReloadOrder } from "../../hooks/use-reload-order";
 import { AppToast } from "../../../../../presentation/Components/AppToast";
 import { ModalAddProduct } from "./ModalAddProduct";
 import { useToggle } from "react-use";
 import * as Icon from "react-feather";
-import { Product } from "../../../../new-order/domain/entities/product";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useGetOrderDetail } from "../../hooks/use-get-order-detail";
 import { usegetPersonById } from "../../hooks/use-get-person-by-id";
-
+import { Product } from "../../../../new-order/domain/entities/product";
+import { StepperFormPayment } from "../../../../Modals/StepperFormPayment";
+import { useCreateNewOrder } from "../../../../new-order/web/hooks/use-create-order";
+export type ProductWithRecurrencia = Product & {
+  recurrencia: string;
+};
 type ModalGenerateAgainOrderProps = {
   isVisible: boolean;
   onClose: () => void;
@@ -44,15 +49,18 @@ export const ModalGenerateAgainOrder = ({
   onReload,
   idPerson,
 }: ModalGenerateAgainOrderProps) => {
-  const [itemsList, setItems] = useState<Product[]>([]);
-  const { reloadOrder, loading, error } = useReloadOrder();
+  const [itemsList, setItems] = useState<ProductWithRecurrencia[]>([]);
+  // const { reloadOrder, loading, error } = useReloadOrder();
+  const { createNewOrder, loading, error } = useCreateNewOrder();
+  const [modalPayment, setModalPayment] = useToggle(false);
   const [modalAddProduct, toggleModalAddProduct] = useToggle(false);
   const [animation] = useAutoAnimate();
   const { getOrderDetail, orderDetail } = useGetOrderDetail();
   const { getPersonById, personById } = usegetPersonById();
-
   const [onCustomerForm, toggleCustomerForm] = useToggle(false);
-
+  const [onPaymentComplete, setOnPaymentComplete] = useState<
+    (() => void) | null
+  >(null);
   const [patientFormValues, setPatientFormValues] =
     useState<ShoppingCartPatientInfoValues>({
       rfc: "",
@@ -68,6 +76,16 @@ export const ModalGenerateAgainOrder = ({
       Referencia2: "",
       Telefono: "",
       Mail: "",
+      idAseguradora: 0,
+      idBroker: 0,
+      informeMedico: "",
+      informeMedicoExt: "",
+      mailafectado: "",
+      poliza: "",
+      receta: "",
+      recetaExt: "",
+      afectado: "",
+      parentesco: "",
     });
   const onAddHandler = (product: Product) => {
     if (
@@ -82,7 +100,10 @@ export const ModalGenerateAgainOrder = ({
       return;
     }
 
-    setItems((prevItems) => [...prevItems, { ...product, cantidad: 1 }]);
+    setItems((prevItems) => [
+      ...prevItems,
+      { ...product, cantidad: 1, recurrencia: "" },
+    ]);
     AppToast().fire({
       title: "Producto agregado",
       text: "Producto agregado a la lista",
@@ -95,9 +116,31 @@ export const ModalGenerateAgainOrder = ({
     );
     setItems(filteredItems);
   };
+  // Funcion para recargar el pedido
+  const onPay = () => {
+    return new Promise<boolean>((resolve) => {
+      const handlePaymentDone = () => {
+        resolve(true);
+        setModalPayment(false);
+      };
+      setOnPaymentComplete(() => handlePaymentDone);
+      setModalPayment(true);
+    });
+  };
   const onReloadHandler = async () => {
-    await reloadOrder(
-      {
+    const responsePay = await onPay(); // Espera hasta que el pago termine
+    if (responsePay) {
+      await createNewOrder({
+        persona: {
+          nombre: patientFormValues.nombre,
+          paterno: patientFormValues.paterno,
+          materno: patientFormValues.materno,
+          rfc: patientFormValues.rfc,
+          telefono: patientFormValues.Telefono,
+          mailafectado: patientFormValues.Mail,
+          afectado: patientFormValues.afectado,
+          parentesco: patientFormValues.parentesco,
+        },
         direccion: {
           Calle: patientFormValues.Calle,
           Colonia: patientFormValues.Colonia || "",
@@ -109,11 +152,31 @@ export const ModalGenerateAgainOrder = ({
           Telefono: patientFormValues.Telefono,
           Mail: patientFormValues.Mail,
         },
-        productos: productos,
-        receta: "",
-      },
-      idPerson
-    );
+        documentos: {
+          receta: patientFormValues.receta,
+          informeMedico: patientFormValues.informeMedico,
+          recetaExt: patientFormValues.recetaExt,
+          informeMedicoExt: patientFormValues.informeMedicoExt,
+        },
+        aseguradora: {
+          idAseguradora: Number(patientFormValues.idAseguradora),
+          idBroker: Number(patientFormValues.idBroker),
+          poliza: patientFormValues.poliza,
+        },
+        productos:
+          productos
+            ?.filter(
+              (item) =>
+                item.idProducto !== undefined && Number(item.cantidad) > 0
+            )
+            .map((item) => ({
+              idProducto: item.idProducto!.toString(),
+              cantidad: item.cantidad.toString(),
+              ean: item.ean,
+              recurrencia: item.recurrencia,
+            })) ?? [],
+      });
+    }
     if (!error) {
       AppToast().fire({
         title: "Pedido generado correctamente",
@@ -136,6 +199,16 @@ export const ModalGenerateAgainOrder = ({
         Referencia2: "",
         Telefono: "",
         Mail: "",
+        idAseguradora: 0,
+        idBroker: 0,
+        informeMedico: "",
+        informeMedicoExt: "",
+        mailafectado: "",
+        poliza: "",
+        receta: "",
+        recetaExt: "",
+        afectado: "",
+        parentesco: "",
       });
     }
   };
@@ -150,6 +223,8 @@ export const ModalGenerateAgainOrder = ({
   const productos = itemsList?.map((item) => ({
     idProducto: item.idProducto.toString(),
     cantidad: item.cantidad.toString(),
+    ean: item.ean,
+    recurrencia: item.recurrencia,
   }));
   const total = itemsList?.reduce(
     (acc, item) => acc + item.precio * item.cantidad,
@@ -176,12 +251,29 @@ export const ModalGenerateAgainOrder = ({
         Referencia2: "",
         Telefono: "",
         Mail: "",
+        idAseguradora: 0,
+        idBroker: 0,
+        informeMedico: "",
+        informeMedicoExt: "",
+        mailafectado: "",
+        poliza: "",
+        receta: "",
+        recetaExt: "",
+        afectado: "",
+        parentesco: "",
       });
       onClose();
     }
   }, [error]);
   const resetProducts = () => {
     getOrderDetail({ idOrder: idOrder });
+  };
+  const handleRecurrenciaChange = (index: number, value: string) => {
+    setItems((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, recurrencia: value } : item
+      )
+    );
   };
   useEffect(() => {
     if (idOrder) {
@@ -190,7 +282,12 @@ export const ModalGenerateAgainOrder = ({
   }, [idOrder]);
   useEffect(() => {
     if (orderDetail) {
-      setItems(orderDetail.productos);
+      const productosConRecurrencia = orderDetail.productos.map((p) => ({
+        ...p,
+        recurrencia: p.recurrencia ?? "", // o el valor por defecto que quieras
+      }));
+
+      setItems(productosConRecurrencia);
     }
   }, [orderDetail]);
   useEffect(() => {
@@ -214,9 +311,43 @@ export const ModalGenerateAgainOrder = ({
         Referencia2: personById.direccion.referencia2,
         Estado: personById.direccion.idEstado,
         Municipio: personById.direccion.idMunicipio,
+        idAseguradora: personById.asegurado.idAseguradora,
+        idBroker: personById.asegurado.broker,
+        informeMedico: "",
+        informeMedicoExt: "",
+        mailafectado: personById.mail,
+        poliza: personById.asegurado.poliza,
+        receta: "",
+        recetaExt: "",
+        afectado: "",
+        parentesco: "",
       });
     }
   }, [personById]);
+  const isFormInvalid = () => {
+    const f = patientFormValues;
+
+    const requiredFields = [
+      f.rfc,
+      f.nombre,
+      f.paterno,
+      f.Calle,
+      f.CP,
+      f.Telefono,
+      f.Mail,
+      f.poliza,
+      f.receta,
+    ];
+
+    const anyEmpty = requiredFields.some((value) => !value);
+
+    const invalidSelects =
+      f.Municipio === 0 || f.Estado === 0 || f.idAseguradora === 0;
+
+    const invalidRecurrencia = itemsList.some((i) => !i.recurrencia);
+
+    return anyEmpty || invalidSelects || invalidRecurrencia;
+  };
   return (
     <Modal
       isOpen={isVisible}
@@ -230,6 +361,15 @@ export const ModalGenerateAgainOrder = ({
         isVisible={modalAddProduct}
         onClose={() => toggleModalAddProduct(false)}
         onAdd={(product) => onAddHandler(product)}
+      />
+      <StepperFormPayment
+        isVisible={modalPayment}
+        onClose={() => {
+          setModalPayment(false);
+        }}
+        onReload={() => onReload()}
+        items={itemsList}
+        onPay={onPaymentComplete || undefined}
       />
       <ModalContent>
         {(onClose) => (
@@ -246,7 +386,7 @@ export const ModalGenerateAgainOrder = ({
                     <Button
                       isIconOnly
                       color="primary"
-                      onClick={() => toggleModalAddProduct(true)}
+                      onPress={() => toggleModalAddProduct(true)}
                     >
                       {" "}
                       <Icon.PlusCircle size={18} />{" "}
@@ -260,7 +400,7 @@ export const ModalGenerateAgainOrder = ({
                     <Button
                       isIconOnly
                       color="default"
-                      onClick={() => resetProducts()}
+                      onPress={() => resetProducts()}
                     >
                       <Icon.RefreshCw size={18} />
                     </Button>
@@ -278,11 +418,49 @@ export const ModalGenerateAgainOrder = ({
                           <React.Fragment key={item.idProducto}>
                             <div className="grid grid-cols-12 w-full">
                               <div className="col-span-12  grid grid-cols-12">
-                                <span className="col-span-6 font-semibold text-gray-800  text-sm flex items-center justify-start">
+                                <span className="col-span-5 font-semibold text-gray-800  text-sm flex items-center justify-start">
                                   {item.descripcion}
                                 </span>
-                                <div className="col-span-6 flex items-center justify-between gap-2">
-                                  <div>
+                                <div className="col-span-7  items-center justify-between gap-2 grid grid-cols-12">
+                                  {/* NUEVO: SELECT DE RECURRENCIA */}
+                                  <div className="col-span-4 max-w-full">
+                                    <Select
+                                      label="Recurrencia"
+                                      name="Recurrencia"
+                                      size="sm"
+                                      selectedKeys={[item.recurrencia]}
+                                      onChange={(e) =>
+                                        handleRecurrenciaChange(
+                                          index,
+                                          e.target.value
+                                        )
+                                      }
+                                      className="w-full"
+                                    >
+                                      <SelectItem key="">
+                                        Sin recurrencia
+                                      </SelectItem>
+                                      <SelectItem key="semanal">
+                                        Semanal
+                                      </SelectItem>
+                                      <SelectItem key="quincenal">
+                                        Quincenal
+                                      </SelectItem>
+                                      <SelectItem key="mensual">
+                                        Mensual
+                                      </SelectItem>
+                                      <SelectItem key="bimestral">
+                                        Bimestral
+                                      </SelectItem>
+                                      <SelectItem key="trimestral">
+                                        Trimestral
+                                      </SelectItem>
+                                      <SelectItem key="semestral">
+                                        Semestral
+                                      </SelectItem>
+                                    </Select>
+                                  </div>
+                                  <div className="col-span-3 flex items-center gap-2">
                                     <Input
                                       type="number"
                                       min={1}
@@ -297,7 +475,7 @@ export const ModalGenerateAgainOrder = ({
                                       endContent="pzas."
                                     />
                                   </div>
-                                  <div className="flex items-center gap-2 text-sm">
+                                  <div className="col-span-5 flex items-center gap-2 text-sm">
                                     <span>{`x $${item.precio.toFixed(
                                       2
                                     )} = `}</span>
@@ -309,7 +487,7 @@ export const ModalGenerateAgainOrder = ({
                                       isIconOnly
                                       variant="faded"
                                       color="danger"
-                                      onClick={() => {
+                                      onPress={() => {
                                         onDeleteHandler(item.idProducto);
                                       }}
                                     >
@@ -345,6 +523,7 @@ export const ModalGenerateAgainOrder = ({
                     onClose={() => toggleCustomerForm(false)}
                     patientFormValues={patientFormValues}
                     setPatientFormValues={setPatientFormValues}
+                    idPersona={idPerson}
                   />
 
                   <FormInfoClient
@@ -362,7 +541,7 @@ export const ModalGenerateAgainOrder = ({
             <ModalFooter>
               <Button
                 color="danger"
-                onClick={onClose}
+                onPress={onClose}
                 size="md"
                 variant="bordered"
               >
@@ -370,25 +549,14 @@ export const ModalGenerateAgainOrder = ({
               </Button>
               <Button
                 color="primary"
-                onClick={() => {
+                onPress={() => {
                   onReloadHandler();
                 }}
                 className=""
                 size="md"
                 variant="shadow"
                 isLoading={loading}
-                isDisabled={
-                  loading ||
-                  (!patientFormValues.rfc &&
-                    !patientFormValues.nombre &&
-                    !patientFormValues.paterno &&
-                    !patientFormValues.Calle &&
-                    patientFormValues.Municipio === 0 &&
-                    patientFormValues.Estado === 0 &&
-                    !patientFormValues.CP &&
-                    !patientFormValues.Telefono &&
-                    !patientFormValues.Mail)
-                }
+                isDisabled={loading || isFormInvalid()}
               >
                 Generar Pedido
               </Button>

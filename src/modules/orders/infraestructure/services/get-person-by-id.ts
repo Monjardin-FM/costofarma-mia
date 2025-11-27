@@ -7,13 +7,15 @@ import { OrderRepository } from "../../domain/repositories/order-repository";
 export const getPersonByIdService: OrderRepository["getPersonById"] = async (
   params
 ) => {
-  const response = await api().get("Order/PersonById", {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-      "Content-Type": "application/json",
-    },
-    searchParams: params,
-  });
+  const response = await api().get(
+    `Order/PersonById?idPersona=${params.idPersona}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token()}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const { body } = await verifyResponse({ response });
   const data = body.data as any;
   const personById: PersonById = {
@@ -27,6 +29,8 @@ export const getPersonByIdService: OrderRepository["getPersonById"] = async (
     paterno: data.paterno,
     materno: data.materno,
     direccion: data.direccion,
+    mail: data.mail,
+    asegurado: data.asegurado,
   };
   return personById;
 };

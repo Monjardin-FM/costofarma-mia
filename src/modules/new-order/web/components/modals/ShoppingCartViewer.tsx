@@ -71,7 +71,7 @@ export const ShoppingCartViewer = ({
                               showArrow
                               closeDelay={10}
                             >
-                              <Button onClick={() => onTab(index)} isIconOnly>
+                              <Button onPress={() => onTab(index)} isIconOnly>
                                 <Icon.ChevronRight size={20} />
                               </Button>
                             </Tooltip>

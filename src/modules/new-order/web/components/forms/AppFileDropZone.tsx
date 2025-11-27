@@ -1,15 +1,17 @@
 import React, { useState, DragEvent, ChangeEvent } from "react";
-
+import * as Icon from "react-feather";
 interface AppFileDropzoneProps {
   label?: string;
   onFileSelect: (file: File) => void;
   accept?: string; // Ej: "application/pdf,image/*"
+  mode: "view" | "edit";
 }
 
 const AppFileDropzone: React.FC<AppFileDropzoneProps> = ({
   label = "Subir documento",
   onFileSelect,
   accept = "application/pdf,image/*",
+  mode,
 }) => {
   const [dragActive, setDragActive] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -59,9 +61,10 @@ const AppFileDropzone: React.FC<AppFileDropzoneProps> = ({
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-2xl p-6 text-center transition-colors cursor-pointer ${
           dragActive
-            ? "border-blue-500 bg-blue-50"
-            : "border-gray-300 hover:border-blue-400"
-        }`}
+            ? "border-info-500 bg-info-100"
+            : "border-gray-300 hover:border-info-400"
+        } ${fileName ? "bg-success-100" : "bg-white"}
+        ${mode === "view" ? "pointer-events-none opacity-60" : ""}`}
       >
         <input
           type="file"
@@ -69,30 +72,22 @@ const AppFileDropzone: React.FC<AppFileDropzoneProps> = ({
           id="fileUploadInput"
           onChange={handleChange}
           className="hidden"
+          disabled={mode === "view"}
         />
 
         <label
           htmlFor="fileUploadInput"
           className="cursor-pointer flex flex-col items-center space-y-2"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10 text-blue-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M7 16V4m0 0l3 3m-3-3l-3 3M3 16h18M5 20h14"
-            />
-          </svg>
+          {!fileName ? (
+            <Icon.Upload className=" text-info-400" size={45} />
+          ) : (
+            <Icon.FileText className=" text-info-400" size={45} />
+          )}
 
           <span className="text-sm text-gray-600">
             Arrastra tu archivo aquí o{" "}
-            <span className="text-blue-600 font-medium">
+            <span className="text-info-600 font-medium">
               haz clic para subir
             </span>
           </span>

@@ -51,6 +51,7 @@ const STEPS: Step[] = [
 ];
 export const NewOrderManagerPage = () => {
   const [search, setSearch] = useState<string>("");
+  const [idPersona, setIdPersona] = useState<number | null>(null);
   const { getProduct, products } = useGetProduct();
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(0);
@@ -79,7 +80,7 @@ export const NewOrderManagerPage = () => {
     useState<ShoppingCartFormMode>("create");
   const tourAcciones = useTour(STEPS, "TourAccionesNuevaOrden");
   useEffect(() => {
-    // Si el usuario ya completó el tour, no lo vuelvas a ejecutar
+    // Si el usuario ya completó el tour, no lo vuelve a ejecutar
     const tourDone = localStorage.getItem("TourAccionesNuevaOrden");
     if (tourDone === "done") return;
 
@@ -88,7 +89,6 @@ export const NewOrderManagerPage = () => {
       const timeout = setTimeout(() => {
         tourAcciones.setRun(true);
       }, 400); // Esperamos un poco para asegurar que el DOM esté listo
-
       return () => clearTimeout(timeout);
     }
   }, [products, tourAcciones]);
@@ -108,6 +108,16 @@ export const NewOrderManagerPage = () => {
       Referencia2: "",
       Telefono: "",
       Mail: "",
+      mailafectado: "",
+      afectado: "",
+      parentesco: "",
+      idAseguradora: 0,
+      idBroker: 0,
+      poliza: "",
+      receta: "",
+      informeMedico: "",
+      recetaExt: "",
+      informeMedicoExt: "",
     });
   const onSelectShoppingCartItem = (index: number) => {
     const shoppigCartItem = shoppingCartItems[index];
@@ -120,6 +130,7 @@ export const NewOrderManagerPage = () => {
         precio: shoppigCartItem.precio,
         cantidad: shoppigCartItem.cantidad,
         requiereReceta: shoppigCartItem.requiereReceta,
+        recurrencia: shoppigCartItem.recurrencia,
       });
     }
     setShoppingCartFormMode("update");
@@ -153,6 +164,7 @@ export const NewOrderManagerPage = () => {
           precio: productOnFocus.precio,
           requiereReceta: productOnFocus.requiereReceta,
           idOrdenDetalle: 0,
+          recurrencia: data.recurrencia,
         },
       });
       AppToast().fire({
@@ -181,6 +193,7 @@ export const NewOrderManagerPage = () => {
         precio: product.precio,
         requiereReceta: product.requiereReceta,
         idOrdenDetalle: 0,
+        recurrencia: "",
       });
       setProductIndex(globalIndex);
       setShoppingCartFormMode("create");
@@ -208,16 +221,12 @@ export const NewOrderManagerPage = () => {
   const onSearch = (search: string) => {
     getProduct({ description: search });
   };
-  // const onPayStep = () => {
-  //   return true;
-  // };
   const onPay = () => {
     return new Promise<boolean>((resolve) => {
       const handlePaymentDone = () => {
         resolve(true);
         setModalPayment(false);
       };
-
       setOnPaymentComplete(() => handlePaymentDone);
       setModalPayment(true);
     });
@@ -236,7 +245,11 @@ export const NewOrderManagerPage = () => {
       setPages(nPages);
     }
   }, [products]);
-
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const idPersona = user.id;
+    setIdPersona(idPersona);
+  }, []);
   return (
     <AppAuthorizationGuard
       redirect={{ to: "/" }}
@@ -268,19 +281,16 @@ export const NewOrderManagerPage = () => {
         onClose={() => toggleCustomerForm(false)}
         patientFormValues={patientFormValues}
         setPatientFormValues={setPatientFormValues}
+        idPersona={idPersona}
       />
+      {/* Modal para procesar el pago de la orden */}
       <StepperFormPayment
         isVisible={modalPayment}
         onClose={() => {
           setModalPayment(false);
         }}
-        // idOrder={}
-        onPay={() => {
-          if (onPaymentComplete) {
-            onPaymentComplete(); // se resuelve la promesa
-          }
-          return true;
-        }}
+        onPay={onPaymentComplete || undefined}
+        items={shoppingCartItems}
       />
       {/* Modal para confirmar pedido */}
       <ShoppingCartConfirmOrder
@@ -310,6 +320,16 @@ export const NewOrderManagerPage = () => {
             Referencia2: "",
             Telefono: "",
             Mail: "",
+            mailafectado: "",
+            afectado: "",
+            parentesco: "",
+            idAseguradora: 0,
+            idBroker: 0,
+            poliza: "",
+            receta: "",
+            informeMedico: "",
+            recetaExt: "",
+            informeMedicoExt: "",
           });
           clearShoppingCart();
         }}
@@ -342,7 +362,7 @@ export const NewOrderManagerPage = () => {
                       disableAnimation
                     >
                       <Button
-                        onClick={() => toggleShoppingCartViewer(true)}
+                        onPress={() => toggleShoppingCartViewer(true)}
                         title="Ver carrito de compra"
                         type="button"
                         size="md"
@@ -363,7 +383,7 @@ export const NewOrderManagerPage = () => {
                     size="md"
                     color="default"
                     startContent={<User size={18} id="patient-info" />}
-                    onClick={() => {
+                    onPress={() => {
                       toggleCustomerForm(true);
                     }}
                     isIconOnly
@@ -378,7 +398,7 @@ export const NewOrderManagerPage = () => {
                     isIconOnly
                     size="md"
                     color="primary"
-                    onClick={() => setConfirmOrderModal(true)}
+                    onPress={() => setConfirmOrderModal(true)}
                     isDisabled={
                       (!patientFormValues.rfc &&
                         !patientFormValues.nombre &&

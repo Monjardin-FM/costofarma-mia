@@ -1,9 +1,5 @@
 import {
   Button,
-  Card,
-  CardBody,
-  Chip,
-  Divider,
   Modal,
   ModalBody,
   ModalContent,
@@ -17,6 +13,7 @@ import { useCreateNewOrder } from "../../hooks/use-create-order";
 import { AppToast } from "../../../../../presentation/Components/AppToast";
 import { useNavigate } from "react-router-dom";
 import { FormInfoClient } from "../forms/FormInfoClient";
+import { DetailPayment } from "../../../../orders/web/components/DetailPayment";
 export type ShoppingCartConfirmOrderProps = {
   isVisible: boolean;
   onClose: () => void;
@@ -45,8 +42,11 @@ export const ShoppingCartConfirmOrder = ({
           nombre: patientInfo.nombre,
           paterno: patientInfo.paterno,
           materno: patientInfo.materno,
-          rfc: patientInfo.Mail,
+          rfc: patientInfo.rfc,
           telefono: patientInfo.Telefono,
+          mailafectado: patientInfo.Mail,
+          afectado: patientInfo.afectado,
+          parentesco: patientInfo.parentesco,
         },
         direccion: {
           Calle: patientInfo.Calle,
@@ -59,6 +59,17 @@ export const ShoppingCartConfirmOrder = ({
           Telefono: patientInfo.Telefono,
           Mail: patientInfo.Mail,
         },
+        documentos: {
+          receta: patientInfo.receta,
+          informeMedico: patientInfo.informeMedico,
+          recetaExt: patientInfo.recetaExt,
+          informeMedicoExt: patientInfo.informeMedicoExt,
+        },
+        aseguradora: {
+          idAseguradora: Number(patientInfo.idAseguradora),
+          idBroker: Number(patientInfo.idBroker),
+          poliza: patientInfo.poliza,
+        },
         productos:
           items
             ?.filter(
@@ -68,8 +79,8 @@ export const ShoppingCartConfirmOrder = ({
               idProducto: item.idProducto!.toString(),
               cantidad: item.cantidad.toString(),
               ean: item.ean,
+              recurrencia: item.recurrencia,
             })) ?? [],
-        receta: "",
       });
     }
     if (!error) {
@@ -104,59 +115,15 @@ export const ShoppingCartConfirmOrder = ({
                   setPatientFormValues={() => {}}
                   mode="view"
                   onEdit={onEdit}
+                  loading={loading}
                 />
-                <Card className="bg-warn-50">
-                  <CardBody className="flex flex-col items-start justify-start gap-3 ">
-                    {items.length > 0 && (
-                      <>
-                        {items.map((item, index) => (
-                          <>
-                            <div className="grid grid-cols-12 w-full ">
-                              <div
-                                key={index}
-                                className="col-span-12 flex items-center justify-between"
-                              >
-                                <span className="font-semibold text-gray-800">
-                                  {item.descripcion}
-                                </span>
-                                <div className="flex items-center gap-2">
-                                  <span>
-                                    {`${
-                                      item.cantidad
-                                    } pzas. x $${item.precio.toFixed(2)} = `}
-                                  </span>
-                                  <Chip color="warning" variant="shadow">
-                                    ${(item.precio * item.cantidad).toFixed(2)}
-                                  </Chip>
-                                </div>
-                              </div>
-                            </div>
-                            <Divider />
-                          </>
-                        ))}
-                      </>
-                    )}
-                  </CardBody>
-                  <div className="flex items-center justify-end p-3">
-                    <Chip color="warning">
-                      <span className="font-semibold">
-                        Total: $
-                        {items
-                          .reduce(
-                            (acc, item) => acc + item.precio * item.cantidad,
-                            0
-                          )
-                          .toFixed(2)}
-                      </span>
-                    </Chip>
-                  </div>
-                </Card>
+                <DetailPayment items={items} />
               </>
             </ModalBody>
             <ModalFooter>
               <Button
                 color="danger"
-                onClick={onClose}
+                onPress={onClose}
                 className=""
                 size="md"
                 variant="bordered"
@@ -165,11 +132,11 @@ export const ShoppingCartConfirmOrder = ({
               </Button>
               <Button
                 color="primary"
-                onClick={onGenerate}
+                onPress={onGenerate}
                 isLoading={loading}
                 isDisabled={loading}
               >
-                Siguiente
+                {loading ? "Generando..." : "Generar pedido"}
               </Button>
             </ModalFooter>
           </>

@@ -428,7 +428,7 @@ export const PaymentOrderManagerPage = () => {
                                     cardFormat={cardFormat}
                                     setCardFormat={setCardFormat}
                                     amount={amount}
-                                    items={orderDetail?.productos}
+                                    items={[]}
                                     mode="page"
                                   />
                                 </div>

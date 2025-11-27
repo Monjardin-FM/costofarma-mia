@@ -21,6 +21,15 @@ export type ShoppingCartFormValues = {
   precio: number;
   requiereReceta: boolean;
   idOrdenDetalle: number;
+  recurrencia:
+    | "semanal"
+    | "quincenal"
+    | "mensual"
+    | "bimestral"
+    | "trimestral"
+    | "semestral"
+    | ""
+    | string;
   //   activo?: boolean;
 };
 
@@ -50,6 +59,7 @@ export const ShoppingCartForm = ({
     idProducto: 0,
     precio: 0,
     requiereReceta: false,
+    recurrencia: "",
   },
   onSubmit,
   onDelete = () => {},
@@ -73,7 +83,13 @@ export const ShoppingCartForm = ({
               onReset={onClose}
               validationSchema={ShoppingCartSchema}
             >
-              {({ handleSubmit, values, handleChange, errors }) => (
+              {({
+                handleSubmit,
+                values,
+                handleChange,
+                errors,
+                setFieldValue,
+              }) => (
                 <form onSubmit={handleSubmit} autoComplete="off ">
                   <ModalHeader>
                     {mode === "create" ? "Agregar" : "Actualizar"}
@@ -114,13 +130,17 @@ export const ShoppingCartForm = ({
                         label="Recurrencia"
                         orientation="horizontal"
                         className="col-span-4"
+                        value={values.recurrencia}
+                        onValueChange={(val) =>
+                          setFieldValue("recurrencia", val)
+                        }
                       >
-                        <Radio value="0">Semanal</Radio>
-                        <Radio value="1">Quincenal</Radio>
-                        <Radio value="2">Mensual</Radio>
-                        <Radio value="3">Bimestral</Radio>
-                        <Radio value="4">Trimestral</Radio>
-                        <Radio value="5">Semestral</Radio>
+                        <Radio value="semanal">Semanal</Radio>
+                        <Radio value="quincenal">Quincenal</Radio>
+                        <Radio value="mensual">Mensual</Radio>
+                        <Radio value="bimestral">Bimestral</Radio>
+                        <Radio value="trimestral">Trimestral</Radio>
+                        <Radio value="semestral">Semestral</Radio>
                       </RadioGroup>
                     </div>
                   </ModalBody>
@@ -129,7 +149,7 @@ export const ShoppingCartForm = ({
                       <Button onPress={onClose}>Cancel</Button>
                       {mode === "update" && (
                         <Button
-                          onClick={() => onDelete()}
+                          onPress={() => onDelete()}
                           type="button"
                           color="danger"
                           variant="bordered"
@@ -141,7 +161,9 @@ export const ShoppingCartForm = ({
                       <Button
                         type="submit"
                         color="primary"
-                        isDisabled={values.cantidad <= 0}
+                        isDisabled={
+                          values.cantidad <= 0 || values.recurrencia === ""
+                        }
                       >
                         {mode === "create" ? "Guardar" : "Actualizar"}
                       </Button>

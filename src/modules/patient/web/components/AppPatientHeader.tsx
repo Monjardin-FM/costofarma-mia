@@ -1,8 +1,22 @@
 import { Button, Input } from "@nextui-org/react";
 import { AppHeading } from "../../../../presentation/Components/AppHeading";
 import { AppHero } from "../../../../presentation/Components/AppHero";
-
-export const AppPatientHeader = () => {
+type AppPatientHeaderProps = {
+  onSearch: (search: string) => void;
+  search: string;
+  setSearch: (search: string) => void;
+};
+export const AppPatientHeader = ({
+  onSearch,
+  setSearch,
+  search,
+}: AppPatientHeaderProps) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const rfc = formData.get("rfc") as string;
+    onSearch(rfc);
+  };
   return (
     <AppHero
       size="base"
@@ -13,24 +27,24 @@ export const AppPatientHeader = () => {
           Pacientes
         </AppHeading>
         <form
-          //   onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           className="w-2/3 gap-2 flex flex-row items-center justify-center rounded-lg"
         >
           <Input
-            value={""}
+            value={search}
             id="rfc"
             name="rfc"
             radius="full"
             size="sm"
             variant="faded"
-            label="Buscar paciente"
-            onChange={() => {
-              //   setSearch(e.target.value);
+            label="Buscar paciente por correo electrónico"
+            onChange={(e) => {
+              setSearch(e.target.value);
             }}
             isClearable={true}
-            // onClear={() => {
-            //   setSearch("");
-            // }}
+            onClear={() => {
+              setSearch("");
+            }}
           />
           <Button variant="shadow" color="primary" size="md" type="submit">
             Buscar
