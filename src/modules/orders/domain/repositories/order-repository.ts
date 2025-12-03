@@ -1,4 +1,5 @@
 import { OrdenPerson } from "../entities/OrdenPerson";
+import { Order } from "../entities/Order";
 import { OrderByPerson } from "../entities/OrderByPerson";
 import { OrderDetail } from "../entities/OrderDetail";
 import { Person } from "../entities/Person";
@@ -21,7 +22,17 @@ export type reloadOrderParams = {
   }[];
   receta: string;
 };
+export type FindManyOrdersParams = {
+  pagination: {
+    offset: number;
+    size: number;
+  };
+  query: {
+    email: string;
+  };
+};
 export type OrderRepository = {
+  getManyOrders(params: FindManyOrdersParams): Promise<Order[]>;
   getPerson(params: { rfc: string }): Promise<Person>;
   getOrderPerson(params: { idPerson: number }): Promise<OrdenPerson[]>;
   getOrderDetail(params: { idOrder: number }): Promise<OrderDetail>;
