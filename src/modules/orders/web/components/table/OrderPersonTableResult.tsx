@@ -6,19 +6,18 @@ import {
   RenderFnParams,
 } from "../../../../../presentation/Components/AppDataGrid";
 import { UIColorScheme } from "../../../../../presentation/types/UIColorScheme";
-import { OrderByPerson } from "../../../domain/entities/OrderByPerson";
 import * as Icon from "react-feather";
 import { AppAuthorizationGuard } from "../../../../../presentation/Components/AppAuthorizationGuard";
 import { UserRole } from "../../../../user/domain/entities/user-role";
 import AppConfig from "../../../../../settings.json";
+import { Order } from "../../../domain/entities/Order";
 
 export type OrderPersonTableResultProps = {
-  items?: OrderByPerson[];
-  onView: (params: RenderFnParams<OrderByPerson>) => void;
-  onPay: (params: RenderFnParams<OrderByPerson>) => void;
-  onDelete: (params: RenderFnParams<OrderByPerson>) => void;
-  onGenerateAgain: (params: RenderFnParams<OrderByPerson>) => void;
-  onViewTIcket: (params: RenderFnParams<OrderByPerson>) => void;
+  items?: Order[];
+  onView: (params: RenderFnParams<Order>) => void;
+  onDelete: (params: RenderFnParams<Order>) => void;
+  onGenerateAgain: (params: RenderFnParams<Order>) => void;
+  onViewTIcket: (params: RenderFnParams<Order>) => void;
   loadingDeleteOrder: boolean;
   tour?: React.ReactNode;
 };
@@ -33,14 +32,14 @@ export const getRandomColorSchema = (params: { length: number }) => {
   ];
   return colors[params.length % colors.length] || "gray";
 };
-const FolioColumn = (params: RenderFnParams<OrderByPerson>) => {
+const FolioColumn = (params: RenderFnParams<Order>) => {
   return (
     <div className="flex items-center space-x-3">
       <div>
         <AppAvatar
           className={`font-bold tracking-wider text-gray-900 ${getRandomColorSchema(
             {
-              length: Number(params.record.folio),
+              length: Number(params.record.invoiceNumber.length),
             }
           )}`}
         >
@@ -48,25 +47,25 @@ const FolioColumn = (params: RenderFnParams<OrderByPerson>) => {
         </AppAvatar>
       </div>
       <div className="flex flex-col gap-2">
-        <span className="font-bold ">{params.record.nombreCompleto}</span>
+        <span className="font-bold ">{`${params.record.patient.name} ${params.record.patient.paternalName} ${params.record.patient.maternalname}`}</span>
         <Chip
           className="font-bold tracking-wider"
           variant="shadow"
           color="primary"
         >
-          {params.record.folio}
+          {params.record.invoiceNumber}
         </Chip>
       </div>
     </div>
   );
 };
-const DateColumn = (params: RenderFnParams<OrderByPerson>) => {
+const DateColumn = (params: RenderFnParams<Order>) => {
   return (
     <Chip color="primary" variant="flat">
       <div className="flex gap-2">
         <Icon.Calendar size={16} className="mr-2" />
         <span>
-          {new Date(params.record.fechaCreacion).toLocaleDateString("es-MX", {
+          {new Date(params.record.created).toLocaleDateString("es-MX", {
             year: "numeric",
             month: "long",
             day: "2-digit",
@@ -76,48 +75,45 @@ const DateColumn = (params: RenderFnParams<OrderByPerson>) => {
     </Chip>
   );
 };
-const StatusColumn = (params: RenderFnParams<OrderByPerson>) => {
-  const { idStatus, pagado } = params.record;
+// const StatusColumn = (params: RenderFnParams<Order>) => {
+//   const { idStatus, pagado } = params.record;
 
-  let color: "primary" | "success" | "warning" | "default" = "default";
-  let label = "";
+//   let color: "primary" | "success" | "warning" | "default" = "default";
+//   let label = "";
 
-  if (pagado) {
-    color = "success";
-    label = "Pagado";
-  } else {
-    switch (idStatus) {
-      case 3:
-        color = "primary";
-        label = "En revisión";
-        break;
-      case 6:
-        color = "warning";
-        label = "Listo para pagar";
-        break;
-      default:
-        color = "default";
-        label = "Desconocido";
-        break;
-    }
-  }
-  return (
-    <div className="flex flex-col items-center jusitfy-center">
-      <Chip color={color}>{label}</Chip>
-    </div>
-  );
-};
+//   if (pagado) {
+//     color = "success";
+//     label = "Pagado";
+//   } else {
+//     switch (idStatus) {
+//       case 3:
+//         color = "primary";
+//         label = "En revisión";
+//         break;
+//       case 6:
+//         color = "warning";
+//         label = "Listo para pagar";
+//         break;
+//       default:
+//         color = "default";
+//         label = "Desconocido";
+//         break;
+//     }
+//   }
+//   return (
+//     <div className="flex flex-col items-center jusitfy-center">
+//       <Chip color={color}>{label}</Chip>
+//     </div>
+//   );
+// };
 const ActionsColumn = ({
-  // onPay,
   onView,
-  // record,
   onDelete,
   onGenerateAgain,
   onViewTIcket,
   loadingDeleteOrder,
   tour,
-}: RenderFnParams<OrderByPerson> & {
-  onPay: () => void;
+}: RenderFnParams<Order> & {
   onView: () => void;
   onDelete: () => void;
   onGenerateAgain: () => void;
@@ -181,28 +177,6 @@ const ActionsColumn = ({
           ] as UserRole[]
         }
       >
-        {/* {record.idStatus === 6 && !record.pagado && (
-          <Tooltip
-            content="Pagar"
-            color="warning"
-            style={{ zIndex: 0 }}
-            offset={1}
-            showArrow
-            closeDelay={10}
-            disableAnimation
-          >
-            <Button
-              onPress={() => onPay()}
-              size="sm"
-              variant="shadow"
-              isIconOnly
-              color="warning"
-            >
-              <Icon.CreditCard size={18} id="PagarPedido" />
-            </Button>
-          </Tooltip>
-        )} */}
-
         <Tooltip
           content="Volver a generar pedido"
           color="secondary"
@@ -239,7 +213,7 @@ const ActionsColumn = ({
           disableAnimation
         >
           <Button
-            onClick={() => {
+            onPress={() => {
               onDelete();
             }}
             size="sm"
@@ -257,7 +231,6 @@ const ActionsColumn = ({
   );
 };
 export const OrderPersonTableResult = ({
-  onPay,
   onView,
   onDelete,
   onGenerateAgain,
@@ -265,7 +238,7 @@ export const OrderPersonTableResult = ({
   items = [],
   loadingDeleteOrder,
 }: OrderPersonTableResultProps) => {
-  const columns: AppDataGridColumn<OrderByPerson>[] = [
+  const columns: AppDataGridColumn<Order>[] = [
     {
       key: "Folio",
       dataIndex: "Folio",
@@ -278,12 +251,12 @@ export const OrderPersonTableResult = ({
       title: "Fecha de creación",
       render: DateColumn,
     },
-    {
-      key: "StatusColumn",
-      dataIndex: "StatusColumn",
-      title: "Status",
-      render: StatusColumn,
-    },
+    // {
+    //   key: "StatusColumn",
+    //   dataIndex: "StatusColumn",
+    //   title: "Status",
+    //   render: StatusColumn,
+    // },
     {
       key: "actionsPerson",
       dataIndex: "actionsPerson",
@@ -294,9 +267,6 @@ export const OrderPersonTableResult = ({
           ...data,
           onView: () => {
             onView(data);
-          },
-          onPay: () => {
-            onPay(data);
           },
           onDelete: () => {
             onDelete(data);
@@ -312,10 +282,6 @@ export const OrderPersonTableResult = ({
     },
   ];
   return (
-    <AppDataGrid<OrderByPerson>
-      columns={columns}
-      dataSource={items}
-      itemKey="id"
-    />
+    <AppDataGrid<Order> columns={columns} dataSource={items} itemKey="id" />
   );
 };

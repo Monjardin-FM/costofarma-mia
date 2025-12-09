@@ -84,7 +84,6 @@ export class MiaUserRepository implements UserRepository {
       else if (current.descripcion === "Broker") return [...previous, "Broker"];
       return previous;
     }, []);
-    console.log("Final roles:", roles);
     return roles;
   }
 }

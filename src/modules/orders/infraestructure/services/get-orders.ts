@@ -1,6 +1,7 @@
 import { api } from "../../../../utils/api";
 import { verifyResponse } from "../../../../utils/check-response";
 import { token } from "../../../../utils/token";
+import { Order } from "../../domain/entities/Order";
 import {
   FindManyOrdersParams,
   OrderRepository,
@@ -21,17 +22,17 @@ export const findManyOrdersService: OrderRepository["getManyOrders"] = async (
   });
 
   const { body } = await verifyResponse({ response });
-  const rawOrders = body as any[];
+  const rawOrders = body.data as any[];
 
-  const orders = rawOrders.map((rawOrder) => ({
+  const orders = rawOrders.map<Order>((rawOrder) => ({
     id: rawOrder.id,
-    invoiceNumber: rawOrder.invoiceNumber,
+    invoiceNumber: rawOrder.invoice_number,
     idTipoCobro: rawOrder.idTipoCobro,
     created: rawOrder.created,
     patient: {
       id: rawOrder.patient.id,
-      paternalName: rawOrder.patient.paternalName,
-      maternalname: rawOrder.patient.maternalname,
+      paternalName: rawOrder.patient.paternal_name,
+      maternalname: rawOrder.patient.maternal_name,
       name: rawOrder.patient.name,
     },
     banContrapropuesta: rawOrder.banContrapropuesta,
@@ -41,5 +42,6 @@ export const findManyOrdersService: OrderRepository["getManyOrders"] = async (
     idEstado: rawOrder.idEstado,
     inventario: rawOrder.inventario,
   }));
+  console.table(orders);
   return orders;
 };

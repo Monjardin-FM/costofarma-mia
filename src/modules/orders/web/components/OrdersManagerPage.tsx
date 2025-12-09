@@ -3,25 +3,20 @@ import { AppPageTransition } from "../../../../presentation/Components/AppPageTr
 import { OrdersHeader } from "./OrdersHeader";
 import AppConfig from "../../../../settings.json";
 import { UserRole } from "../../../user/domain/entities/user-role";
-import { Button, Pagination } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { useGetPerson } from "../hooks/use-get-person";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useToggle } from "react-use";
-import { ModalResultPerson } from "./modals/ModalResultPerson";
-// import { useGetOrderPerson } from "../hooks/use-get-order-person";
 import { OrderPersonTableResult } from "./table/OrderPersonTableResult";
 import * as Icon from "react-feather";
 import { useDeleteOrder } from "../hooks/use-delete-order";
 import { AppToast } from "../../../../presentation/Components/AppToast";
 import { AppSwal } from "../../../../presentation/Components/AppSwal";
-import { useGetOrderByPerson } from "../hooks/get-order-by-person";
-import { OrdenPerson } from "../../domain/entities/OrdenPerson";
-import { useGetOrderPerson } from "../hooks/use-get-order-person";
 import { ModalGenerateAgainOrder } from "./modals/ModalGenerateAgainOrder";
 import { ModalTicket } from "./modals/Ticket/ModalTicket";
 import { Step } from "react-joyride";
 import { useTour } from "../../../../presentation/Components/AppTour/useTour";
+import { useSearchOrder } from "../hooks/use-get-orders";
 
 const STEPS: Step[] = [
   {
@@ -63,18 +58,17 @@ const STEPS: Step[] = [
 ];
 export const OrdersManagerPage = () => {
   const navigate = useNavigate();
-  const { getPerson, person } = useGetPerson();
-  const { getOrderPerson, orderPerson } = useGetOrderPerson();
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(0);
+  const {
+    orders,
+    load: searchOrders,
+    fetchMore,
+    hasMoreResults,
+  } = useSearchOrder();
   const [search, setSearch] = useState<string>("");
   const [idPerson, setIdPerson] = useState(0);
-  const [togglemodaResultPerson, setModalResultPerson] = useToggle(false);
   const [modalGenerateOrder, setModalGenerateOrder] = useToggle(false);
   const [modalTicket, toggleModalTicket] = useToggle(false);
   const [toggleReload, setToggleReload] = useToggle(false);
-  const { getOrdersByPerson, ordersByPerson } = useGetOrderByPerson();
-  const [sortedOrders, setSortedOrders] = useState<OrdenPerson[]>([]);
   const [idOrder, setIdOrder] = useState<number>();
   const {
     deleteOrder,
@@ -85,12 +79,6 @@ export const OrdersManagerPage = () => {
   useEffect(() => {
     tourPedidos.run;
   }, [tourPedidos]);
-  const rowsPerPage = 10;
-  const data = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    return sortedOrders?.slice(start, end);
-  }, [page, sortedOrders]);
   const askDeleteForce = () => {
     return AppSwal().fire({
       title: "¿Estás seguro de eliminar el pedido?",
@@ -127,11 +115,10 @@ export const OrdersManagerPage = () => {
     }
   }, [errorDeleteOrder]);
 
-  const onSearch = (search: string) => {
-    getPerson({ rfc: search });
+  const onSearch = async (search: string) => {
+    await searchOrders({ query: { email: search } });
   };
 
-  // Cada vez que cambie el search, se ejecuta la función onSearch con un pequeño delay
   // Esto es para evitar hacer demasiadas peticiones al servidor mientras el usuario escribe
   useEffect(() => {
     if (search.length > 1 || search.length === 0) {
@@ -141,53 +128,11 @@ export const OrdersManagerPage = () => {
       return () => clearTimeout(timeDelay);
     }
   }, [search]);
-  // Cada vez que cambie person, se actualiza el idPerson
-  const onSearchOrderPerson = async () => {
-    await getOrderPerson({ idPerson: idPerson });
-  };
-
-  // Cada vez que cambie person, se actualiza el modalResultPerson
   useEffect(() => {
-    if (person) {
-      setModalResultPerson(true);
-    }
-  }, [person]);
-  // Cada vez que cambie idPerson, se obtiene el pedido de la persona
-  useEffect(() => {
-    if (idPerson) {
-      getOrderPerson({ idPerson: idPerson });
-    }
-  }, [idPerson, toggleReload]);
-  // Cada vez que cambie ordersByPerson, lo ordenamos
-  useEffect(() => {
-    if (ordersByPerson && ordersByPerson.length > 0) {
-      const sorted = [...ordersByPerson].sort(
-        (a, b) =>
-          new Date(b.fechaCreacion).getTime() -
-          new Date(a.fechaCreacion).getTime()
-      );
-      setSortedOrders(sorted);
-    }
-  }, [ordersByPerson]);
-  // Cada vez que cambie sortedOrders, actualizamos el número de páginas
-  useEffect(() => {
-    if (sortedOrders) {
-      const nPages = Math.ceil(sortedOrders?.length / rowsPerPage);
-      setPages(nPages);
-    }
-  }, [sortedOrders]);
-  // Cada vez que cambie el search, se obtienen los pedidos de la persona
-  useEffect(() => {
-    if (search.length === 0) {
-      getOrdersByPerson();
-    }
-  }, [search, toggleReload]);
-  // Cada vez que cambie orderPerson, se actualiza el sortedOrders
-  useEffect(() => {
-    if (orderPerson && orderPerson.length > 0) {
-      setSortedOrders(orderPerson);
-    }
-  }, [orderPerson]);
+    searchOrders({
+      query: { email: search },
+    });
+  }, [search]);
 
   return (
     <AppAuthorizationGuard
@@ -196,15 +141,6 @@ export const OrdersManagerPage = () => {
       }
       redirect={{ to: "/" }}
     >
-      {/* Modal con el resultado de buscar asegurado */}
-      <ModalResultPerson
-        items={person}
-        setIdPerson={setIdPerson}
-        isVisible={togglemodaResultPerson}
-        onClose={() => setModalResultPerson(false)}
-        onSearchOrderPerson={onSearchOrderPerson}
-      />
-
       <ModalGenerateAgainOrder
         isVisible={modalGenerateOrder}
         onClose={() => {
@@ -255,45 +191,45 @@ export const OrdersManagerPage = () => {
             <div className="mt-5 flex flex-col items-center w-full justify-center gap-5 mb-10">
               <div className="w-full container mx-auto">
                 <OrderPersonTableResult
-                  onPay={(record) => {
-                    setIdOrder(record.record.idOrden);
-                    // setModalPayment(true);
-                  }}
                   onView={(record) => {
                     navigate(
-                      `/orders/${record.record.idOrden}/${record.record.idpersona}`
+                      `/orders/${record.record.id}/${record.record.patient.id}`
                     );
                   }}
                   onDelete={(record) => {
-                    handleDeleteOrder(record.record.idOrden);
+                    handleDeleteOrder(record.record.id);
                   }}
                   onGenerateAgain={(record) => {
-                    setIdPerson(record.record.idpersona);
-                    setIdOrder(record.record.idOrden);
+                    setIdPerson(record.record.patient.id);
+                    setIdOrder(record.record.id);
                     setModalGenerateOrder(true);
                     setToggleReload(!toggleReload);
                   }}
                   onViewTIcket={(record) => {
                     toggleModalTicket(true);
-                    setIdOrder(record.record.idOrden);
+                    setIdOrder(record.record.id);
                   }}
-                  items={data}
+                  items={orders}
                   loadingDeleteOrder={loadingDeleteOrder}
                   tour={tourPedidos.tour}
                 />
-              </div>
-              <div>
-                <Pagination
-                  loop
-                  isCompact
-                  showControls
-                  showShadow
-                  color="primary"
-                  page={page}
-                  total={pages}
-                  onChange={(page) => setPage(page)}
-                  className="w-full"
-                />
+                <div className="flex justify-center mt-10">
+                  {hasMoreResults && (
+                    <Button
+                      variant="bordered"
+                      color="primary"
+                      onPress={() => {
+                        fetchMore({
+                          query: {
+                            email: search,
+                          },
+                        });
+                      }}
+                    >
+                      Cargar más
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           </section>

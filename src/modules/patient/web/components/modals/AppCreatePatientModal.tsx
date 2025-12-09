@@ -59,7 +59,6 @@ export const AppCreatePatientModal = ({
     }
   }, [error]);
   useEffect(() => {
-    console.log(isCreated);
     if (!isCreated) return;
 
     if (isCreated.idPersona && isCreated.idPersona > 0) {

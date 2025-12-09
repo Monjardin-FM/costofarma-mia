@@ -3,6 +3,7 @@ import { AppHeading } from "../../../../presentation/Components/AppHeading";
 import { AppAuthorizationGuard } from "../../../../presentation/Components/AppAuthorizationGuard";
 import { UserRole } from "../../../user/domain/entities/user-role";
 import AppConfig from "../../../../settings.json";
+import { Button, Input } from "@nextui-org/react";
 
 type OrdersHeaderProps = {
   onSearch: (search: string) => void;
@@ -10,13 +11,18 @@ type OrdersHeaderProps = {
   setSearch: (search: string) => void;
   tour: React.ReactNode;
 };
-export const OrdersHeader = ({ tour }: OrdersHeaderProps) => {
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.currentTarget);
-  //   const rfc = formData.get("rfc") as string;
-  //   onSearch(rfc);
-  // };
+export const OrdersHeader = ({
+  tour,
+  search,
+  setSearch,
+  onSearch,
+}: OrdersHeaderProps) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const rfc = formData.get("rfc") as string;
+    onSearch(rfc);
+  };
   return (
     <AppHero
       size="base"
@@ -34,18 +40,18 @@ export const OrdersHeader = ({ tour }: OrdersHeaderProps) => {
           }
         >
           {tour}
-          {/* <form
+          <form
             onSubmit={handleSubmit}
             className="w-2/3 gap-2 flex flex-row items-center justify-center rounded-lg"
           >
             <Input
               value={search}
-              id="rfc"
-              name="rfc"
+              id="email"
+              name="email"
               radius="full"
               size="sm"
               variant="faded"
-              label="Buscar por RFC"
+              label="Buscar por correo electrónico"
               onChange={(e) => {
                 setSearch(e.target.value);
               }}
@@ -57,7 +63,7 @@ export const OrdersHeader = ({ tour }: OrdersHeaderProps) => {
             <Button variant="shadow" color="primary" size="md" type="submit">
               Buscar
             </Button>
-          </form> */}
+          </form>
         </AppAuthorizationGuard>
       </section>
     </AppHero>
